@@ -7,36 +7,27 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  items: [],
-  item: {}
+  finalTranscript: '',
+  interimTranscript: '',
+  listening: false
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case FETCH_POSTS:
-      return {
-        ...state,
-        items: action.payload
-      };
-    case NEW_POST:
-      return {
-        ...state,
-        item: action.payload
-      };
     case FINAL_TRANSCRIPT:
       return {
         ...state,
-        item: action.payload
+        finalTranscript: action.finalTranscript
       };
     case INTERIM_TRANSCRIPT:
       return {
         ...state,
-        item: action.payload
+        interimTranscript: action.interimTranscript
       };
     case LISTENING_TRANSCRIPT:
       return {
         ...state,
-        item: action.payload
+        listening: action.listening
       };
     default:
       return state;
