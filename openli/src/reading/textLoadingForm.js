@@ -29,6 +29,7 @@ class TextLoadingForm extends Component {
               autoComplete='reading text'
               onChange={OnChangeText}
               multiline='true'
+              defaultValue={this.props.text}
             />
           </Grid>
         </Grid>
@@ -40,7 +41,7 @@ class TextLoadingForm extends Component {
 function mapStateToProps(state) {
   return {
     ...state,
-    text: readingSelector.activeStep(state)
+    text: readingSelector.text(state)
   };
 }
 
