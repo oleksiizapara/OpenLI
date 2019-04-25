@@ -16,6 +16,7 @@ import TextLoadingForm from './textLoadingForm';
 import Review from './review';
 
 import { selectors as readingSelector } from './reducer';
+import { nextStep, previousStep } from './actions';
 
 const styles = theme => ({
   appBar: {
@@ -70,31 +71,16 @@ function getStepContent(step) {
 }
 
 class Reading extends Component {
-  state = {
-    activeStep: 0
-  };
-
   handleNext = () => {
-    this.setState(state => ({
-      activeStep: state.activeStep + 1
-    }));
+    this.props.dispatch(nextStep());
   };
 
   handleBack = () => {
-    this.setState(state => ({
-      activeStep: state.activeStep - 1
-    }));
-  };
-
-  handleReset = () => {
-    this.setState({
-      activeStep: 0
-    });
+    this.props.dispatch(previousStep());
   };
 
   render() {
-    const { classes } = this.props;
-    const { activeStep } = this.state;
+    const { activeStep, classes } = this.props;
 
     return (
       <React.Fragment>

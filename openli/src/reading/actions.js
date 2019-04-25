@@ -38,7 +38,7 @@ export const nextStep = () => ({
 });
 
 export const previousStep = () => ({
-  type: NEXT_STEP,
+  type: PREVIOUS_STEP,
   payload: {}
 });
 
