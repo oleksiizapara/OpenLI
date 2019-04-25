@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import SpeechRecognition from './SpeechRecognition';
+import BaseSpeechRecognition from './baseSpeechRecognition';
 
 // const propTypes = {
 //   // Props injected by SpeechRecognition
@@ -8,16 +8,15 @@ import SpeechRecognition from './SpeechRecognition';
 //   browserSupportsSpeechRecognition: PropTypes.bool
 // }
 
-class Dictaphone extends Component {
+class SpeechRecognition extends Component {
   componentDidMount() {
     this.props.recognition.lang = 'en';
   }
 
   render() {
     const {
-      transcript,
       startListening,
-      resetTranscript,
+      stopListening,
       browserSupportsSpeechRecognition
     } = this.props;
 
@@ -25,17 +24,10 @@ class Dictaphone extends Component {
       return null;
     }
 
-    const { interimTranscript, finalTranscript } = this.props.speechRecognition;
-
     return (
       <div>
-        <button onClick={startListening}>start</button>
-        <button onClick={resetTranscript}>Reset</button>
-        <span>{transcript}</span>
-        <br />
-        <span>interimTranscript {interimTranscript}</span>
-        <br />
-        <span>finalTranscript {finalTranscript}</span>
+        <button onClick={startListening}>Start</button>
+        <button onClick={stopListening}>Stop</button>
       </div>
     );
   }
@@ -44,4 +36,4 @@ const options = {
   autoStart: false
 };
 //Dictaphone.propTypes = propTypes
-export default SpeechRecognition(options)(Dictaphone);
+export default BaseSpeechRecognition(options)(SpeechRecognition);

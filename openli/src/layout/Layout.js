@@ -14,9 +14,13 @@ import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
-import SimpleLineChart from './SimpleLineChart';
-import SimpleTable from './SimpleTable';
+
+import { ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
+import Icon from '@material-ui/core/Icon';
+
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+
+import Reading from '../reading/component.js';
 
 const drawerWidth = 240;
 
@@ -97,9 +101,25 @@ const styles = theme => ({
   }
 });
 
+const routes = [
+  {
+    path: '/',
+    exact: true,
+    title: () => 'Home',
+    icon: 'home',
+    main: () => <h2>Home</h2>
+  },
+  {
+    path: '/reading',
+    title: () => 'Reading',
+    icon: 'library_books',
+    main: () => <Reading />
+  }
+];
+
 class Layout extends React.Component {
   state = {
-    open: true
+    open: false
   };
 
   handleDrawerOpen = () => {
@@ -145,7 +165,14 @@ class Layout extends React.Component {
               noWrap
               className={classes.title}
             >
-              Dashboard
+              {routes.map((route, index) => (
+                <Route
+                  key={index}
+                  path={route.path}
+                  exact={route.exact}
+                  component={route.title}
+                />
+              ))}
             </Typography>
             <IconButton color='inherit'>
               <Badge badgeContent={4} color='secondary'>
@@ -170,24 +197,27 @@ class Layout extends React.Component {
             </IconButton>
           </div>
           <Divider />
-          <List>{mainListItems}</List>
-          <Divider />
-          <List>{secondaryListItems}</List>
+          <List>
+            {routes.map((route, index) => (
+              <ListItem button component={Link} to={route.path}>
+                <ListItemIcon>
+                  <Icon>{route.icon}</Icon>
+                </ListItemIcon>
+                <ListItemText primary={route.title} />
+              </ListItem>
+            ))}
+          </List>
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-          <Typography variant='h4' gutterBottom component='h2'>
-            Orders
-          </Typography>
-          <Typography component='div' className={classes.chartContainer}>
-            <SimpleLineChart />
-          </Typography>
-          <Typography variant='h4' gutterBottom component='h2'>
-            Products
-          </Typography>
-          <div className={classes.tableContainer}>
-            <SimpleTable />
-          </div>
+          {routes.map((route, index) => (
+            <Route
+              key={index}
+              path={route.path}
+              exact={route.exact}
+              component={route.main}
+            />
+          ))}
         </main>
       </div>
     );

@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 // import './App.css';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import Posts from './components/Posts';
-import PostForm from './components/Postform';
-import Dictaphone from './components/Dictaphone';
+import configureStore from './configureStore';
+import Layout from './layout/Layout';
 
-import store from './store';
-import Layout from './components/Layout';
+const store = configureStore();
 
 class App extends Component {
   state = {
@@ -16,11 +15,13 @@ class App extends Component {
 
   render() {
     return (
-      <Provider store={store}>
-        <div className='App'>
-          <Layout />
-        </div>
-      </Provider>
+      <Router>
+        <Provider store={store}>
+          <div className='App'>
+            <Layout />
+          </div>
+        </Provider>
+      </Router>
     );
   }
 }

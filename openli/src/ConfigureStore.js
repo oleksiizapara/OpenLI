@@ -1,14 +1,29 @@
-import { createStore, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
+import { createLogicMiddleware } from 'redux-logic';
+import { compose, createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
-import rootReducer from './reducers';
+import rootReducer from './rootReducer';
+import logic from './rootLogic';
 
+const deps = {
+  // injected dependencies for logic
+};
+
+const logicMiddleware = createLogicMiddleware(logic, deps);
 const loggerMiddleware = createLogger();
 
-export default function configureStore(preloadedState) {
-  return createStore(
-    rootReducer,
-    preloadedState,
-    applyMiddleware(thunkMiddleware, loggerMiddleware)
-  );
+const middleware = applyMiddleware(logicMiddleware, loggerMiddleware);
+
+// using compose to allow for applyMiddleware, just add it in
+const enhancer =
+  typeof devToolsExtension !== 'undefined'
+    ? compose(
+        middleware,
+        window.__REDUX_DEVTOOLS_EXTENSION__ &&
+          window.__REDUX_DEVTOOLS_EXTENSION__()
+      )
+    : middleware;
+
+export default function configureStore() {
+  const store = createStore(rootReducer, enhancer);
+  return store;
 }

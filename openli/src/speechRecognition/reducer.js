@@ -1,10 +1,15 @@
 import {
-  FETCH_POSTS,
-  NEW_POST,
-  FINAL_TRANSCRIPT,
-  INTERIM_TRANSCRIPT,
-  LISTENING_TRANSCRIPT
-} from '../actions/types';
+  key,
+  FINAL_UPDATED,
+  INTERIM_UPDATED,
+  LISTENING_UPDATED
+} from './actions';
+
+export const selectors = {
+  finalTranscript: state => state[key].finalTranscript,
+  interimTranscript: state => state[key].interimTranscript,
+  listening: state => state[key].listening
+};
 
 const initialState = {
   finalTranscript: '',
@@ -14,17 +19,17 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case FINAL_TRANSCRIPT:
+    case FINAL_UPDATED:
       return {
         ...state,
         finalTranscript: action.finalTranscript
       };
-    case INTERIM_TRANSCRIPT:
+    case INTERIM_UPDATED:
       return {
         ...state,
         interimTranscript: action.interimTranscript
       };
-    case LISTENING_TRANSCRIPT:
+    case LISTENING_UPDATED:
       return {
         ...state,
         listening: action.listening

@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
-import {
-  listeningUpdated,
-  interimTranscriptUpdated,
-  finalTranscriptUpdated
-} from '../actions/speechRecognitionAction';
-import Dictaphone from './Dictaphone';
 import { connect } from 'react-redux';
 
-export default function SpeechRecognition(options) {
+import { listeningUpdated, interimUpdated, finalUpdated } from './actions';
+import { selectors as speechSelector } from './reducer';
+export default function baseSpeechRecognition(options) {
   const SpeechRecognitionInner = function(WrappedComponent) {
     const BrowserSpeechRecognition =
       typeof window !== 'undefined' &&
@@ -31,8 +27,6 @@ export default function SpeechRecognition(options) {
       listening = true;
     }
     let pauseAfterDisconnect = false;
-    let interimTranscript = '';
-    let finalTranscript = '';
 
     class SpeechRecognitionContainer extends Component {
       constructor(props) {
@@ -46,8 +40,6 @@ export default function SpeechRecognition(options) {
         }
 
         this.state = {
-          interimTranscript,
-          finalTranscript,
           listening
         };
       }
@@ -72,36 +64,26 @@ export default function SpeechRecognition(options) {
       };
 
       onRecognitionDisconnect() {
-        listening = false;
         if (pauseAfterDisconnect) {
-          this.props.dispatch(listeningUpdated(listening));
+          this.props.dispatch(listeningUpdated(false));
         } else if (recognition) {
           if (recognition.continuous) {
             this.startListening();
           } else {
-            this.props.dispatch(listeningUpdated(listening));
+            this.props.dispatch(listeningUpdated(false));
           }
         }
         pauseAfterDisconnect = false;
       }
 
       updateTranscript(event) {
-        interimTranscript = '';
         for (let i = event.resultIndex; i < event.results.length; ++i) {
           if (event.results[i].isFinal) {
-            finalTranscript = this.concatTranscripts(
-              finalTranscript,
-              event.results[i][0].transcript
-            );
+            this.props.dispatch(finalUpdated(event.results[i][0].transcript));
           } else {
-            interimTranscript = this.concatTranscripts(
-              interimTranscript,
-              event.results[i][0].transcript
-            );
+            this.props.dispatch(interimUpdated(event.results[i][0].transcript));
           }
         }
-        this.props.dispatch(interimTranscriptUpdated(interimTranscript));
-        this.props.dispatch(finalTranscriptUpdated(finalTranscript));
       }
 
       concatTranscripts(...transcriptParts) {
@@ -112,11 +94,7 @@ export default function SpeechRecognition(options) {
       }
 
       resetTranscript = () => {
-        interimTranscript = '';
-        finalTranscript = '';
         this.disconnect('RESET');
-        this.props.dispatch(interimTranscriptUpdated(interimTranscript));
-        this.props.dispatch(finalTranscriptUpdated(finalTranscript));
       };
 
       startListening = () => {
@@ -129,36 +107,27 @@ export default function SpeechRecognition(options) {
           } catch (DOMException) {
             // Tried to start recognition after it has already started - safe to swallow this error
           }
-          listening = true;
-          this.props.dispatch(listeningUpdated(listening));
+
+          this.props.dispatch(listeningUpdated(true));
         }
       };
 
       abortListening = () => {
-        listening = false;
-        this.props.dispatch(listeningUpdated(listening));
+        this.props.dispatch(listeningUpdated(false));
         this.disconnect('ABORT');
       };
 
       stopListening = () => {
-        listening = false;
-        this.props.dispatch(listeningUpdated(listening));
+        this.props.dispatch(listeningUpdated(false));
         this.disconnect('STOP');
       };
 
       render() {
-        const transcript = this.concatTranscripts(
-          finalTranscript,
-          interimTranscript
-        );
-
         return (
           <WrappedComponent
-            resetTranscript={this.resetTranscript}
             startListening={this.startListening}
             abortListening={this.abortListening}
             stopListening={this.stopListening}
-            transcript={transcript}
             recognition={recognition}
             browserSupportsSpeechRecognition={browserSupportsSpeechRecognition}
             {...this.state}
@@ -169,15 +138,9 @@ export default function SpeechRecognition(options) {
     }
 
     function mapStateToProps(state) {
-      const { listening, interimTranscript, finalTranscript } = state;
-
       return {
         ...state,
-        SpeechRecognition: {
-          listening,
-          interimTranscript,
-          finalTranscript
-        }
+        listening: speechSelector.listening()
       };
     }
 
