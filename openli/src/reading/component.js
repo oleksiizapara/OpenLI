@@ -1,40 +1,158 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import { connect } from 'react-redux';
 
-import SimpleLineChart from './SimpleLineChart';
-import SimpleTable from './SimpleTable';
+import { withStyles } from '@material-ui/core/styles';
+import {
+  Typography,
+  Paper,
+  Stepper,
+  Step,
+  StepLabel,
+  Button
+} from '@material-ui/core';
+
+import ReadingForm from './readingForm';
+import TextLoadingForm from './textLoadingForm';
+import Review from './review';
+
+import { selectors as readingSelector } from './reducer';
 
 const styles = theme => ({
-  chartContainer: {
-    marginLeft: -22
+  appBar: {
+    position: 'relative'
   },
-  tableContainer: {
-    height: 320
+  layout: {
+    width: 'auto',
+    marginLeft: theme.spacing.unit * 2,
+    marginRight: theme.spacing.unit * 2,
+    [theme.breakpoints.up(600 + theme.spacing.unit * 2 * 2)]: {
+      width: 600,
+      marginLeft: 'auto',
+      marginRight: 'auto'
+    }
+  },
+  paper: {
+    marginTop: theme.spacing.unit * 3,
+    marginBottom: theme.spacing.unit * 3,
+    padding: theme.spacing.unit * 2,
+    [theme.breakpoints.up(600 + theme.spacing.unit * 3 * 2)]: {
+      marginTop: theme.spacing.unit * 6,
+      marginBottom: theme.spacing.unit * 6,
+      padding: theme.spacing.unit * 3
+    }
+  },
+  stepper: {
+    padding: `${theme.spacing.unit * 3}px 0 ${theme.spacing.unit * 5}px`
+  },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'flex-end'
+  },
+  button: {
+    marginTop: theme.spacing.unit * 3,
+    marginLeft: theme.spacing.unit
   }
 });
 
+const steps = ['Text Loading', 'Reading', 'Review'];
+
+function getStepContent(step) {
+  switch (step) {
+    case 0:
+      return <TextLoadingForm />;
+    case 1:
+      return <ReadingForm />;
+    case 2:
+      return <Review />;
+    default:
+      throw new Error('Unknown step');
+  }
+}
+
 class Reading extends Component {
+  state = {
+    activeStep: 0
+  };
+
+  handleNext = () => {
+    this.setState(state => ({
+      activeStep: state.activeStep + 1
+    }));
+  };
+
+  handleBack = () => {
+    this.setState(state => ({
+      activeStep: state.activeStep - 1
+    }));
+  };
+
+  handleReset = () => {
+    this.setState({
+      activeStep: 0
+    });
+  };
+
   render() {
     const { classes } = this.props;
+    const { activeStep } = this.state;
 
     return (
       <React.Fragment>
-        <Typography variant='h4' gutterBottom component='h2'>
-          Orders
-        </Typography>
-        <Typography component='div' className={classes.chartContainer}>
-          <SimpleLineChart />
-        </Typography>
-        <Typography variant='h4' gutterBottom component='h2'>
-          Products
-        </Typography>
-        <div className={classes.tableContainer}>
-          <SimpleTable />
-        </div>
+        <Paper className={classes.paper}>
+          <Stepper activeStep={activeStep} className={classes.stepper}>
+            {steps.map(label => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          <React.Fragment>
+            {activeStep === steps.length ? (
+              <React.Fragment>
+                <Typography variant='h5' gutterBottom>
+                  Thank you for your order.
+                </Typography>
+                <Typography variant='subtitle1'>
+                  Your order number is #2001539. We have emailed your order
+                  confirmation, and will send you an update when your order has
+                  shipped.
+                </Typography>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                {getStepContent(activeStep)}
+                <div className={classes.buttons}>
+                  {activeStep !== 0 && (
+                    <Button
+                      onClick={this.handleBack}
+                      className={classes.button}
+                    >
+                      Back
+                    </Button>
+                  )}
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={this.handleNext}
+                    className={classes.button}
+                  >
+                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                  </Button>
+                </div>
+              </React.Fragment>
+            )}
+          </React.Fragment>
+        </Paper>
       </React.Fragment>
     );
   }
 }
 
-export default withStyles(styles)(Reading);
+function mapStateToProps(state) {
+  return {
+    ...state,
+    activeStep: readingSelector.activeStep(state)
+  };
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(Reading));

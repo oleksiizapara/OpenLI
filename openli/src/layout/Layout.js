@@ -199,11 +199,11 @@ class Layout extends React.Component {
           <Divider />
           <List>
             {routes.map((route, index) => (
-              <ListItem button component={Link} to={route.path}>
+              <ListItem key={index} button component={Link} to={route.path}>
                 <ListItemIcon>
                   <Icon>{route.icon}</Icon>
                 </ListItemIcon>
-                <ListItemText primary={route.title} />
+                <ListItemText primary={route.title()} />
               </ListItem>
             ))}
           </List>

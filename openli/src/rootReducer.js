@@ -5,6 +5,9 @@ import {
   reducer as speechRecognitionReducer
 } from './speechRecognition/index';
 
+import { key as readingKey, reducer as readingReducer } from './reading/index';
+
 export default combineReducers({
-  [speechRecognitionKey]: speechRecognitionReducer
+  [speechRecognitionKey]: speechRecognitionReducer,
+  [readingKey]: readingReducer
 });

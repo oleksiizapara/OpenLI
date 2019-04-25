@@ -11,11 +11,11 @@ import Paper from '@material-ui/core/Paper';
 const styles = {
   root: {
     width: '100%',
-    overflowX: 'auto',
+    overflowX: 'auto'
   },
   table: {
-    minWidth: 700,
-  },
+    minWidth: 700
+  }
 };
 
 let id = 0;
@@ -29,7 +29,7 @@ const data = [
   createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
   createData('Eclair', 262, 16.0, 24, 6.0),
   createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
+  createData('Gingerbread', 356, 16.0, 49, 3.9)
 ];
 
 function SimpleTable(props) {
@@ -41,22 +41,22 @@ function SimpleTable(props) {
         <TableHead>
           <TableRow>
             <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat (g)</TableCell>
-            <TableCell align="right">Carbs (g)</TableCell>
-            <TableCell align="right">Protein (g)</TableCell>
+            <TableCell align='right'>Calories</TableCell>
+            <TableCell align='right'>Fat (g)</TableCell>
+            <TableCell align='right'>Carbs (g)</TableCell>
+            <TableCell align='right'>Protein (g)</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map(n => (
             <TableRow key={n.id}>
-              <TableCell component="th" scope="row">
+              <TableCell component='th' scope='row'>
                 {n.name}
               </TableCell>
-              <TableCell align="right">{n.calories}</TableCell>
-              <TableCell align="right">{n.fat}</TableCell>
-              <TableCell align="right">{n.carbs}</TableCell>
-              <TableCell align="right">{n.protein}</TableCell>
+              <TableCell align='right'>{n.calories}</TableCell>
+              <TableCell align='right'>{n.fat}</TableCell>
+              <TableCell align='right'>{n.carbs}</TableCell>
+              <TableCell align='right'>{n.protein}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -66,7 +66,7 @@ function SimpleTable(props) {
 }
 
 SimpleTable.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(SimpleTable);
