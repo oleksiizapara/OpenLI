@@ -17,6 +17,7 @@ import Review from './review';
 
 import { selectors as readingSelector } from './reducer';
 import { nextStep, previousStep } from './actions';
+import { TEXT_LOADING_STATE, READING_STATE, REVIEW_STATE } from './actions';
 
 const styles = theme => ({
   appBar: {
@@ -55,20 +56,23 @@ const styles = theme => ({
   }
 });
 
-const steps = ['Text Loading', 'Reading', 'Review'];
-
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <TextLoadingForm />;
-    case 1:
-      return <ReadingForm />;
-    case 2:
-      return <Review />;
-    default:
-      throw new Error('Unknown step');
+const steps = {
+  TEXT_LOADING_STATE: {
+    index: 0,
+    title: 'Text Loading',
+    content: () => <TextLoadingForm />
+  },
+  READING_STATE: {
+    index: 1,
+    title: 'Reading',
+    content: () => <ReadingForm />
+  },
+  REVIEW_STATE: {
+    index: 2,
+    title: 'Review',
+    content: () => <Review />
   }
-}
+};
 
 class Reading extends Component {
   handleNext = () => {
@@ -85,10 +89,13 @@ class Reading extends Component {
     return (
       <React.Fragment>
         <Paper className={classes.paper}>
-          <Stepper activeStep={activeStep} className={classes.stepper}>
-            {steps.map(label => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
+          <Stepper
+            activeStep={steps[activeStep].index}
+            className={classes.stepper}
+          >
+            {Object.keys(steps).map((key, index) => (
+              <Step key={steps[key].index}>
+                <StepLabel>{steps[key].title}</StepLabel>
               </Step>
             ))}
           </Stepper>
@@ -106,9 +113,9 @@ class Reading extends Component {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
+                {steps[activeStep].content()}
                 <div className={classes.buttons}>
-                  {activeStep !== 0 && (
+                  {activeStep !== TEXT_LOADING_STATE && (
                     <Button
                       onClick={this.handleBack}
                       className={classes.button}
@@ -122,7 +129,7 @@ class Reading extends Component {
                     onClick={this.handleNext}
                     className={classes.button}
                   >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                    {activeStep === REVIEW_STATE ? 'Place order' : 'Next'}
                   </Button>
                 </div>
               </React.Fragment>

@@ -1,5 +1,6 @@
 import {
   key,
+  TEXT_LOADING_STATE,
   TEXT_UPDATED,
   ACTIVE_STEP_UPDATED,
   NEXT_STEP,
@@ -13,7 +14,8 @@ export const selectors = {
 
 const initialState = {
   text: '',
-  activeStep: 0
+  activeStep: TEXT_LOADING_STATE,
+  words: []
 };
 
 export default function(state = initialState, action) {

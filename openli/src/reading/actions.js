@@ -10,6 +10,11 @@ export const ACTIVE_STEP_UPDATED = '[reading] ACTIVE_STEP_UPDATED';
 export const NEXT_STEP = '[reading] NEXT_STEP';
 export const PREVIOUS_STEP = '[reading] PREVIOUS_STEP';
 
+// wizard form state
+export const TEXT_LOADING_STATE = 'TEXT_LOADING_STATE';
+export const READING_STATE = 'READING_STATE';
+export const REVIEW_STATE = 'REVIEW_STATE';
+
 export const actionTypes = {
   TEXT_UPDATED,
   ACTIVE_STEP_UPDATED,

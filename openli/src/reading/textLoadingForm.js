@@ -28,7 +28,7 @@ class TextLoadingForm extends Component {
               fullWidth
               autoComplete='reading text'
               onChange={OnChangeText}
-              multiline='true'
+              multiline
               defaultValue={this.props.text}
             />
           </Grid>
