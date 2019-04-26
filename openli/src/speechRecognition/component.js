@@ -1,5 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import BaseSpeechRecognition from './baseSpeechRecognition';
+import Icon from '@material-ui/core/Icon';
+import IconButton from '@material-ui/core/IconButton';
 
 // const propTypes = {
 //   // Props injected by SpeechRecognition
@@ -17,6 +19,7 @@ class SpeechRecognition extends Component {
     const {
       startListening,
       stopListening,
+      listening,
       browserSupportsSpeechRecognition
     } = this.props;
 
@@ -24,12 +27,23 @@ class SpeechRecognition extends Component {
       return null;
     }
 
-    return (
-      <div>
-        <button onClick={startListening}>Start</button>
-        <button onClick={stopListening}>Stop</button>
-      </div>
-    );
+    if (listening) {
+      return (
+        <React.Fragment>
+          <IconButton color='inherit' onClick={stopListening}>
+            <Icon>pause_circle_filled</Icon>
+          </IconButton>
+        </React.Fragment>
+      );
+    } else {
+      return (
+        <React.Fragment>
+          <IconButton color='inherit' onClick={startListening}>
+            <Icon>play_circle_filled</Icon>
+          </IconButton>
+        </React.Fragment>
+      );
+    }
   }
 }
 const options = {

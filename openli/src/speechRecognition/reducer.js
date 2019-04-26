@@ -22,17 +22,17 @@ export default function(state = initialState, action) {
     case FINAL_UPDATED:
       return {
         ...state,
-        finalTranscript: action.finalTranscript
+        finalTranscript: action.payload.finalTranscript
       };
     case INTERIM_UPDATED:
       return {
         ...state,
-        interimTranscript: action.interimTranscript
+        interimTranscript: action.payload.interimTranscript
       };
     case LISTENING_UPDATED:
       return {
         ...state,
-        listening: action.listening
+        listening: action.payload.listening
       };
     default:
       return state;

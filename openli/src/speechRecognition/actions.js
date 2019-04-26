@@ -16,17 +16,17 @@ export const actionTypes = {
 };
 
 // action creators
-export const finalUpdated = final => ({
+export const finalUpdated = finalTranscript => ({
   type: FINAL_UPDATED,
   payload: {
-    final
+    finalTranscript
   }
 });
 
-export const interimUpdated = interim => ({
+export const interimUpdated = interimTranscript => ({
   type: INTERIM_UPDATED,
   payload: {
-    interim
+    interimTranscript
   }
 });
 

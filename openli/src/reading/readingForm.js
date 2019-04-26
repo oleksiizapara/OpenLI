@@ -1,37 +1,52 @@
-import React from 'react';
-import Typography from '@material-ui/core/Typography';
-import { unstable_Box as Box } from '@material-ui/core/Box';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import { func } from 'prop-types';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-function ReadingForm() {
-  return (
-    <React.Fragment>
-      <Word key='1' value='Have read ' isRead='true' />
-      <Word key='2' value='Reading ' isReading='true' />
-      <Word key='3' value='Will read' />
-    </React.Fragment>
-  );
+import { selectors as readingSelector } from './reducer';
+
+class ReadingForm extends Component {
+  render() {
+    const words = this.props.words;
+    return (
+      <React.Fragment>
+        {words.map(word => (
+          <Word key={word.index} word={word} />
+        ))}
+      </React.Fragment>
+    );
+  }
 }
 
-function Word({ value, index, isNew, isRead, isReading, isSkipped, isSign }) {
+function Word({ word }) {
   var style = {
-    color: 'black'
+    color: '#212121'
   };
 
-  if (isRead) {
+  if (word.isRead) {
     style['color'] = '#4615b2';
-  } else {
-    style['color'] = '#212121';
   }
 
-  if (isReading) {
+  if (word.isReading) {
     style['color'] = '#00a152';
   }
 
-  return <span style={style}>{value}</span>;
+  const newLineRegularExpression = new RegExp('\n');
+
+  if (newLineRegularExpression.test(word.afterWord)) {
+    return (
+      <React.Fragment>
+        <span style={style}>{word.viewWord}</span>
+        <br />
+      </React.Fragment>
+    );
+  }
+  return <span style={style}>{word.viewWord}</span>;
 }
 
-export default ReadingForm;
+function mapStateToProps(state) {
+  return {
+    ...state,
+    words: readingSelector.words(state)
+  };
+}
+
+export default connect(mapStateToProps)(ReadingForm);

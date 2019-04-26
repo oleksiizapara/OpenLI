@@ -57,17 +57,17 @@ const styles = theme => ({
 });
 
 const steps = {
-  TEXT_LOADING_STATE: {
+  [TEXT_LOADING_STATE]: {
     index: 0,
     title: 'Text Loading',
     content: () => <TextLoadingForm />
   },
-  READING_STATE: {
+  [READING_STATE]: {
     index: 1,
     title: 'Reading',
     content: () => <ReadingForm />
   },
-  REVIEW_STATE: {
+  [REVIEW_STATE]: {
     index: 2,
     title: 'Review',
     content: () => <Review />

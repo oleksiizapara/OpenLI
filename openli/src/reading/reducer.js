@@ -3,13 +3,13 @@ import {
   TEXT_LOADING_STATE,
   TEXT_UPDATED,
   ACTIVE_STEP_UPDATED,
-  NEXT_STEP,
-  PREVIOUS_STEP
+  WORDS_UPDATED
 } from './actions';
 
 export const selectors = {
   text: state => state[key].text,
-  activeStep: state => state[key].activeStep
+  activeStep: state => state[key].activeStep,
+  words: state => state[key].words
 };
 
 const initialState = {
@@ -29,6 +29,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         activeStep: action.payload.activeStep
+      };
+    case WORDS_UPDATED:
+      return {
+        ...state,
+        words: action.payload.words
       };
     default:
       return state;

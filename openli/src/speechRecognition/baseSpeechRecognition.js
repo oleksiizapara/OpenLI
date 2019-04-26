@@ -65,7 +65,7 @@ export default function baseSpeechRecognition(options) {
 
       onRecognitionDisconnect() {
         if (pauseAfterDisconnect) {
-          this.props.dispatch(listeningUpdated(false));
+          // this.props.dispatch(listeningUpdated(false));
         } else if (recognition) {
           if (recognition.continuous) {
             this.startListening();
@@ -84,13 +84,6 @@ export default function baseSpeechRecognition(options) {
             this.props.dispatch(interimUpdated(event.results[i][0].transcript));
           }
         }
-      }
-
-      concatTranscripts(...transcriptParts) {
-        return transcriptParts
-          .map(t => t.trim())
-          .join(' ')
-          .trim();
       }
 
       resetTranscript = () => {
@@ -140,7 +133,7 @@ export default function baseSpeechRecognition(options) {
     function mapStateToProps(state) {
       return {
         ...state,
-        listening: speechSelector.listening()
+        listening: speechSelector.listening(state)
       };
     }
 

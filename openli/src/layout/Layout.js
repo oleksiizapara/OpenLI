@@ -9,18 +9,18 @@ import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 
 import { ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
-import Icon from '@material-ui/core/Icon';
 
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import Reading from '../reading/component.js';
+import SpeechRecognition from '../speechRecognition/component.js';
 
 const drawerWidth = 240;
 
@@ -107,13 +107,15 @@ const routes = [
     exact: true,
     title: () => 'Home',
     icon: 'home',
-    main: () => <h2>Home</h2>
+    main: () => <h2>Home</h2>,
+    toolbar: () => <React.Fragment />
   },
   {
     path: '/reading',
     title: () => 'Reading',
     icon: 'library_books',
-    main: () => <Reading />
+    main: () => <Reading />,
+    toolbar: () => <SpeechRecognition />
   }
 ];
 
@@ -174,11 +176,14 @@ class Layout extends React.Component {
                 />
               ))}
             </Typography>
-            <IconButton color='inherit'>
-              <Badge badgeContent={4} color='secondary'>
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            {routes.map((route, index) => (
+              <Route
+                key={index}
+                path={route.path}
+                exact={route.exact}
+                component={route.toolbar}
+              />
+            ))}
           </Toolbar>
         </AppBar>
         <Drawer
