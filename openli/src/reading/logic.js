@@ -1,5 +1,8 @@
 import { map } from 'rxjs/operators';
 import { createLogic } from 'redux-logic';
+import produce from 'immer';
+import Enumerable from 'linq';
+
 import {
   key,
   TEXT_UPDATED,
@@ -12,6 +15,21 @@ import {
   wordsUpdated,
   statusUpdated
 } from './actions';
+
+import {
+  selectors as speechRecognitionSelectors,
+  FINAL_UPDATED,
+  INTERIM_UPDATED,
+  LISTENING_UPDATED
+} from '../speechRecognition/actions';
+
+import { selectors } from './reducer';
+
+import {
+  splitTextOnWords,
+  recogniseWords,
+  validateRecognizedWords
+} from './common';
 
 import { TEXT_LOADING_STATE, READING_STATE, REVIEW_STATE } from './actions';
 
@@ -78,16 +96,7 @@ export const updateWords = createLogic({
     const text = getState()[key].text;
 
     if (text) {
-      var viewWords = text.match(/[^ \n\t]+[ \n\t]*/g);
-      var words = viewWords.map((viewWord, index) => {
-        const word = viewWord.match(/[^ \n\t]+/g)[0];
-        return {
-          index: index,
-          word: word,
-          viewWord: viewWord,
-          afterWord: viewWord.substring(word.length, viewWord.length)
-        };
-      });
+      const words = splitTextOnWords(text);
 
       dispatch(wordsUpdated(words));
       dispatch(statusUpdated(WORDS_UPDATE_FINISHED));
@@ -96,4 +105,59 @@ export const updateWords = createLogic({
   }
 });
 
-export default [nextStep, previousStep, updateWords];
+export const recognitionFinalWords = createLogic({
+  type: FINAL_UPDATED,
+  latest: true, // take latest only
+
+  processOptions: {
+    dispatchReturn: true
+  },
+
+  process({ getState, action }, dispatch, done) {
+    const finalTranscript = action.payload.finalTranscript;
+    const finalTranscriptWords = splitTextOnWords(finalTranscript);
+    const words = selectors.words(getState());
+
+    const lastRecognisedWord = Enumerable.from(words).lastOrDefault(
+      x => x.isFinalRecognised
+    );
+    const testedWords = Enumerable.from(words)
+      .skip(lastRecognisedWord ? lastRecognisedWord.index : 0)
+      .where(x => !x.isFinalRecognised)
+      .take(Math.max(finalTranscriptWords.length + 1, 3))
+      .toArray();
+
+    const rawRecogniseWordIndexes = recogniseWords(
+      testedWords,
+      finalTranscriptWords
+    );
+
+    const recognisedWordIndexes = validateRecognizedWords(
+      rawRecogniseWordIndexes
+    );
+
+    const normalizedRecognisedWordIndexes = Enumerable.from(
+      recognisedWordIndexes
+    )
+      .select((x, index) => {
+        if (x === -1) {
+          return x;
+        }
+        return index + (lastRecognisedWord ? lastRecognisedWord.index + 1 : 0);
+      })
+      .where(x => x !== -1)
+      .toArray();
+
+    const updatedWords = produce(words, draft => {
+      normalizedRecognisedWordIndexes.forEach(x => {
+        draft[x].isFinalRecognised = true;
+      });
+    });
+
+    dispatch(wordsUpdated(updatedWords));
+
+    done();
+  }
+});
+
+export default [nextStep, previousStep, updateWords, recognitionFinalWords];

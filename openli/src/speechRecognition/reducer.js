@@ -1,3 +1,5 @@
+import produce from 'immer';
+
 import {
   key,
   FINAL_UPDATED,
@@ -18,23 +20,17 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
-  switch (action.type) {
-    case FINAL_UPDATED:
-      return {
-        ...state,
-        finalTranscript: action.payload.finalTranscript
-      };
-    case INTERIM_UPDATED:
-      return {
-        ...state,
-        interimTranscript: action.payload.interimTranscript
-      };
-    case LISTENING_UPDATED:
-      return {
-        ...state,
-        listening: action.payload.listening
-      };
-    default:
-      return state;
-  }
+  return produce(state, draft => {
+    switch (action.type) {
+      case FINAL_UPDATED:
+        draft.finalTranscript = action.payload.finalTranscript;
+        break;
+      case INTERIM_UPDATED:
+        draft.interimTranscript = action.payload.interimTranscript;
+        break;
+      case LISTENING_UPDATED:
+        draft.listening = action.payload.listening;
+        break;
+    }
+  });
 }

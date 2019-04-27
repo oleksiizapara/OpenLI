@@ -27,6 +27,8 @@ export default function baseSpeechRecognition(options) {
       listening = true;
     }
     let pauseAfterDisconnect = false;
+    let interimTranscript = '';
+    let finalTranscript = '';
 
     class SpeechRecognitionContainer extends Component {
       constructor(props) {
@@ -40,8 +42,28 @@ export default function baseSpeechRecognition(options) {
         }
 
         this.state = {
-          listening
+          listening,
+          interimTranscript,
+          finalTranscript
         };
+      }
+
+      updateListening(listening) {
+        if (this.props.listening !== listening) {
+          this.props.dispatch(listeningUpdated(listening));
+        }
+      }
+
+      updateInterim(interimTranscript) {
+        if (this.props.interimTranscript !== interimTranscript) {
+          this.props.dispatch(interimUpdated(interimTranscript));
+        }
+      }
+
+      updateFinal(finalTranscript) {
+        if (this.props.finalTranscript !== finalTranscript) {
+          this.props.dispatch(finalUpdated(finalTranscript));
+        }
       }
 
       disconnect = disconnectType => {
@@ -64,30 +86,52 @@ export default function baseSpeechRecognition(options) {
       };
 
       onRecognitionDisconnect() {
+        listening = false;
         if (pauseAfterDisconnect) {
-          // this.props.dispatch(listeningUpdated(false));
+          this.updateListening(listening);
         } else if (recognition) {
           if (recognition.continuous) {
             this.startListening();
           } else {
-            this.props.dispatch(listeningUpdated(false));
+            this.updateListening(listening);
           }
         }
         pauseAfterDisconnect = false;
       }
 
       updateTranscript(event) {
+        interimTranscript = '';
+        finalTranscript = '';
         for (let i = event.resultIndex; i < event.results.length; ++i) {
           if (event.results[i].isFinal) {
-            this.props.dispatch(finalUpdated(event.results[i][0].transcript));
+            finalTranscript = this.concatTranscripts(
+              finalTranscript,
+              event.results[i][0].transcript
+            );
           } else {
-            this.props.dispatch(interimUpdated(event.results[i][0].transcript));
+            interimTranscript = this.concatTranscripts(
+              interimTranscript,
+              event.results[i][0].transcript
+            );
           }
         }
+        this.updateFinal(finalTranscript);
+        this.updateInterim(interimTranscript);
+      }
+
+      concatTranscripts(...transcriptParts) {
+        return transcriptParts
+          .map(t => t.trim())
+          .join(' ')
+          .trim();
       }
 
       resetTranscript = () => {
+        interimTranscript = '';
+        finalTranscript = '';
         this.disconnect('RESET');
+        this.updateFinal(finalTranscript);
+        this.updateInterim(interimTranscript);
       };
 
       startListening = () => {
@@ -100,18 +144,20 @@ export default function baseSpeechRecognition(options) {
           } catch (DOMException) {
             // Tried to start recognition after it has already started - safe to swallow this error
           }
-
-          this.props.dispatch(listeningUpdated(true));
+          listening = true;
+          this.updateListening(listening);
         }
       };
 
       abortListening = () => {
-        this.props.dispatch(listeningUpdated(false));
+        listening = false;
+        this.updateListening(listening);
         this.disconnect('ABORT');
       };
 
       stopListening = () => {
-        this.props.dispatch(listeningUpdated(false));
+        listening = false;
+        this.updateListening(listening);
         this.disconnect('STOP');
       };
 
@@ -133,7 +179,9 @@ export default function baseSpeechRecognition(options) {
     function mapStateToProps(state) {
       return {
         ...state,
-        listening: speechSelector.listening(state)
+        listening: speechSelector.listening(state),
+        finalTranscript: speechSelector.finalTranscript(state),
+        interimTranscript: speechSelector.interimTranscript(state)
       };
     }
 

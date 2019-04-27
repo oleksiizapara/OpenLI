@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { selectors as readingSelector } from './reducer';
+import { selectors as speechRecognitionSelector } from '../speechRecognition/reducer';
 
 class ReadingForm extends Component {
   render() {
@@ -11,6 +12,12 @@ class ReadingForm extends Component {
         {words.map(word => (
           <Word key={word.index} word={word} />
         ))}
+
+        <br />
+        <br />
+        <p>Final Transcript : {this.props.finalTranscript}</p>
+        <br />
+        <p>Interim Transcript : {this.props.interimTranscript}</p>
       </React.Fragment>
     );
   }
@@ -21,7 +28,7 @@ function Word({ word }) {
     color: '#212121'
   };
 
-  if (word.isRead) {
+  if (word.isFinalRecognised) {
     style['color'] = '#4615b2';
   }
 
@@ -45,7 +52,9 @@ function Word({ word }) {
 function mapStateToProps(state) {
   return {
     ...state,
-    words: readingSelector.words(state)
+    words: readingSelector.words(state),
+    finalTranscript: speechRecognitionSelector.finalTranscript(state),
+    interimTranscript: speechRecognitionSelector.interimTranscript(state)
   };
 }
 

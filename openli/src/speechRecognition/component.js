@@ -19,6 +19,7 @@ class SpeechRecognition extends Component {
     const {
       startListening,
       stopListening,
+      abortListening,
       listening,
       browserSupportsSpeechRecognition
     } = this.props;
@@ -33,6 +34,9 @@ class SpeechRecognition extends Component {
           <IconButton color='inherit' onClick={stopListening}>
             <Icon>pause_circle_filled</Icon>
           </IconButton>
+          <IconButton color='inherit' onClick={abortListening}>
+            <Icon>cancel</Icon>
+          </IconButton>
         </React.Fragment>
       );
     } else {
@@ -40,6 +44,9 @@ class SpeechRecognition extends Component {
         <React.Fragment>
           <IconButton color='inherit' onClick={startListening}>
             <Icon>play_circle_filled</Icon>
+          </IconButton>
+          <IconButton color='inherit' onClick={abortListening}>
+            <Icon>cancel</Icon>
           </IconButton>
         </React.Fragment>
       );

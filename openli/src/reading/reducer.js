@@ -6,6 +6,9 @@ import {
   WORDS_UPDATED
 } from './actions';
 
+import produce from 'immer';
+import { readlink } from 'fs';
+
 export const selectors = {
   text: state => state[key].text,
   activeStep: state => state[key].activeStep,
@@ -19,23 +22,17 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
-  switch (action.type) {
-    case TEXT_UPDATED:
-      return {
-        ...state,
-        text: action.payload.text
-      };
-    case ACTIVE_STEP_UPDATED:
-      return {
-        ...state,
-        activeStep: action.payload.activeStep
-      };
-    case WORDS_UPDATED:
-      return {
-        ...state,
-        words: action.payload.words
-      };
-    default:
-      return state;
-  }
+  return produce(state, draft => {
+    switch (action.type) {
+      case TEXT_UPDATED:
+        draft.text = action.payload.text;
+        break;
+      case ACTIVE_STEP_UPDATED:
+        draft.activeStep = action.payload.activeStep;
+        break;
+      case WORDS_UPDATED:
+        draft.words = action.payload.words;
+        break;
+    }
+  });
 }

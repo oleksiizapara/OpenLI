@@ -7,6 +7,8 @@ import {
   REVIEW_STATE,
   previousStep
 } from '../actions';
+
+import { finalUpdated } from '../../speechRecognition/actions';
 import { nextStep, activeStepUpdated } from '../actions';
 import reducer from '../../rootReducer';
 import logic from '../logic';
@@ -69,7 +71,7 @@ describe.each([
   });
 });
 
-test(`[redux-logic] updateWords switch from `, () => {
+test(`[redux-logic] updateWords split text`, () => {
   const initialState = {
     [key]: {
       text: 'a b'
@@ -90,13 +92,142 @@ test(`[redux-logic] updateWords switch from `, () => {
       index: 0,
       word: 'a',
       viewWord: 'a ',
-      afterWord: ' '
+      afterWord: ' ',
+      preWord: ''
     });
     expect(words[1]).toEqual({
       index: 1,
       word: 'b',
       viewWord: 'b',
-      afterWord: ''
+      afterWord: '',
+      preWord: ''
     });
   });
 });
+
+describe.each([
+  [
+    [{ index: 0, word: 'Another' }],
+    'Another',
+    [
+      {
+        index: 0,
+        word: 'Another',
+        isFinalRecognised: true
+      }
+    ]
+  ],
+  [
+    [{ index: 0, word: 'a' }],
+    'a',
+    [
+      {
+        index: 0,
+        word: 'a',
+        isFinalRecognised: true
+      }
+    ]
+  ],
+  [
+    [
+      { index: 0, word: 'a' },
+      { index: 1, word: 'a', isFinalRecognised: true },
+      { index: 2, word: 'a' }
+    ],
+    'a',
+    [
+      { index: 0, word: 'a' },
+      { index: 1, word: 'a', isFinalRecognised: true },
+      {
+        index: 2,
+        word: 'a',
+        isFinalRecognised: true
+      }
+    ]
+  ],
+  [
+    [
+      { index: 0, word: 'direct' },
+      { index: 1, word: 'neural' },
+      { index: 2, word: 'pathways' },
+      { index: 3, word: 'have' }
+    ],
+    'direct neural pathways',
+    [
+      { index: 0, word: 'direct', isFinalRecognised: true },
+      { index: 1, word: 'neural', isFinalRecognised: true },
+      { index: 2, word: 'pathways', isFinalRecognised: true },
+      { index: 3, word: 'have' }
+    ]
+  ],
+  [
+    [
+      { index: 0, word: 'direct' },
+      { index: 1, word: 'neural' },
+      { index: 2, word: 'pathways' },
+      { index: 3, word: 'have' },
+      { index: 4, word: 'been' },
+      { index: 5, word: 'perfected' }
+    ],
+    'neural pathways have been perfected',
+    [
+      { index: 0, word: 'direct' },
+      { index: 1, word: 'neural', isFinalRecognised: true },
+      { index: 2, word: 'pathways', isFinalRecognised: true },
+      { index: 3, word: 'have', isFinalRecognised: true },
+      { index: 4, word: 'been', isFinalRecognised: true },
+      { index: 5, word: 'perfected', isFinalRecognised: true }
+    ]
+  ],
+  [
+    [
+      { index: 0, word: 'direct', isFinalRecognised: true },
+      { index: 1, word: 'neural', isFinalRecognised: true },
+      { index: 2, word: 'pathways', isFinalRecognised: true },
+      { index: 3, word: 'have', isFinalRecognised: true },
+      { index: 4, word: 'been', isFinalRecognised: true },
+      { index: 5, word: 'a' },
+      { index: 6, word: 'range' },
+      { index: 7, word: 'of' },
+      { index: 8, word: 'neural' },
+      { index: 9, word: 'implants' }
+    ],
+    'our range of neural implants',
+    [
+      { index: 0, word: 'direct', isFinalRecognised: true },
+      { index: 1, word: 'neural', isFinalRecognised: true },
+      { index: 2, word: 'pathways', isFinalRecognised: true },
+      { index: 3, word: 'have', isFinalRecognised: true },
+      { index: 4, word: 'been', isFinalRecognised: true },
+      { index: 5, word: 'a' },
+      { index: 6, word: 'range', isFinalRecognised: true },
+      { index: 7, word: 'of', isFinalRecognised: true },
+      { index: 8, word: 'neural', isFinalRecognised: true },
+      { index: 9, word: 'implants', isFinalRecognised: true }
+    ]
+  ]
+])(
+  '[redux-logic] recognitionFinalWords',
+  (baseWords, finalText, expectedWords) => {
+    test(`[redux-logic] recognitionFinalWords `, () => {
+      const initialState = {
+        [key]: {
+          words: baseWords
+        }
+      };
+
+      const store = createMockStore({
+        initialState,
+        reducer,
+        logic
+      });
+
+      store.dispatch(finalUpdated(finalText));
+
+      store.whenComplete(() => {
+        const words = selectors.words(store.getState());
+        expect(words).toEqual(expectedWords);
+      });
+    });
+  }
+);
