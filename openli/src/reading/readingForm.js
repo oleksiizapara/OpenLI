@@ -28,12 +28,12 @@ function Word({ word }) {
     color: '#212121'
   };
 
-  if (word.isFinalRecognised) {
-    style['color'] = '#4615b2';
+  if (word.isInterimRecognised) {
+    style['color'] = '#00a152';
   }
 
-  if (word.isReading) {
-    style['color'] = '#00a152';
+  if (word.isFinalRecognised) {
+    style['color'] = '#4615b2';
   }
 
   const newLineRegularExpression = new RegExp('\n');

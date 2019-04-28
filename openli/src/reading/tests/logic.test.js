@@ -8,7 +8,7 @@ import {
   previousStep
 } from '../actions';
 
-import { finalUpdated } from '../../speechRecognition/actions';
+import { finalUpdated, interimUpdated } from '../../speechRecognition/actions';
 import { nextStep, activeStepUpdated } from '../actions';
 import reducer from '../../rootReducer';
 import logic from '../logic';
@@ -223,6 +223,52 @@ describe.each([
       });
 
       store.dispatch(finalUpdated(finalText));
+
+      store.whenComplete(() => {
+        const words = selectors.words(store.getState());
+        expect(words).toEqual(expectedWords);
+      });
+    });
+  }
+);
+
+describe.each([
+  [
+    [{ index: 0, word: 'a' }],
+    'a',
+    [
+      {
+        index: 0,
+        word: 'a',
+        isInterimRecognised: true
+      }
+    ]
+  ],
+  [
+    [{ index: 0, word: 'a', isFinalRecognised: true }, { index: 1, word: 'b' }],
+    'b',
+    [
+      { index: 0, word: 'a', isFinalRecognised: true },
+      { index: 1, word: 'b', isInterimRecognised: true }
+    ]
+  ]
+])(
+  '[redux-logic] recognitionInterimWords',
+  (baseWords, interimText, expectedWords) => {
+    test(`[redux-logic] recognitionInterimWords `, () => {
+      const initialState = {
+        [key]: {
+          words: baseWords
+        }
+      };
+
+      const store = createMockStore({
+        initialState,
+        reducer,
+        logic
+      });
+
+      store.dispatch(interimUpdated(interimText));
 
       store.whenComplete(() => {
         const words = selectors.words(store.getState());

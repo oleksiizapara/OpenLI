@@ -154,10 +154,79 @@ export const recognitionFinalWords = createLogic({
       });
     });
 
-    dispatch(wordsUpdated(updatedWords));
+    if (normalizedRecognisedWordIndexes.length > 0) {
+      dispatch(wordsUpdated(updatedWords));
+    }
 
     done();
   }
 });
 
-export default [nextStep, previousStep, updateWords, recognitionFinalWords];
+export const recognitionInterimWords = createLogic({
+  type: INTERIM_UPDATED,
+  latest: true, // take latest only
+
+  processOptions: {
+    dispatchReturn: true
+  },
+
+  process({ getState, action }, dispatch, done) {
+    const interimTranscript = action.payload.interimTranscript;
+    const interimTranscriptWords = splitTextOnWords(interimTranscript);
+    const words = selectors.words(getState());
+
+    const lastRecognisedWord = Enumerable.from(words).lastOrDefault(
+      x => x.isFinalRecognised
+    );
+    const testedWords = Enumerable.from(words)
+      .skip(lastRecognisedWord ? lastRecognisedWord.index : 0)
+      .where(x => !x.isFinalRecognised)
+      .take(Math.max(interimTranscriptWords.length + 1, 3))
+      .toArray();
+
+    const rawRecognisedWordIndexes = recogniseWords(
+      testedWords,
+      interimTranscriptWords
+    );
+
+    const recognisedWordIndexes = validateRecognizedWords(
+      rawRecognisedWordIndexes
+    );
+
+    const normalizedRecognisedWordIndexes = Enumerable.from(
+      recognisedWordIndexes
+    )
+      .select((x, index) => {
+        if (x === -1) {
+          return x;
+        }
+        return index + (lastRecognisedWord ? lastRecognisedWord.index + 1 : 0);
+      })
+      .where(x => x !== -1)
+      .toArray();
+
+    var isWordsChanged = false;
+
+    const updatedWords = produce(words, draft => {
+      normalizedRecognisedWordIndexes.forEach(x => {
+        if (!draft[x].isInterimRecognised) {
+          draft[x].isInterimRecognised = true;
+          isWordsChanged = true;
+        }
+      });
+    });
+
+    if (isWordsChanged) {
+      dispatch(wordsUpdated(updatedWords));
+    }
+    done();
+  }
+});
+
+export default [
+  nextStep,
+  previousStep,
+  updateWords,
+  recognitionFinalWords,
+  recognitionInterimWords
+];
