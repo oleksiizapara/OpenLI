@@ -19,7 +19,14 @@ steps:
     cd openli
     npm install
     npm run build
-    npm test
+    CI=true npm test
   displayName: 'npm install and build'
 
-  
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: 'openli/build'
+    includeRootFolder: false
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    ArtifactName: 'drop'
