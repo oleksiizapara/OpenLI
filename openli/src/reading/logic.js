@@ -100,6 +100,7 @@ export const updateWords = createLogic({
       const words = splitTextOnWords(text);
 
       dispatch(wordsUpdated(words));
+
       dispatch(statusUpdated(WORDS_UPDATE_FINISHED));
       done();
     }
