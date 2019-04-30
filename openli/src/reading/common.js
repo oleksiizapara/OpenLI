@@ -90,3 +90,18 @@ export const validateRecognizedWords = recognisedWords => {
 
   return allUnrecognizedWords;
 };
+
+export const getTooltipWordIndex = words => {
+  var index = words.length > 0 ? 0 : -1;
+
+  for (var i = 0; i < words.length; i++) {
+    if (
+      'isFinalRecognised' in words[i] &&
+      words[i].isFinalRecognised === true
+    ) {
+      index = i;
+    }
+  }
+
+  return index;
+};

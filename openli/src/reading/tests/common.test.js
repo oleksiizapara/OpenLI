@@ -1,7 +1,8 @@
 import {
   splitTextOnWords,
   recogniseWords,
-  validateRecognizedWords
+  validateRecognizedWords,
+  getTooltipWordIndex
 } from '../common';
 
 describe.each([
@@ -97,5 +98,47 @@ describe.each([
   test(`[reading common.js].validateRecognizedWords `, () => {
     const validatedWords = validateRecognizedWords(recognisedWords);
     expect(validatedWords).toEqual(expectedValidatedWords);
+  });
+});
+
+describe.each([
+  [[], -1],
+  [[{ index: 0, word: 'e' }], 0],
+  [[{ index: 0, word: 'e', isFinalRecognised: true }], 0],
+  [
+    [{ index: 0, word: 'e', isFinalRecognised: true }, { index: 1, word: 'e' }],
+    0
+  ],
+  [
+    [
+      { index: 0, word: 'e', isFinalRecognised: true },
+      { index: 1, word: 'e', isInterimRecognised: true }
+    ],
+    0
+  ],
+  [
+    [
+      { index: 0, word: 'e', isFinalRecognised: true },
+      { index: 1, word: 'e', isInterimRecognised: true },
+      { index: 2, word: 'e', isFinalRecognised: true },
+      { index: 3, word: 'e' }
+    ],
+    2
+  ],
+  [
+    [
+      { index: 0, word: 'e', isFinalRecognised: true },
+      { index: 1, word: 'e', isInterimRecognised: true },
+      { index: 2, word: 'e', isFinalRecognised: true },
+      { index: 3, word: 'e', isInterimRecognised: true }
+    ],
+    2
+  ]
+])(`[redux-logic] getTooltipWordIndex`, (words, expectedIndex) => {
+  test(`[redux-logic] getTooltipWordIndex ${JSON.stringify(
+    words
+  )} expectedIndex = ${expectedIndex}`, () => {
+    const index = getTooltipWordIndex(words);
+    expect(index).toEqual(expectedIndex);
   });
 });

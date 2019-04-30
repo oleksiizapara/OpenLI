@@ -4,7 +4,8 @@ import {
   key,
   FINAL_UPDATED,
   INTERIM_UPDATED,
-  LISTENING_UPDATED
+  LISTENING_UPDATED,
+  RESET_RECORDING
 } from './actions';
 
 export const selectors = {
@@ -30,6 +31,10 @@ export default function(state = initialState, action) {
         break;
       case LISTENING_UPDATED:
         draft.listening = action.payload.listening;
+        break;
+      case RESET_RECORDING:
+        draft.finalTranscript = '';
+        draft.interimTranscript = '';
         break;
     }
   });

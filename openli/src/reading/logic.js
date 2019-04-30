@@ -20,7 +20,8 @@ import {
   selectors as speechRecognitionSelectors,
   FINAL_UPDATED,
   INTERIM_UPDATED,
-  LISTENING_UPDATED
+  LISTENING_UPDATED,
+  resetRecording
 } from '../speechRecognition/actions';
 
 import { selectors } from './reducer';
@@ -192,6 +193,13 @@ export const recognitionInterimWords = createLogic({
     const recognisedWordIndexes = validateRecognizedWords(
       rawRecognisedWordIndexes
     );
+
+    if (
+      recognisedWordIndexes.length > 5 &&
+      Enumerable.from(recognisedWordIndexes).all(x => x == -1)
+    ) {
+      dispatch(resetRecording());
+    }
 
     const normalizedRecognisedWordIndexes = Enumerable.from(
       recognisedWordIndexes

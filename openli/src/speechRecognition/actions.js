@@ -8,6 +8,7 @@ export const key = 'speechRecognition';
 export const FINAL_UPDATED = '[speechRecognition] FINAL_UPDATED';
 export const INTERIM_UPDATED = '[speechRecognition] INTERIM_UPDATED';
 export const LISTENING_UPDATED = '[speechRecognition] LISTENING_UPDATED';
+export const RESET_RECORDING = '[speechRecognition] RESET_RECORDING';
 
 export const actionTypes = {
   FINAL_UPDATED,
@@ -37,8 +38,14 @@ export const listeningUpdated = listening => ({
   }
 });
 
+export const resetRecording = () => ({
+  type: RESET_RECORDING,
+  payload: {}
+});
+
 export const actions = {
   finalUpdated: finalUpdated,
   interimUpdated: interimUpdated,
-  listeningUpdated: listeningUpdated
+  listeningUpdated: listeningUpdated,
+  resetRecording: resetRecording
 };

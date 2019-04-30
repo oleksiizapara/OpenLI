@@ -13,6 +13,8 @@ import { nextStep, activeStepUpdated } from '../actions';
 import reducer from '../../rootReducer';
 import logic from '../logic';
 import { selectors } from '../reducer';
+import { selectors as speechRecognitionSelector } from '../../speechRecognition/reducer';
+import { getTooltipWordIndex } from '../common';
 
 describe.each([
   [TEXT_LOADING_STATE, READING_STATE],
@@ -277,3 +279,40 @@ describe.each([
     });
   }
 );
+
+describe.each([
+  [
+    [
+      { index: 0, word: 'e' },
+      { index: 1, word: 'e' },
+      { index: 2, word: 'e' },
+      { index: 3, word: 'e' },
+      { index: 4, word: 'e' },
+      { index: 5, word: 'e' }
+    ],
+    'a b c d l k'
+  ]
+])('[redux-logic] resetRecording', (baseWords, interimText, expectedWords) => {
+  test(`[redux-logic] resetRecording `, () => {
+    const initialState = {
+      [key]: {
+        words: baseWords
+      }
+    };
+
+    const store = createMockStore({
+      initialState,
+      reducer,
+      logic
+    });
+
+    store.dispatch(interimUpdated(interimText));
+
+    store.whenComplete(() => {
+      const interimText = speechRecognitionSelector.interimTranscript(
+        store.getState()
+      );
+      expect(interimText).toEqual('');
+    });
+  });
+});

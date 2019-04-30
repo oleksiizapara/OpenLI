@@ -1,16 +1,30 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Enumerable from 'linq';
+
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { selectors as readingSelector } from './reducer';
 import { selectors as speechRecognitionSelector } from '../speechRecognition/reducer';
+import { getTooltipWordIndex } from './common';
 
 class ReadingForm extends Component {
   render() {
     const words = this.props.words;
+    const interimTranscript = this.props.interimTranscript;
+    const finalTranscript = this.props.finalTranscript;
+    const toolTipWordIndex = getTooltipWordIndex(this.props.words);
+
     return (
       <React.Fragment>
         {words.map(word => (
-          <Word key={word.index} word={word} />
+          <Word
+            key={word.index}
+            word={word}
+            toolTipWordIndex={toolTipWordIndex}
+            interimTranscript={interimTranscript}
+            finalTranscript={finalTranscript}
+          />
         ))}
 
         <br />
@@ -23,7 +37,34 @@ class ReadingForm extends Component {
   }
 }
 
-function Word({ word }) {
+function Word({ word, toolTipWordIndex, interimTranscript, finalTranscript }) {
+  const newLineRegularExpression = new RegExp('\n');
+  var open = true;
+
+  return (
+    <React.Fragment>
+      {word.index === toolTipWordIndex ? (
+        <Tooltip
+          title={
+            <React.Fragment>
+              <span color='fff'>{finalTranscript}</span>
+              <br />
+              <span color='000'>{interimTranscript}</span>
+            </React.Fragment>
+          }
+          open={open}
+          placement='top-start'
+        >
+          <WordInner word={word} />
+        </Tooltip>
+      ) : (
+        <WordInner word={word} />
+      )}
+    </React.Fragment>
+  );
+}
+
+function WordInner({ word }) {
   var style = {
     color: '#212121'
   };
@@ -36,16 +77,6 @@ function Word({ word }) {
     style['color'] = '#4615b2';
   }
 
-  const newLineRegularExpression = new RegExp('\n');
-
-  if (newLineRegularExpression.test(word.afterWord)) {
-    return (
-      <React.Fragment>
-        <span style={style}>{word.viewWord}</span>
-        <br />
-      </React.Fragment>
-    );
-  }
   return <span style={style}>{word.viewWord}</span>;
 }
 
