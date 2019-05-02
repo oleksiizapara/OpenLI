@@ -9,6 +9,11 @@
             "UnauthRoleName": "openli-macbook-20190502180744-unauthRole",
             "StackName": "openli-macbook-20190502180744",
             "StackId": "arn:aws:cloudformation:ap-southeast-2:775559920249:stack/openli-macbook-20190502180744/9c313af0-6ca0-11e9-a7dc-0a9f9937b4ac"
+        },
+        "categories": {
+            "auth": {
+                "cognitoe2ed924f": {}
+            }
         }
     }
 }
