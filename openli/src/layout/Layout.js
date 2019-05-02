@@ -21,6 +21,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import Reading from '../reading/component.js';
 import SpeechRecognition from '../speechRecognition/component.js';
+import UserProfile from './UserProfile.js';
 
 const drawerWidth = 240;
 
@@ -184,6 +185,7 @@ class Layout extends React.Component {
                 component={route.toolbar}
               />
             ))}
+            <UserProfile />
           </Toolbar>
         </AppBar>
         <Drawer
