@@ -10,9 +10,13 @@ import { withAuthenticator } from 'aws-amplify-react';
 
 import configureStore from './configureStore';
 import Layout from './layout/Layout';
+import { listen as authListen } from './hubs/authHub';
+
 Amplify.configure(aws_exports);
 
 const store = configureStore();
+
+authListen();
 
 class App extends Component {
   state = {
@@ -66,22 +70,6 @@ const signUpConfig = {
       placeholder: 'Family Name',
       type: 'string',
       displayOrder: 4
-    },
-    {
-      label: 'Gender',
-      key: 'gender',
-      required: true,
-      placeholder: 'Gender',
-      type: 'string',
-      displayOrder: 5
-    },
-    {
-      label: 'Birth Date',
-      key: 'birthdate',
-      required: true,
-      placeholder: 'Birth Date',
-      type: 'date',
-      displayOrder: 6
     }
   ]
 };
