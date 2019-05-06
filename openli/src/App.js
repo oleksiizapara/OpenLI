@@ -10,13 +10,13 @@ import { withAuthenticator } from 'aws-amplify-react';
 
 import configureStore from './configureStore';
 import Layout from './layout/Layout';
-import { listen as authListen } from './hubs/authHub';
+// import { listen as authListen } from './hubs/authHub';
 
 Amplify.configure(aws_exports);
 
 const store = configureStore();
 
-authListen();
+// authListen();
 
 class App extends Component {
   state = {

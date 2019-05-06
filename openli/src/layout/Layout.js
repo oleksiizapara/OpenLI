@@ -23,6 +23,7 @@ import Reading from '../reading/component.js';
 import SpeechRecognition from '../speechRecognition/component.js';
 import UserProfile from './UserProfile.js';
 import Home from './Home.js';
+import ReadingSearch from '../readingSearch/components/ReadingSearch.js';
 
 const drawerWidth = 240;
 
@@ -113,10 +114,10 @@ const routes = [
     toolbar: () => <Home />
   },
   {
-    path: '/reading',
-    title: () => 'Reading',
+    path: '/readingSearch',
+    title: () => 'Reading Search',
     icon: 'library_books',
-    main: () => <Reading />,
+    main: () => <ReadingSearch />,
     toolbar: () => <SpeechRecognition />
   }
 ];
