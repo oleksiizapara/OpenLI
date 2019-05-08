@@ -24,3 +24,21 @@ export const getUser = async username => {
     console.log(e);
   }
 };
+
+export const getReadingMessage = async id => {
+  try {
+    const response = await API.graphql(
+      graphqlOperation(queries.getReadingMessage, { id: id })
+    );
+    assertErrors(response);
+    return response.data.getReadingMessage;
+  } catch (e) {
+    Analytics.record({
+      name: 'getReadingMessageError',
+      attributes: {
+        error: e.message
+      }
+    });
+    console.log(e);
+  }
+};

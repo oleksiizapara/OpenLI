@@ -25,6 +25,60 @@ export const createUser = async user => {
   }
 };
 
+export const createReadingMessage = async message => {
+  try {
+    const response = await API.graphql(
+      graphqlOperation(mutations.createReadingMessage, { input: message })
+    );
+    assertErrors(response);
+    return response.data.createReadingMessage;
+  } catch (e) {
+    Analytics.record({
+      name: 'createReadingMessageError',
+      attributes: {
+        error: e.message
+      }
+    });
+    console.log(e);
+  }
+};
+
+export const updateReadingMessage = async message => {
+  try {
+    const response = await API.graphql(
+      graphqlOperation(mutations.updateReadingMessage, { input: message })
+    );
+    assertErrors(response);
+    return response.data.updateReadingMessage;
+  } catch (e) {
+    Analytics.record({
+      name: 'updateReadingMessageError',
+      attributes: {
+        error: e.message
+      }
+    });
+    console.log(e);
+  }
+};
+
+export const deleteReadingMessage = async id => {
+  try {
+    const response = await API.graphql(
+      graphqlOperation(mutations.deleteReadingMessage, { input: id })
+    );
+    assertErrors(response);
+    return response.data.deleteReadingMessage;
+  } catch (e) {
+    Analytics.record({
+      name: 'deleteReadingMessageError',
+      attributes: {
+        error: e.message
+      }
+    });
+    console.log(e);
+  }
+};
+
 // export const createConvo = async (user1, user2) => {
 //     try {
 //         const members = [user1, user2].sort()

@@ -19,12 +19,13 @@ import { ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
 
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-import Reading from '../reading/component.js';
-import SpeechRecognition from '../speechRecognition/component.js';
-import UserProfile from './UserProfile.js';
+import Reading from '../reading/components/Reading';
+import UserProfile from './UserProfile';
 import Home from './Home.js';
-import ReadingSearch from '../readingSearch/components/ReadingSearch.js';
-
+import ReadingSearch from '../readingSearch/components/ReadingSearch';
+import ReadingAdd from '../readingAddOrEdit/components/ReadingAdd';
+import ReadingEdit from '../readingAddOrEdit/components/ReadingEdit';
+import { contentWrapper } from './contentWrapper';
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -117,8 +118,34 @@ const routes = [
     path: '/readingSearch',
     title: () => 'Reading Search',
     icon: 'library_books',
-    main: () => <ReadingSearch />,
-    toolbar: () => <SpeechRecognition />
+    main: () => {
+      const WrappedComponent = contentWrapper(ReadingSearch);
+      return <WrappedComponent />;
+    }
+  },
+  {
+    path: '/reading_add',
+    title: () => 'Add New Reading Message',
+    main: () => {
+      const WrappedComponent = contentWrapper(ReadingAdd);
+      return <WrappedComponent />;
+    }
+  },
+  {
+    path: '/reading_edit/:id',
+    title: () => 'Reading Edit',
+    main: () => {
+      const WrappedComponent = contentWrapper(ReadingEdit);
+      return <WrappedComponent />;
+    }
+  },
+  {
+    path: '/reading/:id',
+    title: () => 'Reading',
+    main: () => {
+      const WrappedComponent = contentWrapper(Reading);
+      return <WrappedComponent />;
+    }
   }
 ];
 
@@ -179,14 +206,17 @@ class Layout extends React.Component {
                 />
               ))}
             </Typography>
-            {routes.map((route, index) => (
-              <Route
-                key={index}
-                path={route.path}
-                exact={route.exact}
-                component={route.toolbar}
-              />
-            ))}
+            {routes.map(
+              (route, index) =>
+                route.toolbar && (
+                  <Route
+                    key={index}
+                    path={route.path}
+                    exact={route.exact}
+                    component={route.toolbar}
+                  />
+                )
+            )}
             <UserProfile />
           </Toolbar>
         </AppBar>
@@ -207,14 +237,17 @@ class Layout extends React.Component {
           </div>
           <Divider />
           <List>
-            {routes.map((route, index) => (
-              <ListItem key={index} button component={Link} to={route.path}>
-                <ListItemIcon>
-                  <Icon>{route.icon}</Icon>
-                </ListItemIcon>
-                <ListItemText primary={route.title()} />
-              </ListItem>
-            ))}
+            {routes.map(
+              (route, index) =>
+                route.icon && (
+                  <ListItem key={index} button component={Link} to={route.path}>
+                    <ListItemIcon>
+                      <Icon>{route.icon}</Icon>
+                    </ListItemIcon>
+                    <ListItemText primary={route.title()} />
+                  </ListItem>
+                )
+            )}
           </List>
         </Drawer>
         <main className={classes.content}>

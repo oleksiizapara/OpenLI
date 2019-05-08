@@ -66,11 +66,19 @@ export const statusUpdated = type => ({
   payload: {}
 });
 
+export const readingMessageUpdated = message => ({
+  type: TEXT_UPDATED,
+  payload: {
+    message
+  }
+});
+
 export const actions = {
   textUpdated,
   activeStepUpdated,
   nextStep,
   previousStep,
   wordsUpdated,
-  statusUpdated
+  statusUpdated,
+  readingMessageUpdated
 };

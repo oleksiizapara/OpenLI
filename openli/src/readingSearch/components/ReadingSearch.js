@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Grid from '@material-ui/core/Grid';
 import {
   withStyles,
   Paper,
@@ -11,103 +10,74 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Badge
+  Badge,
+  Grid
 } from '@material-ui/core';
+import { withRouter } from 'react-router-dom';
 
 import SearchIcon from '@material-ui/icons/Search';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import ReadingSearchItem from './ReadingSearchItem';
+import ReadingSearchBar from './ReadingSearchBar';
 
 const styles = theme => ({
-  root: {
-    flexGrow: 1
-  },
+  root: {},
   paper: {
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
+    margin: 'auto'
   },
+
   button: {
     margin: theme.spacing.unit
   },
   grow: {
     flexGrow: 1
   },
-  menuButton: {
-    marginLeft: -12
-  },
-  search: {
-    flexGrow: 1
-  },
+  menuButton: {},
 
   inputRoot: {
-    color: 'inherit',
-    width: '100%'
+    color: 'inherit'
   },
   inputInput: {
-    paddingTop: theme.spacing.unit,
+    paddingTop: 2 * theme.spacing.unit,
     paddingRight: theme.spacing.unit,
     paddingBottom: theme.spacing.unit,
     paddingLeft: theme.spacing.unit,
-    transition: theme.transitions.create('width'),
     width: '100%'
   }
 });
 
 class ReadingSearch extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, history } = this.props;
 
     return (
-      <div className={classes.root}>
-        <Grid
-          container
-          justify='center'
-          alignItems='center'
-          alignItems='stretch'
-          spacing={16}
-        >
-          <Grid item xs={12} md={8}>
-            <AppBar position='static'>
-              <Toolbar>
-                <IconButton
-                  className={classes.menuButton}
-                  color='inherit'
-                  aria-label='Add new reading message'
-                >
-                  <AddCircleOutlineIcon />
-                </IconButton>
-                <div className={classes.search}>
-                  <InputBase
-                    fullWidth
-                    placeholder='Search…'
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput
-                    }}
-                  />
-                </div>
-
-                <IconButton
-                  className={classes.menuButton}
-                  color='inherit'
-                  aria-label='Search ...'
-                >
-                  <SearchIcon />
-                </IconButton>
-              </Toolbar>
-            </AppBar>
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <ReadingSearchItem />
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <ReadingSearchItem />
-          </Grid>
+      <Grid
+        className='root'
+        container
+        direction='column'
+        justify='flex-start'
+        alignItems='stretch'
+        spacing={16}
+      >
+        <Grid item>
+          <ReadingSearchBar
+            onRequestAdd={() => {
+              history.push('/reading_add');
+            }}
+          />
         </Grid>
-      </div>
+        <Grid item>
+          <ReadingSearchItem />
+        </Grid>
+        <Grid item>
+          <ReadingSearchItem />
+        </Grid>
+      </Grid>
     );
   }
 }
 
-export default withStyles(styles)(ReadingSearch);
+export default withRouter(withStyles(styles)(ReadingSearch));
