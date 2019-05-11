@@ -18,7 +18,7 @@ export const contentWrapper = WrappedComponent => {
             direction='row'
             justify='center'
             alignItems='stretch'
-            spacing={16}
+            spacing={1}
           >
             <Grid item md={12} lg={8}>
               <WrappedComponent {...this.props} />

@@ -23,8 +23,8 @@ import Reading from '../reading/components/Reading';
 import UserProfile from './UserProfile';
 import Home from './Home.js';
 import ReadingSearch from '../readingSearch/components/ReadingSearch';
-import ReadingAdd from '../readingAddOrEdit/components/ReadingAdd';
-import ReadingEdit from '../readingAddOrEdit/components/ReadingEdit';
+import ReadingAdd from '../readingMessage/components/Add';
+import ReadingEdit from '../readingMessage/components/Edit';
 import { contentWrapper } from './contentWrapper';
 const drawerWidth = 240;
 
@@ -82,15 +82,15 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     }),
-    width: theme.spacing.unit * 7,
+    width: theme.spacing(7),
     [theme.breakpoints.up('sm')]: {
-      width: theme.spacing.unit * 9
+      width: theme.spacing(9)
     }
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     height: '100vh',
     overflow: 'auto'
   },
@@ -101,7 +101,7 @@ const styles = theme => ({
     height: 320
   },
   h5: {
-    marginBottom: theme.spacing.unit * 2
+    marginBottom: theme.spacing(2)
   }
 });
 

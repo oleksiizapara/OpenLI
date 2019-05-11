@@ -9,6 +9,7 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
       items {
         id
         authorId
+        title
         content
         createdAt
         updatedAt
@@ -28,6 +29,7 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
       items {
         id
         authorId
+        title
         content
         createdAt
         updatedAt
@@ -47,6 +49,7 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
       items {
         id
         authorId
+        title
         content
         createdAt
         updatedAt
@@ -71,6 +74,7 @@ export const createReadingMessage = `mutation CreateReadingMessage($input: Creat
       updatedAt
     }
     authorId
+    title
     content
     createdAt
     updatedAt
@@ -90,6 +94,7 @@ export const updateReadingMessage = `mutation UpdateReadingMessage($input: Updat
       updatedAt
     }
     authorId
+    title
     content
     createdAt
     updatedAt
@@ -109,6 +114,7 @@ export const deleteReadingMessage = `mutation DeleteReadingMessage($input: Delet
       updatedAt
     }
     authorId
+    title
     content
     createdAt
     updatedAt

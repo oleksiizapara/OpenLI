@@ -23,14 +23,14 @@ import ReadingSearchBar from './ReadingSearchBar';
 const styles = theme => ({
   root: {},
   paper: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
     margin: 'auto'
   },
 
   button: {
-    margin: theme.spacing.unit
+    margin: theme.spacing(1)
   },
   grow: {
     flexGrow: 1
@@ -41,10 +41,10 @@ const styles = theme => ({
     color: 'inherit'
   },
   inputInput: {
-    paddingTop: 2 * theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit,
+    paddingTop: theme.spacing(2),
+    paddingRight: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    paddingLeft: theme.spacing(1),
     width: '100%'
   }
 });
@@ -60,7 +60,7 @@ class ReadingSearch extends Component {
         direction='column'
         justify='flex-start'
         alignItems='stretch'
-        spacing={16}
+        spacing={1}
       >
         <Grid item>
           <ReadingSearchBar

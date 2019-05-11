@@ -6,8 +6,13 @@ import {
 } from './speechRecognition/index';
 
 import { key as readingKey, reducer as readingReducer } from './reading/index';
+import {
+  key as readingMessageKey,
+  reducer as readingMessageReducer
+} from './readingMessage/index';
 
 export default combineReducers({
   [speechRecognitionKey]: speechRecognitionReducer,
-  [readingKey]: readingReducer
+  [readingKey]: readingReducer,
+  [readingMessageKey]: readingMessageReducer
 });

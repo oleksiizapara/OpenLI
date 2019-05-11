@@ -9,7 +9,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 
 const styles = theme => ({
   root: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     margin: 'auto'
   }
 });
@@ -19,7 +19,7 @@ class ReadingSearchItem extends Component {
     const { classes } = this.props;
     return (
       <Paper className={classes.root}>
-        <Grid container spacing={16}>
+        <Grid container spacing={1}>
           <Typography gutterBottom variant='h4'>
             Text Title 1
           </Typography>
@@ -37,12 +37,12 @@ class ReadingSearchItem extends Component {
 
           <Grid
             container
-            spacing={16}
+            spacing={1}
             direction='row'
             justify='space-between'
             alignItems='flex-start'
           >
-            <Grid item xs container direction='column' spacing={16}>
+            <Grid item xs container direction='column' spacing={1}>
               <Grid item xs />
             </Grid>
             <Grid item>

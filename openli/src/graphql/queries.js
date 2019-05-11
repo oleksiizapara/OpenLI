@@ -9,6 +9,7 @@ export const getUser = `query GetUser($id: ID!) {
       items {
         id
         authorId
+        title
         content
         createdAt
         updatedAt
@@ -52,6 +53,7 @@ export const getReadingMessage = `query GetReadingMessage($id: ID!) {
       updatedAt
     }
     authorId
+    title
     content
     createdAt
     updatedAt
@@ -73,6 +75,7 @@ export const listReadingMessages = `query ListReadingMessages(
         updatedAt
       }
       authorId
+      title
       content
       createdAt
       updatedAt

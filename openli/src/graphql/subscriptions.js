@@ -9,6 +9,7 @@ export const onCreateUser = `subscription OnCreateUser {
       items {
         id
         authorId
+        title
         content
         createdAt
         updatedAt
@@ -28,6 +29,7 @@ export const onUpdateUser = `subscription OnUpdateUser {
       items {
         id
         authorId
+        title
         content
         createdAt
         updatedAt
@@ -47,6 +49,7 @@ export const onDeleteUser = `subscription OnDeleteUser {
       items {
         id
         authorId
+        title
         content
         createdAt
         updatedAt
@@ -71,6 +74,7 @@ export const onCreateReadingMessage = `subscription OnCreateReadingMessage {
       updatedAt
     }
     authorId
+    title
     content
     createdAt
     updatedAt
@@ -90,6 +94,7 @@ export const onUpdateReadingMessage = `subscription OnUpdateReadingMessage {
       updatedAt
     }
     authorId
+    title
     content
     createdAt
     updatedAt
@@ -109,6 +114,7 @@ export const onDeleteReadingMessage = `subscription OnDeleteReadingMessage {
       updatedAt
     }
     authorId
+    title
     content
     createdAt
     updatedAt

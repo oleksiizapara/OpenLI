@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-// import './App.css';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -10,26 +9,26 @@ import { withAuthenticator } from 'aws-amplify-react';
 
 import configureStore from './configureStore';
 import Layout from './layout/Layout';
-// import { listen as authListen } from './hubs/authHub';
+
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 
 Amplify.configure(aws_exports);
 
 const store = configureStore();
 
-// authListen();
+const theme = createMuiTheme({});
 
 class App extends Component {
-  state = {
-    transcript: ''
-  };
-
   render() {
     return (
       <Router>
         <Provider store={store}>
-          <div className='App'>
-            <Layout />
-          </div>
+          <ThemeProvider theme={theme}>
+            <div className='App'>
+              <Layout />
+            </div>
+          </ThemeProvider>
         </Provider>
       </Router>
     );
