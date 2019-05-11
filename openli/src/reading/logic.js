@@ -1,30 +1,17 @@
-import { map } from 'rxjs/operators';
 import { createLogic } from 'redux-logic';
 import produce from 'immer';
 import Enumerable from 'linq';
 
-import {
-  key,
-  TEXT_UPDATED,
-  ACTIVE_STEP_UPDATED,
-  NEXT_STEP,
-  PREVIOUS_STEP,
-  WORDS_UPDATE_STARTED,
-  WORDS_UPDATE_FINISHED,
-  activeStepUpdated,
-  wordsUpdated,
-  statusUpdated
-} from './actions';
+import { actionTypes, actions } from './actions';
+
+import { selectors } from './reducer';
 
 import {
-  selectors as speechRecognitionSelectors,
-  FINAL_UPDATED,
-  INTERIM_UPDATED,
-  LISTENING_UPDATED,
+  actionTypes as speechRecognitionActionTypes,
   resetRecording
 } from '../speechRecognition/actions';
 
-import { selectors } from './reducer';
+import * as queryHelper from '../queryHelper';
 
 import {
   splitTextOnWords,
@@ -32,83 +19,27 @@ import {
   validateRecognizedWords
 } from './common';
 
-import { TEXT_LOADING_STATE, READING_STATE, REVIEW_STATE } from './actions';
-
-export const nextStep = createLogic({
-  type: NEXT_STEP,
-  latest: true, // take latest only
+export const loadWords = createLogic({
+  type: actionTypes.LOAD,
 
   processOptions: {
     dispatchReturn: true
   },
 
-  process({ getState }, dispatch, done) {
-    const currentActiveStep = getState()[key].activeStep;
+  async process({ action }, dispatch, done) {
+    const { id } = action.payload;
+    const readingMessage = await queryHelper.getReadingMessage(id);
+    dispatch(actions.updateReadingMessage(readingMessage));
 
-    switch (currentActiveStep) {
-      case TEXT_LOADING_STATE:
-        dispatch(activeStepUpdated(READING_STATE));
-        break;
-      case READING_STATE:
-        dispatch(activeStepUpdated(REVIEW_STATE));
-        break;
-      default:
-        dispatch(activeStepUpdated(TEXT_LOADING_STATE));
-    }
-
+    const words = splitTextOnWords(readingMessage.content);
+    dispatch(actions.updateWords(words));
+    dispatch(actions.loaded());
     done();
   }
 });
 
-export const previousStep = createLogic({
-  type: PREVIOUS_STEP,
-  latest: true, // take latest only
-
-  processOptions: {
-    dispatchReturn: true
-  },
-
-  process({ getState }, dispatch, done) {
-    const currentActiveStep = getState()[key].activeStep;
-
-    switch (currentActiveStep) {
-      case READING_STATE:
-        dispatch(activeStepUpdated(TEXT_LOADING_STATE));
-        break;
-      case REVIEW_STATE:
-        dispatch(activeStepUpdated(READING_STATE));
-        break;
-      default:
-        dispatch(activeStepUpdated(TEXT_LOADING_STATE));
-    }
-  }
-});
-
-export const updateWords = createLogic({
-  type: ACTIVE_STEP_UPDATED,
-  latest: true, // take latest only
-
-  processOptions: {
-    dispatchReturn: true
-  },
-
-  process({ getState }, dispatch, done) {
-    dispatch(statusUpdated(WORDS_UPDATE_STARTED));
-    const text = getState()[key].text;
-
-    if (text) {
-      const words = splitTextOnWords(text);
-
-      dispatch(wordsUpdated(words));
-      dispatch(statusUpdated(WORDS_UPDATE_FINISHED));
-      done();
-    }
-  }
-});
-
 export const recognitionFinalWords = createLogic({
-  type: FINAL_UPDATED,
-  latest: true, // take latest only
+  type: speechRecognitionActionTypes.FINAL_UPDATED,
 
   processOptions: {
     dispatchReturn: true
@@ -156,7 +87,7 @@ export const recognitionFinalWords = createLogic({
     });
 
     if (normalizedRecognisedWordIndexes.length > 0) {
-      dispatch(wordsUpdated(updatedWords));
+      dispatch(actions.updateWords(updatedWords));
     }
 
     done();
@@ -164,8 +95,7 @@ export const recognitionFinalWords = createLogic({
 });
 
 export const recognitionInterimWords = createLogic({
-  type: INTERIM_UPDATED,
-  latest: true, // take latest only
+  type: speechRecognitionActionTypes.INTERIM_UPDATED,
 
   processOptions: {
     dispatchReturn: true
@@ -225,16 +155,10 @@ export const recognitionInterimWords = createLogic({
     });
 
     if (isWordsChanged) {
-      dispatch(wordsUpdated(updatedWords));
+      dispatch(actions.wordsUpdated(updatedWords));
     }
     done();
   }
 });
 
-export default [
-  nextStep,
-  previousStep,
-  updateWords,
-  recognitionFinalWords,
-  recognitionInterimWords
-];
+export default [loadWords, recognitionFinalWords, recognitionInterimWords];

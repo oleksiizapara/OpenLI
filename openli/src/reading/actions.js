@@ -1,84 +1,79 @@
-// unique key namespace used by combineReducers.
-// By convention it will match the directory structure to
-// make it easy to locate the src.
-// Also action types will prefix with the capitalized version
 export const key = 'reading';
 
-// action type constants
-export const ACTIVE_STEP_UPDATED = '[reading] ACTIVE_STEP_UPDATED';
-export const NEXT_STEP = '[reading] NEXT_STEP';
-export const PREVIOUS_STEP = '[reading] PREVIOUS_STEP';
-
-export const TEXT_UPDATED = '[reading] TEXT_UPDATED';
-export const WORDS_UPDATED = '[reading] WORDS_UPDATED';
-export const WORDS_UPDATE_STARTED = '[reading] WORDS_UPDATE_STARTED';
-export const WORDS_UPDATE_FINISHED = '[reading] WORDS_UPDATE_FINISHED';
-
-// wizard form state
-export const TEXT_LOADING_STATE = 'TEXT_LOADING_STATE';
-export const READING_STATE = 'READING_STATE';
-export const REVIEW_STATE = 'REVIEW_STATE';
+export const LOAD = `[${key}] LOAD`;
+export const LOADED = `[${key}] LOADED`;
+export const REVIEW = `[${key}] REVIEW`;
+export const ERROR = `[${key}] ERROR`;
+export const UPDATE_READING_MESSAGE = `[${key}] UPDATE_READING_MESSAGE`;
+export const UPDATE_WORDS = `[${key}] UPDATE_WORDS`;
 
 export const actionTypes = {
-  ACTIVE_STEP_UPDATED,
-  NEXT_STEP,
-  PREVIOUS_STEP,
-  TEXT_UPDATED,
-  WORDS_UPDATED,
-  WORDS_UPDATE_STARTED,
-  WORDS_UPDATE_FINISHED
+  LOAD,
+  LOADED,
+  REVIEW,
+  ERROR,
+  UPDATE_READING_MESSAGE,
+  UPDATE_WORDS
 };
 
-// action creators
-export const textUpdated = text => ({
-  type: TEXT_UPDATED,
+export const DEFAULT_STATE = 'DEFAULT_STATE';
+export const LOADING_STATE = 'LOADING_STATE';
+export const LOADED_STATE = 'LOADED_STATE';
+export const READING_STATE = 'READING_STATE';
+export const REVIEW_STATE = 'REVIEW_STATE';
+export const ERROR_STATE = 'ERROR_STATE';
+
+export const formStates = {
+  DEFAULT_STATE,
+  LOADING_STATE,
+  LOADED_STATE,
+  READING_STATE,
+  ERROR_STATE
+};
+
+export const load = id => ({
+  type: actionTypes.LOAD,
   payload: {
-    text
+    id
   }
 });
 
-export const activeStepUpdated = activeStep => ({
-  type: ACTIVE_STEP_UPDATED,
+export const loaded = () => ({
+  type: actionTypes.LOADED,
+  payload: {}
+});
+
+export const review = () => ({
+  type: actionTypes.REVIEW,
+  payload: {}
+});
+
+export const error = error => ({
+  type: actionTypes.ERROR,
   payload: {
-    activeStep
+    error
   }
 });
 
-export const nextStep = () => ({
-  type: NEXT_STEP,
-  payload: {}
+export const updateReadingMessage = readingMessage => ({
+  type: actionTypes.UPDATE_READING_MESSAGE,
+  payload: {
+    readingMessage
+  }
 });
 
-export const previousStep = () => ({
-  type: PREVIOUS_STEP,
-  payload: {}
-});
-
-export const wordsUpdated = words => ({
-  type: WORDS_UPDATED,
+export const updateWords = words => ({
+  type: actionTypes.UPDATE_WORDS,
   payload: {
     words
   }
 });
 
-export const statusUpdated = type => ({
-  type: type,
-  payload: {}
-});
-
-export const readingMessageUpdated = message => ({
-  type: TEXT_UPDATED,
-  payload: {
-    message
-  }
-});
-
 export const actions = {
-  textUpdated,
-  activeStepUpdated,
-  nextStep,
-  previousStep,
-  wordsUpdated,
-  statusUpdated,
-  readingMessageUpdated
+  load,
+  loaded,
+  review,
+  error,
+  updateReadingMessage,
+  updateWords
 };

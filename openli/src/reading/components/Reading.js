@@ -1,103 +1,59 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import useReactRouter from 'use-react-router';
 
-import Tooltip from '@material-ui/core/Tooltip';
-
-import { getReadingMessage } from '../../queryHelper';
-import { selectors as readingSelector } from './../reducer';
-import { selectors as speechRecognitionSelector } from '../../speechRecognition/reducer';
 import { getTooltipWordIndex } from '../common';
-import { readingMessageUpdated } from '../actions';
+import { actions } from '../actions';
+import { selectors } from '../reducer';
+import { selectors as speachRecognitionSelectors } from '../../speechRecognition/reducer';
 
-class Reading extends Component {
-  async componentDidMount() {
-    const {
-      match: { params }
-    } = this.props;
+import Word from './Word';
+import { formStates } from '../../readingMessage/actions';
 
-    const message = await getReadingMessage(params.id);
-    this.props.dispatch(readingMessageUpdated(message.content));
-  }
+export default function Reading() {
+  const dispatch = useDispatch();
+  const { match } = useReactRouter();
 
-  render() {
-    const words = this.props.words;
-    const interimTranscript = this.props.interimTranscript;
-    const finalTranscript = this.props.finalTranscript;
-    const toolTipWordIndex = getTooltipWordIndex(this.props.words);
+  useEffect(() => {
+    dispatch(actions.load(match.params.id));
+  }, [dispatch, match.params.id]);
 
-    return (
-      <React.Fragment>
-        {words.map(word => (
-          <Word
-            key={word.index}
-            word={word}
-            toolTipWordIndex={toolTipWordIndex}
-            interimTranscript={interimTranscript}
-            finalTranscript={finalTranscript}
-          />
-        ))}
+  const formState = useSelector(state => selectors.formState(state));
 
-        <br />
-        <br />
-        <p>Final Transcript : {this.props.finalTranscript}</p>
-        <br />
-        <p>Interim Transcript : {this.props.interimTranscript}</p>
-      </React.Fragment>
-    );
-  }
-}
-
-function Word({ word, toolTipWordIndex, interimTranscript, finalTranscript }) {
-  const newLineRegularExpression = new RegExp('\n');
-  var open = true;
-
-  return (
-    <React.Fragment>
-      {word.index === toolTipWordIndex ? (
-        <Tooltip
-          title={
-            <React.Fragment>
-              <span color='fff'>{finalTranscript}</span>
-              <br />
-              <span color='000'>{interimTranscript}</span>
-            </React.Fragment>
-          }
-          open={open}
-          placement='top-start'
-        >
-          <WordInner word={word} />
-        </Tooltip>
-      ) : (
-        <WordInner word={word} />
-      )}
-    </React.Fragment>
+  const words = useSelector(state => selectors.words(state));
+  const interimTranscript = useSelector(state =>
+    speachRecognitionSelectors.interimTranscript(state)
   );
-}
+  const finalTranscript = useSelector(state =>
+    speachRecognitionSelectors.finalTranscript(state)
+  );
 
-function WordInner({ word }) {
-  var style = {
-    color: '#212121'
-  };
+  const toolTipWordIndex = getTooltipWordIndex(words);
 
-  if (word.isInterimRecognised) {
-    style['color'] = '#00a152';
+  switch (formState) {
+    case formStates.LOADING_STATE:
+      return <div>Loading ...</div>;
+    case formStates.LOADED_STATE:
+      return (
+        <>
+          {words.map(word => (
+            <Word
+              key={word.index}
+              word={word}
+              toolTipWordIndex={toolTipWordIndex}
+              interimTranscript={interimTranscript}
+              finalTranscript={finalTranscript}
+            />
+          ))}
+
+          <br />
+          <br />
+          <p>Final Transcript : {finalTranscript}</p>
+          <br />
+          <p>Interim Transcript : {interimTranscript}</p>
+        </>
+      );
+    default:
+      return <div>error</div>;
   }
-
-  if (word.isFinalRecognised) {
-    style['color'] = '#4615b2';
-  }
-
-  return <span style={style}>{word.viewWord}</span>;
 }
-
-function mapStateToProps(state) {
-  return {
-    ...state,
-    words: readingSelector.words(state),
-    finalTranscript: speechRecognitionSelector.finalTranscript(state),
-    interimTranscript: speechRecognitionSelector.interimTranscript(state)
-  };
-}
-
-export default withRouter(connect(mapStateToProps)(Reading));

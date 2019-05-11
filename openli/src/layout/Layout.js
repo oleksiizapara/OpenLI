@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import classNames from 'classnames';
+
 import { withStyles } from '@material-ui/core/styles';
+
+import SpeechRecognition from '../speechRecognition/component';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -111,8 +116,7 @@ const routes = [
     exact: true,
     title: () => 'Home',
     icon: 'home',
-    main: () => <h2>Home</h2>,
-    toolbar: () => <Home />
+    main: () => <h2>Home</h2>
   },
   {
     path: '/readingSearch',
@@ -145,7 +149,8 @@ const routes = [
     main: () => {
       const WrappedComponent = contentWrapper(Reading);
       return <WrappedComponent />;
-    }
+    },
+    toolbar: () => <SpeechRecognition />
   }
 ];
 

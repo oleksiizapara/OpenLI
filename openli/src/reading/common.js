@@ -23,7 +23,7 @@ export const splitTextOnWords = text => {
   return [];
 };
 
-export const recogniseWords = (words, possibleRecognisedWords, settings) => {
+export const recogniseWords = (words, possibleRecognisedWords) => {
   const possibleRecognisedWordDictionary = Enumerable.from(
     possibleRecognisedWords
   )
@@ -65,6 +65,7 @@ export const validateRecognizedWords = recognisedWords => {
     .count();
 
   const allUnrecognizedWords = Enumerable.from(recognisedWords)
+    // eslint-disable-next-line no-unused-vars
     .select(x => -1)
     .toArray();
 

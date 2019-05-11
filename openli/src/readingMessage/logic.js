@@ -1,4 +1,4 @@
-import { key, actionTypes, actions } from './actions';
+import { actionTypes, actions } from './actions';
 
 import { createLogic } from 'redux-logic';
 
@@ -13,7 +13,7 @@ export const loadingReadingMessage = createLogic({
     dispatchReturn: true
   },
 
-  async process({ getState, action }, dispatch, done) {
+  async process({ action }, dispatch, done) {
     const { id } = action.payload;
 
     const readingMessage = await queryHelper.getReadingMessage(id);
@@ -31,27 +31,23 @@ export const publishReadingMessage = createLogic({
     dispatchReturn: true
   },
 
-  async process({ getState, action }, dispatch, done) {
-    try {
-      const { readingMessage } = action.payload;
+  async process({ action }, dispatch, done) {
+    const { readingMessage } = action.payload;
 
-      if ('id' in readingMessage) {
-        const readingMessage = await mutationHelper.updateReadingMessage(
-          readingMessage
-        );
+    if (readingMessage.id !== '') {
+      const newReadingMessage = await mutationHelper.updateReadingMessage(
+        readingMessage
+      );
 
-        dispatch(actions.published(readingMessage));
-      } else {
-        const newReadingMessage = await mutationHelper.createReadingMessage(
-          readingMessage
-        );
+      dispatch(actions.published(newReadingMessage));
+    } else {
+      const newReadingMessage = await mutationHelper.createReadingMessage(
+        readingMessage
+      );
 
-        dispatch(actions.published(newReadingMessage));
-      }
-      done();
-    } catch (e) {
-      console.log(e);
+      dispatch(actions.published(newReadingMessage));
     }
+    done();
   }
 });
 

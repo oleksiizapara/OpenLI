@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import useReactRouter from 'use-react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 

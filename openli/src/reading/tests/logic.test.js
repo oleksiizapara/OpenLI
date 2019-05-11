@@ -14,7 +14,6 @@ import reducer from '../../rootReducer';
 import logic from '../logic';
 import { selectors } from '../reducer';
 import { selectors as speechRecognitionSelector } from '../../speechRecognition/reducer';
-import { getTooltipWordIndex } from '../common';
 
 describe.each([
   [TEXT_LOADING_STATE, READING_STATE],
@@ -292,7 +291,7 @@ describe.each([
     ],
     'a b c d l k'
   ]
-])('[redux-logic] resetRecording', (baseWords, interimText, expectedWords) => {
+])('[redux-logic] resetRecording', (baseWords, interimText) => {
   test(`[redux-logic] resetRecording `, () => {
     const initialState = {
       [key]: {
