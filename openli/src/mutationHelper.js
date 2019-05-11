@@ -1,4 +1,4 @@
-import * as mutations from './graphql/mutations';
+import * as mutations from './graphql_custom/mutations';
 import { graphqlOperation, Analytics, API } from 'aws-amplify';
 
 const assertErrors = response => {
@@ -27,6 +27,7 @@ export const createUser = async user => {
 
 export const createReadingMessage = async message => {
   try {
+    console.log(message);
     const response = await API.graphql(
       graphqlOperation(mutations.createReadingMessage, { input: message })
     );

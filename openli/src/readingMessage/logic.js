@@ -32,23 +32,25 @@ export const publishReadingMessage = createLogic({
   },
 
   async process({ getState, action }, dispatch, done) {
-    const { readingMessage } = action.payload;
-    const { id } = readingMessage;
+    try {
+      const { readingMessage } = action.payload;
 
-    if (id) {
-      const readingMessage = mutationHelper.updateReadingMessage(
-        readingMessage
-      );
+      if ('id' in readingMessage) {
+        const readingMessage = await mutationHelper.updateReadingMessage(
+          readingMessage
+        );
 
-      dispatch(actions.published(readingMessage));
+        dispatch(actions.published(readingMessage));
+      } else {
+        const newReadingMessage = await mutationHelper.createReadingMessage(
+          readingMessage
+        );
+
+        dispatch(actions.published(newReadingMessage));
+      }
       done();
-    } else {
-      const readingMessage = mutationHelper.createReadingMessage(
-        readingMessage
-      );
-
-      dispatch(actions.published(readingMessage));
-      done();
+    } catch (e) {
+      console.log(e);
     }
   }
 });

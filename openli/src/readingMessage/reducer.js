@@ -12,10 +12,9 @@ export const selectors = {
 
 const initialReadingMessage = () => {
   return {
-    id: '',
     title: '',
-    content: '',
-    tags: ''
+    content: ''
+    // tags: ''
   };
 };
 

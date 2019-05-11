@@ -89,7 +89,7 @@ export default function Form(props) {
               component={TextField}
             />
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <Field
               id='tags'
               name='tags'
@@ -98,7 +98,7 @@ export default function Form(props) {
               autoComplete='new_reading_message tags'
               component={TextField}
             />
-          </Grid>
+          </Grid> */}
           <Grid item sm={6} xs={12}>
             {/* <FormControl className={classes.formControl}>
               <InputLabel htmlFor='shared-status'>Shared Status</InputLabel>
