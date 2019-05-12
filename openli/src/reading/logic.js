@@ -9,10 +9,10 @@ import { selectors } from './reducer';
 import {
   actionTypes as speechRecognitionActionTypes,
   resetRecording
-} from '../speechRecognition/actions';
+} from 'speechRecognition/actions';
 
-import * as queryHelper from '../queryHelper';
-import { errorMessages } from '../errorMessages';
+import * as queryHelper from 'common/queryHelper';
+import { errorMessages } from 'common/errorMessages';
 
 import {
   splitTextOnWords,

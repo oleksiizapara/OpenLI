@@ -1,4 +1,4 @@
-import * as mutations from './graphql_custom/mutations';
+import * as mutations from 'graphql_custom/mutations';
 import { graphqlOperation, Analytics, API } from 'aws-amplify';
 
 const assertErrors = response => {

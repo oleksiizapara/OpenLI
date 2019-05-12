@@ -24,12 +24,12 @@ import { ListItem, ListItemText, ListItemIcon } from '@material-ui/core';
 
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-import Reading from '../reading/components/Reading';
+import Reading from 'reading/components/Reading';
 import UserProfile from './UserProfile';
 import Home from './Home.js';
-import ReadingSearch from '../readingSearch/components/ReadingSearch';
-import ReadingAdd from '../readingMessage/components/Add';
-import ReadingEdit from '../readingMessage/components/Edit';
+import ReadingSearch from 'readingSearch/components/ReadingSearch';
+import ReadingAdd from 'readingMessage/components/Add';
+import ReadingEdit from 'readingMessage/components/Edit';
 import { contentWrapper } from './contentWrapper';
 const drawerWidth = 240;
 

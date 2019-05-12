@@ -2,10 +2,10 @@ import { actionTypes, actions } from './actions';
 
 import { createLogic } from 'redux-logic';
 
-import * as queryHelper from '../queryHelper';
-import * as mutationHelper from '../mutationHelper';
+import * as queryHelper from 'common/queryHelper';
+import * as mutationHelper from 'common/mutationHelper';
 
-import { errorMessages } from '../errorMessages';
+import { errorMessages } from 'common/errorMessages';
 
 export const loadingReadingMessage = createLogic({
   type: actionTypes.LOAD,

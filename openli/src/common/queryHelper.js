@@ -1,5 +1,5 @@
-import * as queries from './graphql/queries';
-import * as customQueries from './graphql_custom/queries';
+import * as queries from 'graphql/queries';
+import * as customQueries from 'graphql_custom/queries';
 
 import { graphqlOperation, Analytics, API } from 'aws-amplify';
 

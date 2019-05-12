@@ -4,12 +4,12 @@ import { key, actions, formStates } from '../actions';
 import { selectors } from '../reducer';
 import logic from '../logic';
 
-import { actions as speechRecognitionActions } from '../../speechRecognition/actions';
-import reducer from '../../rootReducer';
-import { selectors as speechRecognitionSelector } from '../../speechRecognition/reducer';
+import { actions as speechRecognitionActions } from 'speechRecognition/actions';
+import reducer from 'rootReducer';
+import { selectors as speechRecognitionSelector } from 'speechRecognition/reducer';
 
-import * as queryHelper from '../../queryHelper';
-import { errorMessages } from '../../errorMessages';
+import * as queryHelper from 'common/queryHelper';
+import { errorMessages } from 'common/errorMessages';
 
 test(`[redux-logic] load words`, async () => {
   queryHelper.getReadingMessage = jest.fn().mockResolvedValue({

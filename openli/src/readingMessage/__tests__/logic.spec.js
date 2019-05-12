@@ -4,10 +4,10 @@ import { key, actions, formStates } from '../actions';
 import { selectors } from '../reducer';
 import logic from '../logic';
 
-import reducer from '../../rootReducer';
-import * as queryHelper from '../../queryHelper';
-import * as mutationHelper from '../../mutationHelper';
-import { errorMessages } from '../../errorMessages';
+import reducer from 'rootReducer';
+import * as queryHelper from 'common/queryHelper';
+import * as mutationHelper from 'common/mutationHelper';
+import { errorMessages } from 'common/errorMessages';
 
 describe.each([
   [
