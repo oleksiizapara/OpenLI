@@ -10,6 +10,7 @@ import { selectors as speechRecognitionSelector } from 'speechRecognition/reduce
 
 import * as queryHelper from 'common/queryHelper';
 import { errorMessages } from 'common/errorMessages';
+import { date } from 'common/date';
 
 test(`[redux-logic] load words`, async () => {
   queryHelper.getReadingMessage = jest.fn().mockResolvedValue({
@@ -34,14 +35,14 @@ test(`[redux-logic] load words`, async () => {
 
   await store.whenComplete(() => {
     const words = selectors.words(store.getState());
-    expect(words[0]).toEqual({
+    expect(words[0]).toMatchObject({
       index: 0,
       word: 'a',
       viewWord: 'a ',
       afterWord: ' ',
       preWord: ''
     });
-    expect(words[1]).toEqual({
+    expect(words[1]).toMatchObject({
       index: 1,
       word: 'b',
       viewWord: 'b',
@@ -203,7 +204,7 @@ describe.each([
 
       await store.whenComplete(() => {
         const words = selectors.words(store.getState());
-        expect(words).toEqual(expectedWords);
+        expect(words).toMatchObject(expectedWords);
       });
     });
   }
@@ -249,7 +250,7 @@ describe.each([
 
       await store.whenComplete(() => {
         const words = selectors.words(store.getState());
-        expect(words).toEqual(expectedWords);
+        expect(words).toMatchObject(expectedWords);
       });
     });
   }
@@ -289,5 +290,97 @@ describe.each([
       );
       expect(interimText).toEqual('');
     });
+  });
+});
+
+test(`[redux-logic] UTCTime added on final recognised words `, async () => {
+  const initialState = {
+    [key]: {
+      words: [{ index: 0, word: 'a' }]
+    }
+  };
+
+  const store = createMockStore({
+    initialState,
+    reducer,
+    logic
+  });
+
+  date.getUTCtime = jest.fn(() => 1);
+
+  store.dispatch(speechRecognitionActions.finalUpdated('a'));
+
+  await store.whenComplete(() => {
+    const words = selectors.words(store.getState());
+    expect(words[0]).toMatchObject({ index: 0, word: 'a', time: 1 });
+  });
+});
+
+test(`[redux-logic] UTCTime will not updated on final recognised words`, async () => {
+  const initialState = {
+    [key]: {
+      words: [{ index: 0, word: 'a', time: 1 }]
+    }
+  };
+
+  const store = createMockStore({
+    initialState,
+    reducer,
+    logic
+  });
+
+  date.getUTCtime = jest.fn(() => 2);
+
+  store.dispatch(speechRecognitionActions.finalUpdated('a'));
+
+  await store.whenComplete(() => {
+    const words = selectors.words(store.getState());
+    expect(words[0]).toMatchObject({ index: 0, word: 'a', time: 1 });
+  });
+});
+
+test(`[redux-logic] UTCTime added on interim recognised words `, async () => {
+  const initialState = {
+    [key]: {
+      words: [{ index: 0, word: 'a' }]
+    }
+  };
+
+  const store = createMockStore({
+    initialState,
+    reducer,
+    logic
+  });
+
+  date.getUTCtime = jest.fn(() => 1);
+
+  store.dispatch(speechRecognitionActions.interimUpdated('a'));
+
+  await store.whenComplete(() => {
+    const words = selectors.words(store.getState());
+    expect(words[0]).toMatchObject({ index: 0, word: 'a', time: 1 });
+  });
+});
+
+test(`[redux-logic] UTCTime will not updated on interim recognised words `, async () => {
+  const initialState = {
+    [key]: {
+      words: [{ index: 0, word: 'a', time: 1 }]
+    }
+  };
+
+  const store = createMockStore({
+    initialState,
+    reducer,
+    logic
+  });
+
+  date.getUTCtime = jest.fn(() => 2);
+
+  store.dispatch(speechRecognitionActions.interimUpdated('a'));
+
+  await store.whenComplete(() => {
+    const words = selectors.words(store.getState());
+    expect(words[0]).toMatchObject({ index: 0, word: 'a', time: 1 });
   });
 });

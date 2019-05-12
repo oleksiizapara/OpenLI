@@ -13,6 +13,7 @@ import {
 
 import * as queryHelper from 'common/queryHelper';
 import { errorMessages } from 'common/errorMessages';
+import { date } from 'common/date';
 
 import {
   splitTextOnWords,
@@ -91,6 +92,10 @@ export const recognitionFinalWords = createLogic({
     const updatedWords = produce(words, draft => {
       normalizedRecognisedWordIndexes.forEach(x => {
         draft[x].isFinalRecognised = true;
+
+        if (!('time' in draft[x])) {
+          draft[x].time = date.getUTCtime();
+        }
       });
     });
 
@@ -157,6 +162,11 @@ export const recognitionInterimWords = createLogic({
       normalizedRecognisedWordIndexes.forEach(x => {
         if (!draft[x].isInterimRecognised) {
           draft[x].isInterimRecognised = true;
+
+          if (!('time' in draft[x])) {
+            draft[x].time = date.getUTCtime();
+          }
+
           isWordsChanged = true;
         }
       });
