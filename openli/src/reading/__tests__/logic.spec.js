@@ -49,10 +49,10 @@ test(`[redux-logic] load words`, async () => {
       afterWord: '',
       preWord: ''
     });
-  });
 
-  const formState = selectors.formState(store.getState());
-  expect(formState).toEqual(formStates.LOADED_STATE);
+    const formState = selectors.formState(store.getState());
+    expect(formState).toEqual(formStates.LOADED_STATE);
+  });
 });
 
 test(`[redux-logic] api return exception`, async () => {
