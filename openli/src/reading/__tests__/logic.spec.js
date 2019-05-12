@@ -384,3 +384,67 @@ test(`[redux-logic] UTCTime will not updated on interim recognised words `, asyn
     expect(words[0]).toMatchObject({ index: 0, word: 'a', time: 1 });
   });
 });
+
+describe.each([
+  [
+    [{ index: 0, word: 'a' }],
+    'b',
+    [
+      {
+        index: 0,
+        word: 'a',
+        isNotRecognisedCount: 1
+      }
+    ]
+  ],
+  [
+    [{ index: 0, word: 'a', isNotRecognisedCount: 1 }],
+    'b',
+    [
+      {
+        index: 0,
+        word: 'a',
+        isNotRecognisedCount: 2
+      }
+    ]
+  ],
+  [
+    [{ index: 0, word: 'a', isFinalRecognised: true }, { index: 1, word: 'c' }],
+    'b',
+    [
+      {
+        index: 0,
+        word: 'a'
+      },
+      {
+        index: 1,
+        word: 'c',
+        isNotRecognisedCount: 1
+      }
+    ]
+  ]
+])(
+  '[redux-logic] isNotRecognisedCount will be updated',
+  (baseWords, finalText, expectedWords) => {
+    test(`[redux-logic] isNotRecognisedCount will be updated on final recognised words`, async () => {
+      const initialState = {
+        [key]: {
+          words: baseWords
+        }
+      };
+
+      const store = createMockStore({
+        initialState,
+        reducer,
+        logic
+      });
+
+      store.dispatch(speechRecognitionActions.finalUpdated(finalText));
+
+      await store.whenComplete(() => {
+        const words = selectors.words(store.getState());
+        expect(words).toMatchObject(expectedWords);
+      });
+    });
+  }
+);

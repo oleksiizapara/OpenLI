@@ -18,7 +18,8 @@ import { date } from 'common/date';
 import {
   splitTextOnWords,
   recogniseWords,
-  validateRecognizedWords
+  validateRecognizedWords,
+  calculateNotRecognisedWords
 } from './common';
 
 export const loadWords = createLogic({
@@ -89,6 +90,11 @@ export const recognitionFinalWords = createLogic({
       .where(x => x !== -1)
       .toArray();
 
+    const notRecognisedWordIndexes = calculateNotRecognisedWords(
+      testedWords,
+      recognisedWordIndexes
+    );
+
     const updatedWords = produce(words, draft => {
       normalizedRecognisedWordIndexes.forEach(x => {
         draft[x].isFinalRecognised = true;
@@ -97,9 +103,20 @@ export const recognitionFinalWords = createLogic({
           draft[x].time = date.getUTCtime();
         }
       });
+
+      notRecognisedWordIndexes.forEach(x => {
+        if (!('isNotRecognisedCount' in draft[x])) {
+          draft[x].isNotRecognisedCount = 1;
+        } else {
+          draft[x].isNotRecognisedCount++;
+        }
+      });
     });
 
-    if (normalizedRecognisedWordIndexes.length > 0) {
+    if (
+      normalizedRecognisedWordIndexes.length > 0 ||
+      notRecognisedWordIndexes.length > 0
+    ) {
       dispatch(actions.updateWords(updatedWords));
     }
 

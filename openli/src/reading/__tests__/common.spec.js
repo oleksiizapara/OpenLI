@@ -2,7 +2,8 @@ import {
   splitTextOnWords,
   recogniseWords,
   validateRecognizedWords,
-  getTooltipWordIndex
+  getTooltipWordIndex,
+  calculateNotRecognisedWords
 } from '../common';
 
 describe.each([
@@ -142,3 +143,28 @@ describe.each([
     expect(index).toEqual(expectedIndex);
   });
 });
+
+describe.each([
+  [[], [], []],
+  [[], [-1], []],
+  [[{ word: 'a', index: 0 }], [-1], [0]],
+
+  [[{ word: 'a', index: 99 }], [-1], [99]],
+
+  [[{ word: 'a', index: 2 }], [2], []]
+])(
+  `[redux-logic] calculateNotRecognisedWords`,
+  (words, recognisedWordIndexes, notRecognisedWordIndexes) => {
+    test(`[redux-logic] calculateNotRecognisedWords words : ${JSON.stringify(
+      words
+    )}`, () => {
+      const calculatedNotRecognisedWordIndexes = calculateNotRecognisedWords(
+        words,
+        recognisedWordIndexes
+      );
+      expect(calculatedNotRecognisedWordIndexes).toEqual(
+        notRecognisedWordIndexes
+      );
+    });
+  }
+);

@@ -106,3 +106,11 @@ export const getTooltipWordIndex = words => {
 
   return index;
 };
+
+export const calculateNotRecognisedWords = (words, recognisedWordIndexes) => {
+  return words.length > 0 &&
+    recognisedWordIndexes.length > 0 &&
+    recognisedWordIndexes[0] === -1
+    ? [words[0].index]
+    : [];
+};
