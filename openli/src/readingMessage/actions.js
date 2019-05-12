@@ -75,9 +75,11 @@ export const published = readingMessage => ({
   }
 });
 
-export const error = () => ({
+export const error = error => ({
   type: ERROR,
-  payload: {}
+  payload: {
+    error
+  }
 });
 
 export const actions = {

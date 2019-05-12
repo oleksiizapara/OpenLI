@@ -2,10 +2,9 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import useReactRouter from 'use-react-router';
 
-import { getTooltipWordIndex } from '../common';
 import { actions } from '../actions';
 import { selectors } from '../reducer';
-import { selectors as speachRecognitionSelectors } from '../../speechRecognition/reducer';
+import { selectors as speechRecognitionSelectors } from '../../speechRecognition/reducer';
 
 import Word from './Word';
 import { formStates } from '../../readingMessage/actions';
@@ -22,13 +21,11 @@ export default function Reading() {
 
   const words = useSelector(state => selectors.words(state));
   const interimTranscript = useSelector(state =>
-    speachRecognitionSelectors.interimTranscript(state)
+    speechRecognitionSelectors.interimTranscript(state)
   );
   const finalTranscript = useSelector(state =>
-    speachRecognitionSelectors.finalTranscript(state)
+    speechRecognitionSelectors.finalTranscript(state)
   );
-
-  const toolTipWordIndex = getTooltipWordIndex(words);
 
   switch (formState) {
     case formStates.LOADING_STATE:
@@ -40,7 +37,6 @@ export default function Reading() {
             <Word
               key={word.index}
               word={word}
-              toolTipWordIndex={toolTipWordIndex}
               interimTranscript={interimTranscript}
               finalTranscript={finalTranscript}
             />

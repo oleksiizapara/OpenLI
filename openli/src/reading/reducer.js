@@ -5,7 +5,8 @@ import produce from 'immer';
 export const selectors = {
   readingMessage: state => state[key].readingMessage,
   formState: state => state[key].formState,
-  words: state => state[key].words
+  words: state => state[key].words,
+  error: state => state[key].error
 };
 
 const initialState = {
@@ -32,6 +33,7 @@ export default function(state = initialState, action) {
         break;
       case actionTypes.ERROR:
         draft.error = action.payload.error;
+        draft.formState = formStates.ERROR_STATE;
         break;
     }
   });

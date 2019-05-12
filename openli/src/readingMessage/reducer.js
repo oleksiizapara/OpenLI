@@ -7,7 +7,8 @@ export const selectors = {
   identifier: state => state[key].identifier,
   id: state => state[key].id,
   readingMessage: state => state[key].readingMessage,
-  formState: state => state[key].formState
+  formState: state => state[key].formState,
+  error: state => state[key].error
 };
 
 const initialReadingMessage = () => {
@@ -23,7 +24,8 @@ const initialState = {
   identifier: uuid(),
   id: '',
   readingMessage: initialReadingMessage(),
-  formState: formStates.DEFAULT_STATE
+  formState: formStates.DEFAULT_STATE,
+  error: ''
 };
 
 export default function(state = initialState, action) {
@@ -56,6 +58,7 @@ export default function(state = initialState, action) {
         break;
       case actionTypes.ERROR:
         draft.formState = formStates.ERROR_STATE;
+        draft.error = action.payload.error;
         break;
     }
   });

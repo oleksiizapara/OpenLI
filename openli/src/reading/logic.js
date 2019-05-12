@@ -12,6 +12,7 @@ import {
 } from '../speechRecognition/actions';
 
 import * as queryHelper from '../queryHelper';
+import { errorMessages } from '../errorMessages';
 
 import {
   splitTextOnWords,
@@ -29,6 +30,13 @@ export const loadWords = createLogic({
   async process({ action }, dispatch, done) {
     const { id } = action.payload;
     const readingMessage = await queryHelper.getReadingMessage(id);
+
+    if (!readingMessage) {
+      dispatch(actions.error(errorMessages.READING_MESSAGE_WAS_NOT_FOUND));
+      done();
+      return;
+    }
+
     dispatch(actions.updateReadingMessage(readingMessage));
 
     const words = splitTextOnWords(readingMessage.content);
@@ -155,7 +163,7 @@ export const recognitionInterimWords = createLogic({
     });
 
     if (isWordsChanged) {
-      dispatch(actions.wordsUpdated(updatedWords));
+      dispatch(actions.updateWords(updatedWords));
     }
     done();
   }

@@ -1,81 +1,25 @@
 import { createMockStore } from 'redux-logic-test';
 
-import {
-  key,
-  TEXT_LOADING_STATE,
-  READING_STATE,
-  REVIEW_STATE,
-  previousStep
-} from '../actions';
-
-import { finalUpdated, interimUpdated } from '../../speechRecognition/actions';
-import { nextStep, activeStepUpdated } from '../actions';
-import reducer from '../../rootReducer';
-import logic from '../logic';
+import { key, actions, formStates } from '../actions';
 import { selectors } from '../reducer';
+import logic from '../logic';
+
+import { actions as speechRecognitionActions } from '../../speechRecognition/actions';
+import reducer from '../../rootReducer';
 import { selectors as speechRecognitionSelector } from '../../speechRecognition/reducer';
 
-describe.each([
-  [TEXT_LOADING_STATE, READING_STATE],
-  [READING_STATE, REVIEW_STATE],
-  ['INVALID_STATE', TEXT_LOADING_STATE]
-])('.next(%i, %i)', (initialActiveState, expectedActiveState) => {
-  test(`[redux-logic] nextStep switch from ${initialActiveState} to ${expectedActiveState}`, () => {
-    const initialState = {
-      [key]: {
-        activeStep: initialActiveState
-      }
-    };
+import * as queryHelper from '../../queryHelper';
+import { errorMessages } from '../../errorMessages';
 
-    const store = createMockStore({
-      initialState,
-      reducer,
-      logic
-    });
-
-    store.dispatch(nextStep());
-
-    store.whenComplete(() => {
-      expect(selectors.activeStep(store.getState())).toEqual(
-        expectedActiveState
-      );
-    });
+test(`[redux-logic] load words`, async () => {
+  queryHelper.getReadingMessage = jest.fn().mockResolvedValue({
+    content: 'a b'
   });
-});
 
-describe.each([
-  [TEXT_LOADING_STATE, TEXT_LOADING_STATE],
-  [READING_STATE, TEXT_LOADING_STATE],
-  [REVIEW_STATE, READING_STATE],
-  ['INVALID_STATE', TEXT_LOADING_STATE]
-])('.previous(%i, %i)', (initialActiveState, expectedActiveState) => {
-  test(`[redux-logic] previousStep switch from ${initialActiveState} to ${expectedActiveState}`, () => {
-    const initialState = {
-      [key]: {
-        activeStep: initialActiveState
-      }
-    };
-
-    const store = createMockStore({
-      initialState,
-      reducer,
-      logic
-    });
-
-    store.dispatch(previousStep());
-
-    store.whenComplete(() => {
-      expect(selectors.activeStep(store.getState())).toEqual(
-        expectedActiveState
-      );
-    });
-  });
-});
-
-test(`[redux-logic] updateWords split text`, () => {
   const initialState = {
     [key]: {
-      text: 'a b'
+      readingMessage: {},
+      formState: formStates.DEFAULT_STATE
     }
   };
 
@@ -85,9 +29,10 @@ test(`[redux-logic] updateWords split text`, () => {
     logic
   });
 
-  store.dispatch(activeStepUpdated(READING_STATE));
+  const testId = 1;
+  store.dispatch(actions.load(testId));
 
-  store.whenComplete(() => {
+  await store.whenComplete(() => {
     const words = selectors.words(store.getState());
     expect(words[0]).toEqual({
       index: 0,
@@ -103,6 +48,37 @@ test(`[redux-logic] updateWords split text`, () => {
       afterWord: '',
       preWord: ''
     });
+  });
+
+  const formState = selectors.formState(store.getState());
+  expect(formState).toEqual(formStates.LOADED_STATE);
+});
+
+test(`[redux-logic] api return exception`, async () => {
+  queryHelper.getReadingMessage = jest.fn().mockResolvedValue(undefined);
+
+  const initialState = {
+    [key]: {
+      readingMessage: {},
+      formState: formStates.DEFAULT_STATE
+    }
+  };
+
+  const store = createMockStore({
+    initialState,
+    reducer,
+    logic
+  });
+
+  const testId = 1;
+  store.dispatch(actions.load(testId));
+
+  await store.whenComplete(() => {
+    const formState = selectors.formState(store.getState());
+    expect(formState).toEqual(formStates.ERROR_STATE);
+
+    const error = selectors.error(store.getState());
+    expect(error).toEqual(errorMessages.READING_MESSAGE_WAS_NOT_FOUND);
   });
 });
 
@@ -210,7 +186,7 @@ describe.each([
 ])(
   '[redux-logic] recognitionFinalWords',
   (baseWords, finalText, expectedWords) => {
-    test(`[redux-logic] recognitionFinalWords `, () => {
+    test(`[redux-logic] recognitionFinalWords `, async () => {
       const initialState = {
         [key]: {
           words: baseWords
@@ -223,9 +199,9 @@ describe.each([
         logic
       });
 
-      store.dispatch(finalUpdated(finalText));
+      store.dispatch(speechRecognitionActions.finalUpdated(finalText));
 
-      store.whenComplete(() => {
+      await store.whenComplete(() => {
         const words = selectors.words(store.getState());
         expect(words).toEqual(expectedWords);
       });
@@ -256,7 +232,7 @@ describe.each([
 ])(
   '[redux-logic] recognitionInterimWords',
   (baseWords, interimText, expectedWords) => {
-    test(`[redux-logic] recognitionInterimWords `, () => {
+    test(`[redux-logic] recognitionInterimWords ${interimText}`, async () => {
       const initialState = {
         [key]: {
           words: baseWords
@@ -269,9 +245,9 @@ describe.each([
         logic
       });
 
-      store.dispatch(interimUpdated(interimText));
+      store.dispatch(speechRecognitionActions.interimUpdated(interimText));
 
-      store.whenComplete(() => {
+      await store.whenComplete(() => {
         const words = selectors.words(store.getState());
         expect(words).toEqual(expectedWords);
       });
@@ -292,7 +268,7 @@ describe.each([
     'a b c d l k'
   ]
 ])('[redux-logic] resetRecording', (baseWords, interimText) => {
-  test(`[redux-logic] resetRecording `, () => {
+  test(`[redux-logic] resetRecording ${interimText}`, async () => {
     const initialState = {
       [key]: {
         words: baseWords
@@ -305,9 +281,9 @@ describe.each([
       logic
     });
 
-    store.dispatch(interimUpdated(interimText));
+    store.dispatch(speechRecognitionActions.interimUpdated(interimText));
 
-    store.whenComplete(() => {
+    await store.whenComplete(() => {
       const interimText = speechRecognitionSelector.interimTranscript(
         store.getState()
       );
