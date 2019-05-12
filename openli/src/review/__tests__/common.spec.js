@@ -31,8 +31,11 @@ describe.each([
 
 describe.each([
   [[], []],
-  [[{ word: 'a' }], [{ word: 'a' }]],
-  [[{ word: 'a', isNotRecognisedCount: 1 }], []]
+  [[{ word: 'a' }], ['a']],
+  [[{ word: 'a' }, { word: 'a' }], ['a']],
+  [[{ word: 'b' }, { word: 'a' }], ['a', 'b']],
+  [[{ word: 'a', isNotRecognisedCount: 1 }], []],
+  [[{ word: 'a' }, { word: 'a', isNotRecognisedCount: 1 }], []]
 ])('', (words, recognisedWords) => {
   test(`calculate Recognised Words, words: ${JSON.stringify(words)}`, () => {
     const calculatedRecognisedWords = calculateRecognisedWords(words);
@@ -44,11 +47,26 @@ describe.each([
 describe.each([
   [[], []],
   [[{ word: 'a' }], []],
-  [[{ isNotRecognisedCount: 1 }], [{ isNotRecognisedCount: 1 }]]
-])('', (words, notRecognisedWoeds) => {
+  [[{ word: 'a', isNotRecognisedCount: 1 }], ['a']],
+  [
+    [
+      { word: 'a', isNotRecognisedCount: 1 },
+      { word: 'a', isNotRecognisedCount: 1 }
+    ],
+    ['a']
+  ],
+  [
+    [
+      { word: 'b', isNotRecognisedCount: 1 },
+      { word: 'a', isNotRecognisedCount: 1 }
+    ],
+    ['a', 'b']
+  ],
+  [[{ word: 'a' }, { word: 'a', isNotRecognisedCount: 1 }], ['a']]
+])('', (words, notRecognisedWords) => {
   test(`calculate Recognised Words, words: ${JSON.stringify(words)}`, () => {
     const calculatedNotRecognisedWords = calculateNotRecognisedWords(words);
 
-    expect(calculatedNotRecognisedWords).toEqual(notRecognisedWoeds);
+    expect(calculatedNotRecognisedWords).toEqual(notRecognisedWords);
   });
 });

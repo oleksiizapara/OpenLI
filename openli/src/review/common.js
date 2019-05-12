@@ -13,14 +13,30 @@ export const calculateReadingSpeed = words => {
   return (lastWordTime - firstWordTime) / calculateTotalWordCount(words);
 };
 
-export const calculateRecognisedWords = words => {
+const dirtyCalculateRecognisedWords = words => {
   return Enumerable.from(words)
     .where(x => !('isNotRecognisedCount' in x))
+    .select(x => x.word)
+    .distinct()
+    .orderBy(x => x)
+    .toArray();
+};
+
+export const calculateRecognisedWords = words => {
+  return Enumerable.from(dirtyCalculateRecognisedWords(words))
+    .except(dirtyCalculateNotRecognisedWords(words))
+    .toArray();
+};
+
+const dirtyCalculateNotRecognisedWords = words => {
+  return Enumerable.from(words)
+    .where(x => x.isNotRecognisedCount > 0)
+    .select(x => x.word)
+    .distinct()
+    .orderBy(x => x)
     .toArray();
 };
 
 export const calculateNotRecognisedWords = words => {
-  return Enumerable.from(words)
-    .where(x => x.isNotRecognisedCount > 0)
-    .toArray();
+  return Enumerable.from(dirtyCalculateNotRecognisedWords(words)).toArray();
 };

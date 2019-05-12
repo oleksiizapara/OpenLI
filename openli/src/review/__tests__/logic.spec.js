@@ -27,7 +27,7 @@ test(`[redux-logic] calculate`, async () => {
     actions.load({
       words: [
         { word: 'a', time: 1 },
-        { word: 'a', time: 3, isNotRecognisedCount: 1 }
+        { word: 'b', time: 3, isNotRecognisedCount: 1 }
       ],
       readingMessage: { content: 'a' }
     })
@@ -41,12 +41,10 @@ test(`[redux-logic] calculate`, async () => {
     expect(readingSpeed).toEqual(1);
 
     const recognisedWords = selectors.recognisedWords(store.getState());
-    expect(recognisedWords).toEqual([{ word: 'a', time: 1 }]);
+    expect(recognisedWords).toEqual(['a']);
 
     const notRecognisedWords = selectors.notRecognisedWords(store.getState());
-    expect(notRecognisedWords).toEqual([
-      { word: 'a', time: 3, isNotRecognisedCount: 1 }
-    ]);
+    expect(notRecognisedWords).toEqual(['b']);
 
     const formState = selectors.formState(store.getState());
     expect(formState).toEqual(formStates.LOADED_STATE);
