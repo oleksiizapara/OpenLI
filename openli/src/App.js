@@ -12,25 +12,18 @@ import mockedConfigureStore from 'mocks/mockedConfigureStore';
 
 import Layout from './layout/Layout';
 
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/styles';
-
 Amplify.configure(aws_exports);
 
 const store = configureStore();
 const mockedStore = mockedConfigureStore();
 
-const theme = createMuiTheme({});
-
 export default function App() {
   return (
     <Router>
       <Provider store={store}>
-        <ThemeProvider theme={theme}>
-          <div className='App'>
-            <Layout />
-          </div>
-        </ThemeProvider>
+        <div className='App'>
+          <Layout />
+        </div>
       </Provider>
     </Router>
   );
@@ -40,11 +33,9 @@ export function MockedApp() {
   return (
     <Router>
       <Provider store={mockedStore}>
-        <ThemeProvider theme={theme}>
-          <div className='App'>
-            <Layout />
-          </div>
-        </ThemeProvider>
+        <div className='App'>
+          <Layout />
+        </div>
       </Provider>
     </Router>
   );

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Icon, IconButton, Menu, MenuItem } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 
@@ -22,7 +21,7 @@ class UserProfile extends Component {
 
     return (
       <React.Fragment>
-        <IconButton
+        {/* <IconButton
           color='inherit'
           aria-owns={anchorEl ? 'simple-menu' : undefined}
           aria-haspopup='true'
@@ -60,7 +59,7 @@ class UserProfile extends Component {
           >
             Sign Out
           </MenuItem>
-        </Menu>
+        </Menu> */}
       </React.Fragment>
     );
   }

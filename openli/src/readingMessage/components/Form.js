@@ -1,70 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Paper, Button, Grid } from '@material-ui/core';
-
-import {
-  TextField
-  //  Select,
-} from 'formik-material-ui';
 
 import { Field, Form as FormikForm } from 'formik';
 
 // import * as Yup from 'yup';
 
-import { makeStyles } from '@material-ui/styles';
-
-const useStyles = makeStyles(
-  theme => ({
-    root: {
-      display: 'flex',
-      flexWrap: 'wrap'
-    },
-    paper: {
-      padding: theme.spacing(2),
-      margin: 'auto'
-    },
-    formControl: {
-      // margin: theme.spacing(3),
-      minWidth: 120,
-      width: '100%'
-    },
-    group: {
-      margin: `${theme.spacing(1)}px 0`
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2)
-    }
-  }),
-
-  { withTheme: true }
-);
-
-export const DisplayFormikState = props => (
-  <div style={{ margin: '1rem 0' }}>
-    <h3 style={{ fontFamily: 'monospace' }} />
-    <pre
-      style={{
-        background: '#f6f8fa',
-        fontSize: '.65rem',
-        padding: '.5rem'
-      }}
-    >
-      <strong>props</strong> = {JSON.stringify(props, null, 2)}
-    </pre>
-  </div>
-);
+// export const DisplayFormikState = props => (
+//   <div style={{ margin: '1rem 0' }}>
+//     <h3 style={{ fontFamily: 'monospace' }} />
+//     <pre
+//       style={{
+//         background: '#f6f8fa',
+//         fontSize: '.65rem',
+//         padding: '.5rem'
+//       }}
+//     >
+//       <strong>props</strong> = {JSON.stringify(props, null, 2)}
+//     </pre>
+//   </div>
+// );
 
 // eslint-disable-next-line no-unused-vars
 export default function Form(props) {
-  const classes = useStyles();
   const { handleSubmit } = props;
   return (
-    <FormikForm
-      className={classes.root}
-      autoComplete='off'
-      onSubmit={handleSubmit}
-    >
-      <Paper className={classes.paper}>
+    <FormikForm autoComplete='off' onSubmit={handleSubmit}>
+      {/* <Paper className={classes.paper}>
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <Field
@@ -89,7 +50,7 @@ export default function Form(props) {
               component={TextField}
             />
           </Grid>
-          {/* <Grid item xs={12}>
+          <Grid item xs={12}>
             <Field
               id='tags'
               name='tags'
@@ -98,9 +59,9 @@ export default function Form(props) {
               autoComplete='new_reading_message tags'
               component={TextField}
             />
-          </Grid> */}
+          </Grid>
           <Grid item sm={6} xs={12}>
-            {/* <FormControl className={classes.formControl}>
+            <FormControl className={classes.formControl}>
               <InputLabel htmlFor='shared-status'>Shared Status</InputLabel>
               <Select
                 required
@@ -113,7 +74,7 @@ export default function Form(props) {
                 <MenuItem value={10}>Public</MenuItem>
                 <MenuItem value={20}>Private</MenuItem>
               </Select>
-            </FormControl> */}
+            </FormControl>
           </Grid>
           <Grid item sm={6} xs={12} container spacing={1} alignItems={'center'}>
             <Grid item sm={6} xs={12}>
@@ -137,7 +98,7 @@ export default function Form(props) {
           </Grid>
         </Grid>
       </Paper>
-      <DisplayFormikState {...props} />
+      <DisplayFormikState {...props} /> */}
     </FormikForm>
   );
 }

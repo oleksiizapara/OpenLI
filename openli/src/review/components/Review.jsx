@@ -2,8 +2,6 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import useReactRouter from 'use-react-router';
 
-import { Paper, Button, Grid } from '@material-ui/core';
-
 import { formStates } from '../actions';
 import { selectors } from '../reducer';
 
@@ -27,13 +25,13 @@ export default function Review() {
       return <div>Loading ...</div>;
     case formStates.LOADED_STATE:
       return (
-        <Paper>
-          <Grid container spacing={1}>
+        <div>
+          {/* <Grid container spacing={1}>
             <Grid item xs={12}>
               {totalWords}
             </Grid>
-          </Grid>
-        </Paper>
+          </Grid> */}
+        </div>
       );
     case formStates.DEFAULT_STATE:
       return <div />;

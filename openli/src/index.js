@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'semantic-ui-css/semantic.min.css';
 import './index.css';
 import App, { MockedApp } from './App';
 import registerServiceWorker from './registerServiceWorker';
-import WebFont from 'webfontloader';
 import { Analytics } from '../node_modules/aws-amplify/lib/index';
 
 if (process.env.NODE_ENV !== 'production') {
@@ -20,9 +20,3 @@ if (
   ReactDOM.render(<App />, document.getElementById('root'));
   registerServiceWorker();
 }
-
-WebFont.load({
-  google: {
-    families: ['Roboto:300,400,500', 'Material+Icons']
-  }
-});

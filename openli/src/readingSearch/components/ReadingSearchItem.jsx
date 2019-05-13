@@ -1,24 +1,12 @@
 import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
-
-const styles = theme => ({
-  root: {
-    padding: theme.spacing(2),
-    margin: 'auto'
-  }
-});
 
 class ReadingSearchItem extends Component {
   render() {
-    const { classes } = this.props;
     return (
-      <Paper className={classes.root}>
+      <>
+        {/* <Paper className={classes.root}>
         <Grid container spacing={1}>
           <Typography gutterBottom variant='h4'>
             Text Title 1
@@ -50,9 +38,10 @@ class ReadingSearchItem extends Component {
             </Grid>
           </Grid>
         </Grid>
-      </Paper>
+      </Paper> */}
+      </>
     );
   }
 }
 
-export default withStyles(styles)(ReadingSearchItem);
+export default ReadingSearchItem;
