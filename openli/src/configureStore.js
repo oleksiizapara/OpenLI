@@ -15,7 +15,8 @@ const middleware = applyMiddleware(logicMiddleware, loggerMiddleware);
 
 // using compose to allow for applyMiddleware, just add it in
 const enhancer =
-  typeof devToolsExtension !== 'undefined'
+  typeof devToolsExtension !== 'undefined' &&
+  process.env.NODE_ENV === 'development'
     ? compose(
         middleware,
         window.__REDUX_DEVTOOLS_EXTENSION__ &&

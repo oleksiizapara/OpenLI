@@ -8,6 +8,8 @@ import aws_exports from './aws-exports';
 import { withAuthenticator } from 'aws-amplify-react';
 
 import configureStore from './configureStore';
+import mockedConfigureStore from 'mocks/mockedConfigureStore';
+
 import Layout from './layout/Layout';
 
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -16,62 +18,75 @@ import { ThemeProvider } from '@material-ui/styles';
 Amplify.configure(aws_exports);
 
 const store = configureStore();
+const mockedStore = mockedConfigureStore();
 
 const theme = createMuiTheme({});
 
-class App extends Component {
-  render() {
-    return (
-      <Router>
-        <Provider store={store}>
-          <ThemeProvider theme={theme}>
-            <div className='App'>
-              <Layout />
-            </div>
-          </ThemeProvider>
-        </Provider>
-      </Router>
-    );
-  }
+export default function App() {
+  return (
+    <Router>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <div className='App'>
+            <Layout />
+          </div>
+        </ThemeProvider>
+      </Provider>
+    </Router>
+  );
 }
 
-const signUpConfig = {
-  hideAllDefaults: true,
-  signUpFields: [
-    {
-      label: 'Email',
-      key: 'username',
-      required: true,
-      placeholder: 'Email',
-      type: 'email',
-      displayOrder: 1
-    },
-    {
-      label: 'Password',
-      key: 'password',
-      required: true,
-      placeholder: 'Password',
-      type: 'password',
-      displayOrder: 2
-    },
-    {
-      label: 'Name',
-      key: 'name',
-      required: true,
-      placeholder: 'Name',
-      type: 'string',
-      displayOrder: 3
-    },
-    {
-      label: 'Family Name',
-      key: 'family_name',
-      required: true,
-      placeholder: 'Family Name',
-      type: 'string',
-      displayOrder: 4
-    }
-  ]
-};
-export default withAuthenticator(App, { signUpConfig });
+export function MockedApp() {
+  return (
+    <Router>
+      <Provider store={mockedStore}>
+        <ThemeProvider theme={theme}>
+          <div className='App'>
+            <Layout />
+          </div>
+        </ThemeProvider>
+      </Provider>
+    </Router>
+  );
+}
+
+// const signUpConfig = {
+//   hideAllDefaults: true,
+//   signUpFields: [
+//     {
+//       label: 'Email',
+//       key: 'username',
+//       required: true,
+//       placeholder: 'Email',
+//       type: 'email',
+//       displayOrder: 1
+//     },
+//     {
+//       label: 'Password',
+//       key: 'password',
+//       required: true,
+//       placeholder: 'Password',
+//       type: 'password',
+//       displayOrder: 2
+//     },
+//     {
+//       label: 'Name',
+//       key: 'name',
+//       required: true,
+//       placeholder: 'Name',
+//       type: 'string',
+//       displayOrder: 3
+//     },
+//     {
+//       label: 'Family Name',
+//       key: 'family_name',
+//       required: true,
+//       placeholder: 'Family Name',
+//       type: 'string',
+//       displayOrder: 4
+//     }
+//   ]
+// };
+// export default withAuthenticator(App, { signUpConfig });
 
 // export default withAuthenticator(App, true, { signUpConfig });
