@@ -1,7 +1,7 @@
 import { formStates } from 'review/actions';
 
 export const reviewLoadedMock = {
-  formState: formStates.DEFAULT_STATE,
+  formState: formStates.LOADED_STATE,
   error: '',
 
   words: [],

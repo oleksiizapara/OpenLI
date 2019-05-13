@@ -4,10 +4,11 @@ import useReactRouter from 'use-react-router';
 
 import { actions } from '../actions';
 import { selectors } from '../reducer';
-import { selectors as speechRecognitionSelectors } from '../../speechRecognition/reducer';
+import { formStates } from 'readingMessage/actions';
+import { selectors as speechRecognitionSelectors } from 'speechRecognition/reducer';
 
 import Word from './Word';
-import { formStates } from '../../readingMessage/actions';
+import Review from 'review/components/Review';
 
 export default function Reading() {
   const dispatch = useDispatch();
@@ -47,6 +48,8 @@ export default function Reading() {
           <p>Final Transcript : {finalTranscript}</p>
           <br />
           <p>Interim Transcript : {interimTranscript}</p>
+
+          <Review />
         </>
       );
     default:
