@@ -2,16 +2,17 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import useReactRouter from 'use-react-router';
 
-import { Message, Divider } from 'semantic-ui-react';
+import { Message, Divider, Grid, Image } from 'semantic-ui-react';
 
-import { actions } from '../actions';
+import { actions, formStates } from '../actions';
 import { selectors } from '../reducer';
-import { formStates } from 'readingMessage/actions';
 import { selectors as speechRecognitionSelectors } from 'speechRecognition/reducer';
 
 import Word from './Word';
 import Review from 'review/components/Review';
 import { Layout } from 'layout/Layout';
+import ReadingHistory from './ReadingHistory';
+import ReadingControls from 'control/components/Control';
 
 const Reading = () => {
   const dispatch = useDispatch();
@@ -36,6 +37,8 @@ const Reading = () => {
     case formStates.LOADING_STATE:
       return <div>Loading ...</div>;
     case formStates.LOADED_STATE:
+    case formStates.READING_STATE:
+    case formStates.REVIEW_STATE:
       return (
         <>
           {words.map(word => (
@@ -46,12 +49,6 @@ const Reading = () => {
               finalTranscript={finalTranscript}
             />
           ))}
-
-          <br />
-          <br />
-          <p>Final Transcript : {finalTranscript}</p>
-          <br />
-          <p>Interim Transcript : {interimTranscript}</p>
         </>
       );
     default:
@@ -62,9 +59,20 @@ const Reading = () => {
 export default function ReadingLayout() {
   return (
     <Layout>
-      <Reading />
-      <Divider />
-      <Review />
+      <Grid stackable divided>
+        <Grid.Row>
+          <Grid.Column width={12}>
+            <Reading />
+            <Divider />
+            <Review />
+          </Grid.Column>
+          <Grid.Column width={4}>
+            <ReadingControls />
+            <Divider />
+            <ReadingHistory />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     </Layout>
   );
 }

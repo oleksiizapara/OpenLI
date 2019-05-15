@@ -8,8 +8,9 @@ const passwordsMustMatch = 'Passwords must match';
 const passwordsConfirmIsRequired = 'Password confirm is required';
 const invalidLogin = 'invalid email';
 const invalidAuthenticationCode = 'invalid authentication code';
+const speechRecognitionsIsNotSupported = 'Speech recognitions is not supported';
 
-export const errorMessages = [
+export const errorMessages = {
   READING_MESSAGE_WAS_NOT_CREATED,
   READING_MESSAGE_WAS_NOT_FOUND,
   emailNotLongEnough,
@@ -18,5 +19,6 @@ export const errorMessages = [
   passwordsMustMatch,
   passwordsConfirmIsRequired,
   invalidLogin,
-  invalidAuthenticationCode
-];
+  invalidAuthenticationCode,
+  speechRecognitionsIsNotSupported
+};

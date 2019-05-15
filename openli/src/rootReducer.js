@@ -13,6 +13,8 @@ import {
   reducer as settingsReducer
 } from './settings/index';
 
+import { key as controlKey, reducer as controlReducer } from './control/index';
+
 import {
   key as readingMessageKey,
   reducer as readingMessageReducer
@@ -23,5 +25,6 @@ export default combineReducers({
   [readingKey]: readingReducer,
   [readingMessageKey]: readingMessageReducer,
   [reviewKey]: reviewReducer,
-  [settingsKey]: settingsReducer
+  [settingsKey]: settingsReducer,
+  [controlKey]: controlReducer
 });

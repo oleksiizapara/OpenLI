@@ -464,6 +464,29 @@ const loadedSampleWords = [
   }
 ];
 
+const loadedSampleHistoryTranscript = {
+  content: 'For who thoroughly',
+  lastRecognisedWord: undefined,
+  recognisedWords: [{ index: 0, word: 'a' }],
+  transcript: {
+    content: 'b',
+    lastRecognisedWord: { index: 0, isFinalRecognised: true, word: 'a' },
+    recognisedWords: [{ index: 1, word: 'b' }],
+    transcriptType: 'final'
+  },
+  transcriptIndex: 1,
+  transcriptType: 'final',
+  transcripts: [
+    { content: 'a', transcriptType: 'final' },
+    {
+      content: 'b',
+      lastRecognisedWord: { index: 0, isFinalRecognised: true, word: 'a' },
+      recognisedWords: [{ index: 1, word: 'b' }],
+      transcriptType: 'final'
+    }
+  ]
+};
+
 export const loadedSample = {
   readingMessage: {
     id: 'uniqueIdReadingMessage',
@@ -474,5 +497,20 @@ export const loadedSample = {
   },
   words: loadedSampleWords,
   formState: formStates.LOADED_STATE,
-  error: ''
+  error: '',
+  transcript: loadedSampleHistoryTranscript
+};
+
+export const readingSample = {
+  readingMessage: {
+    id: 'uniqueIdReadingMessage',
+    title: 'Title Reading Message Sample',
+    content: `For who thoroughly her boy estimating conviction. Removed demands expense account in outward tedious do. Particular way thoroughly unaffected projection favourable mrs can projecting own. Thirty it matter enable become admire in giving. See resolved goodness felicity shy civility domestic had but. Drawings offended yet answered jennings perceive laughing six did far. 
+
+        Is we miles ready he might going. Own books built put civil fully blind fanny. Projection appearance at of admiration no. As he totally cousins warrant besides ashamed do. Therefore by applauded acuteness supported affection it. Except had sex limits county enough the figure former add. Do sang my he next mr soon. It merely waited do unable. `
+  },
+  words: loadedSampleWords,
+  formState: formStates.READING_STATE,
+  error: '',
+  transcript: loadedSampleHistoryTranscript
 };
