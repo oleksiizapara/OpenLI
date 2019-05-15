@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Icon, Image, Menu, Sidebar } from 'semantic-ui-react';
+import { Icon, Menu, Sidebar } from 'semantic-ui-react';
 import LogoMenuItem from './LogoMenuItem';
 import UserProfile from './UserProfile';
 
@@ -10,9 +10,7 @@ export const NavBarMobile = ({
   leftItems,
   onPusherClick,
   onToggle,
-  rightItems,
-  visible,
-  rightIcons
+  visible
 }) => {
   return (
     <Sidebar.Pushable>
