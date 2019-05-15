@@ -19,7 +19,8 @@ import {
   splitTextOnWords,
   recogniseWords,
   validateRecognizedWords,
-  calculateNotRecognisedWords
+  calculateNotRecognisedWords,
+  updateTranscript
 } from './common';
 
 export const loadWords = createLogic({
@@ -56,6 +57,12 @@ export const recognitionFinalWords = createLogic({
   },
 
   process({ getState, action }, dispatch, done) {
+    const formState = selectors.formState(getState());
+    if (formState !== formStates.READING_STATE) {
+      done();
+      return;
+    }
+
     const finalTranscript = action.payload.finalTranscript;
     const finalTranscriptWords = splitTextOnWords(finalTranscript);
     const words = selectors.words(getState());
@@ -120,6 +127,22 @@ export const recognitionFinalWords = createLogic({
       dispatch(actions.updateWords(updatedWords));
     }
 
+    const onlyUpdatedWords = Enumerable.from(normalizedRecognisedWordIndexes)
+      .select(index => words[index])
+      .toArray();
+    const transcript = selectors.transcript(getState());
+
+    const updatedTranscript = updateTranscript(
+      action,
+      transcript,
+      lastRecognisedWord,
+      onlyUpdatedWords
+    );
+
+    if (updatedTranscript) {
+      dispatch(actions.updateTranscript(updatedTranscript));
+    }
+
     done();
   }
 });
@@ -132,6 +155,12 @@ export const recognitionInterimWords = createLogic({
   },
 
   process({ getState, action }, dispatch, done) {
+    const formState = selectors.formState(getState());
+    if (formState !== formStates.READING_STATE) {
+      done();
+      return;
+    }
+
     const interimTranscript = action.payload.interimTranscript;
     const interimTranscriptWords = splitTextOnWords(interimTranscript);
     const words = selectors.words(getState());
@@ -192,66 +221,25 @@ export const recognitionInterimWords = createLogic({
     if (isWordsChanged) {
       dispatch(actions.updateWords(updatedWords));
     }
-    done();
-  }
-});
 
-export const addingNewTranscript = createLogic({
-  type: [
-    speechRecognitionActionTypes.FINAL_UPDATED,
-    speechRecognitionActionTypes.INTERIM_UPDATED
-  ],
+    const onlyUpdatedWords = Enumerable.from(normalizedRecognisedWordIndexes)
+      .select(index => words[index])
+      .toArray();
+    const transcript = selectors.transcript(getState());
 
-  processOptions: {
-    dispatchReturn: true
-  },
+    const updatedTranscript = updateTranscript(
+      action,
+      transcript,
+      lastRecognisedWord,
+      onlyUpdatedWords
+    );
 
-  process({ getState, action }, dispatch, done) {
-    const formState = selectors.formState(getState());
-
-    if (formState === formStates.READING_STATE) {
-      var newTranscript = undefined;
-      if (action.type === speechRecognitionActionTypes.FINAL_UPDATED) {
-        newTranscript = {
-          transcriptType: 'final',
-          content: action.payload.finalTranscript
-        };
-      }
-      if (action.type === speechRecognitionActionTypes.INTERIM_UPDATED) {
-        newTranscript = {
-          transcriptType: 'interim',
-          content: action.payload.interimTranscript
-        };
-      }
-      if (newTranscript) {
-        const transcript = selectors.transcript(getState());
-
-        if (!transcript) {
-          dispatch(
-            actions.updateTranscript({
-              transcripts: [newTranscript],
-              transcriptIndex: 0,
-              transcript: newTranscript
-            })
-          );
-        } else {
-          const updatedTranscript = produce(transcript, draft => {
-            draft.transcripts.push(newTranscript);
-            draft.transcriptIndex = draft.transcripts.length - 1;
-            draft.transcript = newTranscript;
-          });
-          dispatch(actions.updateTranscript(updatedTranscript));
-        }
-      }
+    if (updatedTranscript) {
+      dispatch(actions.updateTranscript(updatedTranscript));
     }
 
     done();
   }
 });
 
-export default [
-  loadWords,
-  recognitionFinalWords,
-  recognitionInterimWords,
-  addingNewTranscript
-];
+export default [loadWords, recognitionFinalWords, recognitionInterimWords];

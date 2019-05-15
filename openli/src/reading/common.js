@@ -1,4 +1,9 @@
 import Enumerable from 'linq';
+import produce from 'immer';
+
+import { actionTypes as speechRecognitionActionTypes } from 'speechRecognition/actions';
+
+import { formStates } from './actions';
 
 export const splitTextOnWords = text => {
   if (text) {
@@ -113,4 +118,47 @@ export const calculateNotRecognisedWords = (words, recognisedWordIndexes) => {
     recognisedWordIndexes[0] === -1
     ? [words[0].index]
     : [];
+};
+
+export const updateTranscript = (
+  action,
+  transcript,
+  lastRecognisedWord,
+  recognisedWords
+) => {
+  var newTranscript = undefined;
+  if (action.type === speechRecognitionActionTypes.FINAL_UPDATED) {
+    newTranscript = {
+      transcriptType: 'final',
+      content: action.payload.finalTranscript,
+      lastRecognisedWord,
+      recognisedWords
+    };
+  }
+  if (action.type === speechRecognitionActionTypes.INTERIM_UPDATED) {
+    newTranscript = {
+      transcriptType: 'interim',
+      content: action.payload.interimTranscript,
+      lastRecognisedWord,
+      recognisedWords
+    };
+  }
+  if (newTranscript) {
+    if (!transcript) {
+      return {
+        transcripts: [newTranscript],
+        transcriptIndex: 0,
+        transcript: newTranscript
+      };
+    } else {
+      const updatedTranscript = produce(transcript, draft => {
+        draft.transcripts.push(newTranscript);
+        draft.transcriptIndex = draft.transcripts.length - 1;
+        draft.transcript = newTranscript;
+      });
+      return updatedTranscript;
+    }
+  }
+
+  return undefined;
 };

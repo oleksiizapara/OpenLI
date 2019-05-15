@@ -190,7 +190,8 @@ describe.each([
     test(`[redux-logic] recognitionFinalWords `, async () => {
       const initialState = {
         [key]: {
-          words: baseWords
+          words: baseWords,
+          formState: formStates.READING_STATE
         }
       };
 
@@ -236,7 +237,8 @@ describe.each([
     test(`[redux-logic] recognitionInterimWords ${interimText}`, async () => {
       const initialState = {
         [key]: {
-          words: baseWords
+          words: baseWords,
+          formState: formStates.READING_STATE
         }
       };
 
@@ -272,7 +274,8 @@ describe.each([
   test(`[redux-logic] resetRecording ${interimText}`, async () => {
     const initialState = {
       [key]: {
-        words: baseWords
+        words: baseWords,
+        formState: formStates.READING_STATE
       }
     };
 
@@ -296,7 +299,8 @@ describe.each([
 test(`[redux-logic] UTCTime added on final recognised words `, async () => {
   const initialState = {
     [key]: {
-      words: [{ index: 0, word: 'a' }]
+      words: [{ index: 0, word: 'a' }],
+      formState: formStates.READING_STATE
     }
   };
 
@@ -342,7 +346,8 @@ test(`[redux-logic] UTCTime will not updated on final recognised words`, async (
 test(`[redux-logic] UTCTime added on interim recognised words `, async () => {
   const initialState = {
     [key]: {
-      words: [{ index: 0, word: 'a' }]
+      words: [{ index: 0, word: 'a' }],
+      formState: formStates.READING_STATE
     }
   };
 
@@ -365,7 +370,8 @@ test(`[redux-logic] UTCTime added on interim recognised words `, async () => {
 test(`[redux-logic] UTCTime will not updated on interim recognised words `, async () => {
   const initialState = {
     [key]: {
-      words: [{ index: 0, word: 'a', time: 1 }]
+      words: [{ index: 0, word: 'a', time: 1 }],
+      formState: formStates.READING_STATE
     }
   };
 
@@ -429,7 +435,8 @@ describe.each([
     test(`[redux-logic] isNotRecognisedCount will be updated on final recognised words`, async () => {
       const initialState = {
         [key]: {
-          words: baseWords
+          words: baseWords,
+          formState: formStates.READING_STATE
         }
       };
 
@@ -450,14 +457,6 @@ describe.each([
 );
 
 describe.each([
-  [
-    {
-      transcript: undefined,
-      formState: formStates.DEFAULT_STATE
-    },
-    'a',
-    undefined
-  ],
   [
     {
       transcript: undefined,
@@ -490,7 +489,7 @@ describe.each([
     }
   ]
 ])(
-  '[redux-logic] final transcript will be updated',
+  '[redux-logic] final transcript will be updated test cases',
   (initialStateKey, finalText, expectedTranscript) => {
     test(`[redux-logic] final transcript will be added during reading to empty transcript redux`, async () => {
       const initialState = {
@@ -507,21 +506,13 @@ describe.each([
 
       await store.whenComplete(() => {
         const transcript = selectors.transcript(store.getState());
-        expect(transcript).toEqual(expectedTranscript);
+        expect(transcript).toMatchObject(expectedTranscript);
       });
     });
   }
 );
 
 describe.each([
-  [
-    {
-      transcript: undefined,
-      formState: formStates.DEFAULT_STATE
-    },
-    'a',
-    undefined
-  ],
   [
     {
       transcript: undefined,
@@ -554,7 +545,7 @@ describe.each([
     }
   ]
 ])(
-  '[redux-logic] interim transcript will be updated',
+  '[redux-logic] interim transcript will be updated test cases',
   (initialStateKey, interimText, expectedTranscript) => {
     test(`[redux-logic] interim transcript will be added during reading to empty transcript redux`, async () => {
       const initialState = {
@@ -571,8 +562,61 @@ describe.each([
 
       await store.whenComplete(() => {
         const transcript = selectors.transcript(store.getState());
-        expect(transcript).toEqual(expectedTranscript);
+        expect(transcript).toMatchObject(expectedTranscript);
       });
     });
   }
 );
+
+test(`[redux-logic] final transcript lastRecognisedWordIndex will be updated during reading`, async () => {
+  const initialState = {
+    [key]: {
+      words: [
+        { index: 0, word: 'a', isFinalRecognised: true },
+        { index: 1, word: 'b' }
+      ],
+      transcript: {
+        content: 'a',
+        lastRecognisedWord: undefined,
+        recognisedWords: [{ index: 0, word: 'a' }],
+        transcriptType: 'final',
+        transcripts: [{ transcriptType: 'final', content: 'a' }]
+      },
+      formState: formStates.READING_STATE
+    }
+  };
+
+  const store = createMockStore({
+    initialState,
+    reducer,
+    logic
+  });
+
+  store.dispatch(speechRecognitionActions.finalUpdated('b'));
+
+  await store.whenComplete(() => {
+    const transcript = selectors.transcript(store.getState());
+    expect(transcript).toMatchObject({
+      content: 'a',
+      lastRecognisedWord: undefined,
+      recognisedWords: [{ index: 0, word: 'a' }],
+      transcript: {
+        content: 'b',
+        lastRecognisedWord: { index: 0, isFinalRecognised: true, word: 'a' },
+        recognisedWords: [{ index: 1, word: 'b' }],
+        transcriptType: 'final'
+      },
+      transcriptIndex: 1,
+      transcriptType: 'final',
+      transcripts: [
+        { content: 'a', transcriptType: 'final' },
+        {
+          content: 'b',
+          lastRecognisedWord: { index: 0, isFinalRecognised: true, word: 'a' },
+          recognisedWords: [{ index: 1, word: 'b' }],
+          transcriptType: 'final'
+        }
+      ]
+    });
+  });
+});
