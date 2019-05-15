@@ -9,6 +9,7 @@ const passwordsConfirmIsRequired = 'Password confirm is required';
 const invalidLogin = 'invalid email';
 const invalidAuthenticationCode = 'invalid authentication code';
 const speechRecognitionsIsNotSupported = 'Speech recognitions is not supported';
+const genericNotFoundMessage = 'Page was not found';
 
 export const errorMessages = {
   READING_MESSAGE_WAS_NOT_CREATED,
@@ -20,5 +21,6 @@ export const errorMessages = {
   passwordsConfirmIsRequired,
   invalidLogin,
   invalidAuthenticationCode,
-  speechRecognitionsIsNotSupported
+  speechRecognitionsIsNotSupported,
+  genericNotFoundMessage
 };

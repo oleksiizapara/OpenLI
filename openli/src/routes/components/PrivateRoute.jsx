@@ -6,7 +6,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 import { selectors } from 'settings/reducer';
 
-export const PrivateRoute = ({ component: Component, ...rest }) => {
+const PrivateRoute = ({ component: Component, ...rest }) => {
   const user = useSelector(state => selectors.user(state));
 
   return (
@@ -22,6 +22,8 @@ export const PrivateRoute = ({ component: Component, ...rest }) => {
     />
   );
 };
+
+export default PrivateRoute;
 
 PrivateRoute.propTypes = {
   component: PropTypes.any
