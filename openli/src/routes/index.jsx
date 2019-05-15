@@ -9,12 +9,10 @@ import Home from 'layout/Home';
 import { PrivateRoute } from './components/PrivateRoute';
 import SignIn from 'settings/components/SignIn';
 import SignUp from 'settings/components/SignUp';
-import AuthRedux from 'settings/components/AuthRedux';
 import SignConfirm from 'settings/components/SignConfirm';
 
 export const Routes = () => (
   <BrowserRouter>
-    <AuthRedux />
     <Switch>
       <Route exact={true} path='/' component={Home} />
       <Route path='/sign_in' component={SignIn} />
