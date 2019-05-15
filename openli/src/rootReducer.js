@@ -8,6 +8,10 @@ import {
 import { key as readingKey, reducer as readingReducer } from './reading/index';
 
 import { key as reviewKey, reducer as reviewReducer } from './review/index';
+import {
+  key as settingsKey,
+  reducer as settingsReducer
+} from './settings/index';
 
 import {
   key as readingMessageKey,
@@ -18,5 +22,6 @@ export default combineReducers({
   [speechRecognitionKey]: speechRecognitionReducer,
   [readingKey]: readingReducer,
   [readingMessageKey]: readingMessageReducer,
-  [reviewKey]: reviewReducer
+  [reviewKey]: reviewReducer,
+  [settingsKey]: settingsReducer
 });

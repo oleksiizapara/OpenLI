@@ -1,14 +1,24 @@
 import produce from 'immer';
 
-import { key } from './actions';
+import { key, actionTypes } from './actions';
 
-export const selectors = {};
+export const selectors = {
+  isLoaded: state => state[key].isLoaded,
+  user: state => state[key].user
+};
 
-const initialState = {};
+const initialState = {
+  isLoaded: false,
+  user: undefined
+};
 
 export default function(state = initialState, action) {
   return produce(state, draft => {
     switch (action.type) {
+      case actionTypes.USER_UPDATED:
+        draft.isLoaded = true;
+        draft.user = action.payload.user;
+        break;
     }
   });
 }

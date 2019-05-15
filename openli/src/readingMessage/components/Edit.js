@@ -11,7 +11,7 @@ import uuid from 'uuid/v4';
 import { selectors } from '../reducer';
 import { actions, formStates } from '../actions';
 
-export default function ReadingEdit() {
+export default function Edit() {
   const dispatch = useDispatch();
 
   const { match } = useReactRouter();

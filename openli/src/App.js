@@ -11,6 +11,7 @@ import configureStore from './configureStore';
 import mockedConfigureStore from 'mocks/mockedConfigureStore';
 
 import Layout from './layout/Layout';
+import { Routes } from 'routes/index';
 
 Amplify.configure(aws_exports);
 
@@ -21,9 +22,7 @@ export default function App() {
   return (
     <Router>
       <Provider store={store}>
-        <div className='App'>
-          <Layout />
-        </div>
+        <Routes />
       </Provider>
     </Router>
   );
@@ -33,9 +32,7 @@ export function MockedApp() {
   return (
     <Router>
       <Provider store={mockedStore}>
-        <div className='App'>
-          <Layout />
-        </div>
+        <Routes />
       </Provider>
     </Router>
   );

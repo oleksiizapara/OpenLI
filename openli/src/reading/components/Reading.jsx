@@ -9,8 +9,11 @@ import { selectors as speechRecognitionSelectors } from 'speechRecognition/reduc
 
 import Word from './Word';
 import Review from 'review/components/Review';
+import { Layout } from 'layout/Layout';
+import { leftItems } from 'layout/Layout';
+import { UserInfoDropDown } from 'layout/Layout';
 
-export default function Reading() {
+const Reading = () => {
   const dispatch = useDispatch();
   const { match } = useReactRouter();
 
@@ -55,4 +58,20 @@ export default function Reading() {
     default:
       return <div>error</div>;
   }
+};
+
+export default function ReadingLayout() {
+  return (
+    <Layout
+      leftItems={leftItems}
+      rightItems={[]}
+      rightIcons={
+        <>
+          <UserInfoDropDown />
+        </>
+      }
+    >
+      <Reading />
+    </Layout>
+  );
 }

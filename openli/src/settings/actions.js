@@ -1,11 +1,14 @@
-// unique key namespace used by combineReducers.
-// By convention it will match the directory structure to
-// make it easy to locate the src.
-// Also action types will prefix with the capitalized version
 export const key = 'settings';
 
-// action type constants
+export const USER_UPDATED = `${key} USER_UPDATED`;
 
-export const actionTypes = {};
+export const actionTypes = {
+  USER_UPDATED
+};
 
-export const actions = {};
+const userUpdated = user => ({
+  type: USER_UPDATED,
+  payload: { user }
+});
+
+export const actions = { userUpdated };

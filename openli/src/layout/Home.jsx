@@ -1,9 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Layout from './Layout';
+import { rightItems } from './Layout';
+import { leftItems } from './Layout';
 
-class Home extends Component {
-  render() {
-    return <span />;
-  }
+const Home = () => {
+  return <span />;
+};
+
+export default function HomeLayout() {
+  return (
+    <Layout leftItems={leftItems} rightItems={rightItems}>
+      <Home />
+    </Layout>
+  );
 }
-
-export default Home;
