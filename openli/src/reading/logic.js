@@ -2,7 +2,7 @@ import { createLogic } from 'redux-logic';
 import produce from 'immer';
 import Enumerable from 'linq';
 
-import { actionTypes, actions } from './actions';
+import { actionTypes, actions, formStates } from './actions';
 
 import { selectors } from './reducer';
 
@@ -196,4 +196,62 @@ export const recognitionInterimWords = createLogic({
   }
 });
 
-export default [loadWords, recognitionFinalWords, recognitionInterimWords];
+export const addingNewTranscript = createLogic({
+  type: [
+    speechRecognitionActionTypes.FINAL_UPDATED,
+    speechRecognitionActionTypes.INTERIM_UPDATED
+  ],
+
+  processOptions: {
+    dispatchReturn: true
+  },
+
+  process({ getState, action }, dispatch, done) {
+    const formState = selectors.formState(getState());
+
+    if (formState === formStates.READING_STATE) {
+      var newTranscript = undefined;
+      if (action.type === speechRecognitionActionTypes.FINAL_UPDATED) {
+        newTranscript = {
+          transcriptType: 'final',
+          content: action.payload.finalTranscript
+        };
+      }
+      if (action.type === speechRecognitionActionTypes.INTERIM_UPDATED) {
+        newTranscript = {
+          transcriptType: 'interim',
+          content: action.payload.interimTranscript
+        };
+      }
+      if (newTranscript) {
+        const transcript = selectors.transcript(getState());
+
+        if (!transcript) {
+          dispatch(
+            actions.updateTranscript({
+              transcripts: [newTranscript],
+              transcriptIndex: 0,
+              transcript: newTranscript
+            })
+          );
+        } else {
+          const updatedTranscript = produce(transcript, draft => {
+            draft.transcripts.push(newTranscript);
+            draft.transcriptIndex = draft.transcripts.length - 1;
+            draft.transcript = newTranscript;
+          });
+          dispatch(actions.updateTranscript(updatedTranscript));
+        }
+      }
+    }
+
+    done();
+  }
+});
+
+export default [
+  loadWords,
+  recognitionFinalWords,
+  recognitionInterimWords,
+  addingNewTranscript
+];

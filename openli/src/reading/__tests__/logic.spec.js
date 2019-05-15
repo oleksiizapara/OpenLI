@@ -448,3 +448,131 @@ describe.each([
     });
   }
 );
+
+describe.each([
+  [
+    {
+      transcript: undefined,
+      formState: formStates.DEFAULT_STATE
+    },
+    'a',
+    undefined
+  ],
+  [
+    {
+      transcript: undefined,
+      formState: formStates.READING_STATE
+    },
+    'a',
+    {
+      transcripts: [{ transcriptType: 'final', content: 'a' }],
+      transcriptIndex: 0,
+      transcript: { transcriptType: 'final', content: 'a' }
+    }
+  ],
+  [
+    {
+      transcript: {
+        transcripts: [{ transcriptType: 'final', content: 'a' }],
+        transcriptIndex: 0,
+        transcript: { transcriptType: 'final', content: 'a' }
+      },
+      formState: formStates.READING_STATE
+    },
+    'b',
+    {
+      transcripts: [
+        { transcriptType: 'final', content: 'a' },
+        { transcriptType: 'final', content: 'b' }
+      ],
+      transcriptIndex: 1,
+      transcript: { transcriptType: 'final', content: 'b' }
+    }
+  ]
+])(
+  '[redux-logic] final transcript will be updated',
+  (initialStateKey, finalText, expectedTranscript) => {
+    test(`[redux-logic] final transcript will be added during reading to empty transcript redux`, async () => {
+      const initialState = {
+        [key]: initialStateKey
+      };
+
+      const store = createMockStore({
+        initialState,
+        reducer,
+        logic
+      });
+
+      store.dispatch(speechRecognitionActions.finalUpdated(finalText));
+
+      await store.whenComplete(() => {
+        const transcript = selectors.transcript(store.getState());
+        expect(transcript).toEqual(expectedTranscript);
+      });
+    });
+  }
+);
+
+describe.each([
+  [
+    {
+      transcript: undefined,
+      formState: formStates.DEFAULT_STATE
+    },
+    'a',
+    undefined
+  ],
+  [
+    {
+      transcript: undefined,
+      formState: formStates.READING_STATE
+    },
+    'a',
+    {
+      transcripts: [{ transcriptType: 'interim', content: 'a' }],
+      transcriptIndex: 0,
+      transcript: { transcriptType: 'interim', content: 'a' }
+    }
+  ],
+  [
+    {
+      transcript: {
+        transcripts: [{ transcriptType: 'interim', content: 'a' }],
+        transcriptIndex: 0,
+        transcript: { transcriptType: 'interim', content: 'a' }
+      },
+      formState: formStates.READING_STATE
+    },
+    'b',
+    {
+      transcripts: [
+        { transcriptType: 'interim', content: 'a' },
+        { transcriptType: 'interim', content: 'b' }
+      ],
+      transcriptIndex: 1,
+      transcript: { transcriptType: 'interim', content: 'b' }
+    }
+  ]
+])(
+  '[redux-logic] interim transcript will be updated',
+  (initialStateKey, interimText, expectedTranscript) => {
+    test(`[redux-logic] interim transcript will be added during reading to empty transcript redux`, async () => {
+      const initialState = {
+        [key]: initialStateKey
+      };
+
+      const store = createMockStore({
+        initialState,
+        reducer,
+        logic
+      });
+
+      store.dispatch(speechRecognitionActions.interimUpdated(interimText));
+
+      await store.whenComplete(() => {
+        const transcript = selectors.transcript(store.getState());
+        expect(transcript).toEqual(expectedTranscript);
+      });
+    });
+  }
+);
