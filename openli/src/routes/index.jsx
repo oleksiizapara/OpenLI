@@ -19,8 +19,8 @@ export const Routes = () => (
       <Route path='/sign_in' component={SignIn} />
       <Route path='/sign_up' component={SignUp} />
       <Route path='/sign_confirm' component={SignConfirm} />
-      <PrivateRoute path='/reading' component={ReadingSearch} />
       <PrivateRoute path='/reading/:id' component={Reading} />
+      <PrivateRoute path='/reading' component={ReadingSearch} />
       <PrivateRoute path='/reading_add' component={Add} />
       <PrivateRoute path='/reading_edit/:id' component={Edit} />
       <Route component={GenericNotFound} />

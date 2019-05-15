@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import useReactRouter from 'use-react-router';
 
-import { Message, Divider, Grid, Image } from 'semantic-ui-react';
+import { Message, Divider, Grid, Image, Header } from 'semantic-ui-react';
 
 import { actions, formStates } from '../actions';
 import { selectors } from '../reducer';
@@ -13,6 +13,8 @@ import Review from 'review/components/Review';
 import { Layout } from 'layout/Layout';
 import ReadingHistory from './ReadingHistory';
 import ReadingControls from 'control/components/Control';
+
+const ReadingHeader = () => <Header as='h2'>Reading</Header>;
 
 const Reading = () => {
   const dispatch = useDispatch();
@@ -59,6 +61,7 @@ const Reading = () => {
 export default function ReadingLayout() {
   return (
     <Layout>
+      <ReadingHeader />
       <Grid stackable divided>
         <Grid.Row>
           <Grid.Column width={12}>

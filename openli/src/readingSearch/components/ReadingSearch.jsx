@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import React from 'react';
+import { Header, Message, Divider, Grid, Image } from 'semantic-ui-react';
 
 import ReadingSearchItem from './ReadingSearchItem';
+import Layout from 'layout/Layout';
 
-class ReadingSearch extends Component {
-  render() {
-    const { history } = this.props;
+const ReadingSearchHeader = () => <Header as='h2'>Reading Search</Header>;
 
-    return (
-      <>
-        {/* <Grid
+const ReadingSearch = () => {
+  return (
+    <>
+      {/* <Grid
         className='root'
         container
         direction='column'
@@ -31,9 +31,15 @@ class ReadingSearch extends Component {
           <ReadingSearchItem />
         </Grid>
       </Grid> */}
-      </>
-    );
-  }
-}
+    </>
+  );
+};
 
-export default withRouter(ReadingSearch);
+export default function ReadingSearchLayout() {
+  return (
+    <Layout>
+      <ReadingSearchHeader />
+      <ReadingSearch />
+    </Layout>
+  );
+}
