@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 
 import { Menu } from 'semantic-ui-react';
 import LogoMenuItem from './LogoMenuItem';
+import UserProfile from './UserProfile';
 
-export const NavBarDesktop = ({ leftItems, rightItems, rightIcons }) => {
+export const NavBarDesktop = ({ leftItems, rightItems }) => {
   return (
     <Menu fixed='top' inverted>
       <Menu.Item>
@@ -15,18 +16,13 @@ export const NavBarDesktop = ({ leftItems, rightItems, rightIcons }) => {
         <Menu.Item {...item} />
       ))}
       <Menu.Menu position='right'>
-        {rightItems.map(item => (
-          // eslint-disable-next-line react/jsx-key
-          <Menu.Item {...item} />
-        ))}
+        <UserProfile />
       </Menu.Menu>
-      {rightIcons}
     </Menu>
   );
 };
 
 NavBarDesktop.propTypes = {
   leftItems: PropTypes.array,
-  rightItems: PropTypes.array,
-  rightIcons: PropTypes.object
+  rightItems: PropTypes.any
 };

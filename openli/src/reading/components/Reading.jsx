@@ -11,7 +11,7 @@ import Word from './Word';
 import Review from 'review/components/Review';
 import { Layout } from 'layout/Layout';
 import { leftItems } from 'layout/Layout';
-import { UserInfoDropDown } from 'layout/Layout';
+import UserProfile from 'layout/UserProfile';
 
 const Reading = () => {
   const dispatch = useDispatch();
@@ -62,15 +62,7 @@ const Reading = () => {
 
 export default function ReadingLayout() {
   return (
-    <Layout
-      leftItems={leftItems}
-      rightItems={[]}
-      rightIcons={
-        <>
-          <UserInfoDropDown />
-        </>
-      }
-    >
+    <Layout>
       <Reading />
     </Layout>
   );

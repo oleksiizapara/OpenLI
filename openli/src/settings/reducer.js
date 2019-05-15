@@ -19,6 +19,10 @@ export default function(state = initialState, action) {
         draft.isLoaded = true;
         draft.user = action.payload.user;
         break;
+      case actionTypes.USER_UNREGISTERED:
+        draft.isLoaded = false;
+        draft.user = null;
+        break;
     }
   });
 }

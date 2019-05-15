@@ -1,68 +1,42 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import React from 'react';
+import useReactRouter from 'use-react-router';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+import { Dropdown } from 'semantic-ui-react';
+
+import { selectors } from 'settings/reducer';
+import { Menu } from 'semantic-ui-react';
 import { Auth } from 'aws-amplify';
 
-class UserProfile extends Component {
-  state = {
-    anchorEl: null
-  };
+export const UserProfile = () => {
+  const isLoaded = useSelector(state => selectors.isLoaded(state));
+  const user = useSelector(state => selectors.user(state));
 
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
-
-  render() {
-    const { anchorEl } = this.state;
-    const { history } = this.props;
-
-    return (
-      <React.Fragment>
-        {/* <IconButton
-          color='inherit'
-          aria-owns={anchorEl ? 'simple-menu' : undefined}
-          aria-haspopup='true'
-          onClick={this.handleClick}
+  return !isLoaded ? (
+    <></>
+  ) : !user ? (
+    <>
+      <Menu.Item as={Link} content='Sign In' key='sign_in' to='/sign_in' />
+      <Menu.Item content='Sign Up' key='sign_up' to='/sign_up' />
+    </>
+  ) : (
+    <Dropdown item icon='user' direction='left'>
+      <Dropdown.Menu>
+        <Dropdown.Item
+          onClick={async () => {
+            try {
+              await Auth.signOut();
+            } catch (exception) {
+              console.log(exception);
+            }
+          }}
         >
-          <Icon>perm_identity</Icon>
-        </IconButton>
-        <Menu
-          id='simple-menu'
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={this.handleClose}
-        >
-          <MenuItem
-            onClick={() => {
-              this.handleClose();
-              history.push('/profile');
-            }}
-          >
-            Your Profile
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              this.handleClose();
-              history.push('/list');
-            }}
-          >
-            Your list
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              this.handleClose();
-              Auth.signOut();
-            }}
-          >
-            Sign Out
-          </MenuItem>
-        </Menu> */}
-      </React.Fragment>
-    );
-  }
-}
+          Sign Out
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  );
+};
 
-export default withRouter(UserProfile);
+export default UserProfile;

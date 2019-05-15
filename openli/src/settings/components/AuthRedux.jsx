@@ -60,7 +60,7 @@ const reduxListener = dispatch => async data => {
       // logger.error('user signed up');
       break;
     case 'signOut':
-      dispatch(actions.userUpdated(undefined));
+      dispatch(actions.userUnregistered());
       //   history.push('/');
       // logger.error('user signed out');
       break;
@@ -99,6 +99,11 @@ const AuthRedux = () => {
       try {
         const userInfo = await Auth.currentUserInfo();
 
+        if (!userInfo) {
+          dispatch(actions.userUnregistered());
+          return;
+        }
+
         const {
           username: id,
           attributes: {
@@ -119,7 +124,7 @@ const AuthRedux = () => {
           })
         );
       } catch (exception) {
-        dispatch(actions.userUpdated(undefined));
+        dispatch(actions.userUnregistered());
         console.log(exception);
       }
     };

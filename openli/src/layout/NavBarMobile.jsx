@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Icon, Image, Menu, Sidebar } from 'semantic-ui-react';
 import LogoMenuItem from './LogoMenuItem';
+import UserProfile from './UserProfile';
 
 export const NavBarMobile = ({
   children,
@@ -43,12 +44,8 @@ export const NavBarMobile = ({
             <Icon name='sidebar' />
           </Menu.Item>
           <Menu.Menu position='right'>
-            {rightItems.map(item => (
-              // eslint-disable-next-line react/jsx-key
-              <Menu.Item {...item} />
-            ))}
+            <UserProfile />
           </Menu.Menu>
-          {rightIcons}
         </Menu>
         {children}
       </Sidebar.Pusher>
@@ -61,7 +58,6 @@ NavBarMobile.propTypes = {
   leftItems: PropTypes.array,
   onPusherClick: PropTypes.func,
   onToggle: PropTypes.func,
-  rightItems: PropTypes.array,
-  visible: PropTypes.bool,
-  rightIcons: PropTypes.object
+  rightItems: PropTypes.any,
+  visible: PropTypes.bool
 };
