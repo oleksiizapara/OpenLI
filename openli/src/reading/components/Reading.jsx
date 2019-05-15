@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import useReactRouter from 'use-react-router';
 
+import { Message, Divider } from 'semantic-ui-react';
+
 import { actions } from '../actions';
 import { selectors } from '../reducer';
 import { formStates } from 'readingMessage/actions';
@@ -10,8 +12,6 @@ import { selectors as speechRecognitionSelectors } from 'speechRecognition/reduc
 import Word from './Word';
 import Review from 'review/components/Review';
 import { Layout } from 'layout/Layout';
-import { leftItems } from 'layout/Layout';
-import UserProfile from 'layout/UserProfile';
 
 const Reading = () => {
   const dispatch = useDispatch();
@@ -22,6 +22,7 @@ const Reading = () => {
   }, [dispatch, match.params.id]);
 
   const formState = useSelector(state => selectors.formState(state));
+  const error = useSelector(state => selectors.error(state));
 
   const words = useSelector(state => selectors.words(state));
   const interimTranscript = useSelector(state =>
@@ -51,12 +52,10 @@ const Reading = () => {
           <p>Final Transcript : {finalTranscript}</p>
           <br />
           <p>Interim Transcript : {interimTranscript}</p>
-
-          <Review />
         </>
       );
     default:
-      return <div>error</div>;
+      return <Message>{error}</Message>;
   }
 };
 
@@ -64,6 +63,8 @@ export default function ReadingLayout() {
   return (
     <Layout>
       <Reading />
+      <Divider />
+      <Review />
     </Layout>
   );
 }

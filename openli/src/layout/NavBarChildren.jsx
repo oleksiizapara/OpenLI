@@ -8,5 +8,5 @@ export const NavBarChildren = ({ children }) => (
 );
 
 NavBarChildren.propTypes = {
-  children: PropTypes.object
+  children: PropTypes.any
 };

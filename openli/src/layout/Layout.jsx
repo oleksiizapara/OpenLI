@@ -28,6 +28,6 @@ export const Layout = ({ leftItems, children }) => {
 export default Layout;
 
 Layout.propTypes = {
-  children: PropTypes.object,
+  children: PropTypes.any,
   leftItems: PropTypes.any
 };

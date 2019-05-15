@@ -45,6 +45,6 @@ export const NavBar = ({ leftItems, rightItems, children, rightIcons }) => {
 NavBar.propTypes = {
   leftItems: PropTypes.array,
   rightItems: PropTypes.array,
-  children: PropTypes.object,
+  children: PropTypes.any,
   rightIcons: PropTypes.object
 };
