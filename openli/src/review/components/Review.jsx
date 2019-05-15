@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { Header, Table, Message } from 'semantic-ui-react';
+import { Header, Table, Message, Loader } from 'semantic-ui-react';
 
 import { formStates } from '../actions';
 import { selectors } from '../reducer';
@@ -25,7 +25,7 @@ const Review = () => {
       return (
         <>
           <ReviewHeader />
-          <Message content='Loading ...' />
+          <Loader active inline />
         </>
       );
     case formStates.LOADED_STATE:

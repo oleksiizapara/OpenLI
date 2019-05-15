@@ -14,13 +14,13 @@ export const actionTypes = {
 
 export const DEFAULT_STATE = 'DEFAULT_STATE';
 export const LOADED_STATE = 'LOADED_STATE';
-export const LOAD_STATE = 'LOAD_STATE';
+export const LOADING_STATE = 'LOADING_STATE';
 export const READING_STATE = 'READING_STATE';
 export const ERROR_STATE = 'ERROR_STATE';
 
 export const formStates = {
   DEFAULT_STATE,
-  LOAD_STATE,
+  LOADING_STATE,
   LOADED_STATE,
   READING_STATE,
   ERROR_STATE

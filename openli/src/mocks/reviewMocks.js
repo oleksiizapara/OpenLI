@@ -1,6 +1,15 @@
 import { formStates } from 'review/actions';
 
-export const reviewLoadedMock = {
+export const loadingMock = {
+  formState: formStates.LOADING_STATE
+};
+
+export const errorMock = {
+  formState: formStates.ERROR_STATE,
+  error: 'Review module does not working'
+};
+
+export const loadedMock = {
   formState: formStates.LOADED_STATE,
   error: '',
 

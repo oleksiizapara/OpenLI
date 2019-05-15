@@ -18,7 +18,7 @@ import * as settingsMocks from 'mocks/settingsMocks';
 const initialSpeechRecognitionState = {};
 const initialReadingState = readingMocks.loadedSample;
 const initialReadingMessageState = readingMessageMocks.loadedSampleMessage;
-const initialReviewState = reviewMocks.reviewLoadedMock;
+const initialReviewState = reviewMocks.loadedMock;
 const initialSettingsState = settingsMocks.authenticatedState;
 
 const mockedReducer = initialState => (state = initialState) => {
