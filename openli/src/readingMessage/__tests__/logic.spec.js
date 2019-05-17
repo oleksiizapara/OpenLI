@@ -12,14 +12,12 @@ import { errorMessages } from 'common/errorMessages';
 describe.each([
   [
     {
-      identifier: 'uniqueId',
       id: '',
       readingMessage: { id: '', title: '', content: '' },
       formState: formStates.DEFAULT_STATE,
       error: ''
     },
     {
-      identifier: 'uniqueId',
       id: 'notNull',
       readingMessage: { id: 'notNull', title: 'notNull', content: 'notNull' },
       formState: formStates.DEFAULT_STATE,
@@ -40,8 +38,7 @@ describe.each([
       logic
     });
 
-    const testIdentifier = 'testIdentifier';
-    store.dispatch(actions.create(testIdentifier));
+    store.dispatch(actions.create());
 
     await store.whenComplete(() => {
       const readingMessage = selectors.readingMessage(store.getState());
@@ -53,9 +50,6 @@ describe.each([
 
       const formState = selectors.formState(store.getState());
       expect(formState).toEqual(formStates.LOADED_STATE);
-
-      const identifier = selectors.identifier(store.getState());
-      expect(identifier).toEqual('testIdentifier');
     });
   });
 });
@@ -117,7 +111,6 @@ describe.each([
 test(`[redux-logic] load edit readingMessage does not exist`, async () => {
   const initialState = {
     [key]: {
-      identifier: 'uniqueId',
       id: '',
       readingMessage: { id: '', title: '', content: '' },
       formState: formStates.DEFAULT_STATE
@@ -132,13 +125,9 @@ test(`[redux-logic] load edit readingMessage does not exist`, async () => {
 
   queryHelper.getReadingMessage = jest.fn().mockResolvedValue(undefined);
 
-  const testIdentifier = 'testIdentifier';
-  store.dispatch(actions.load(testIdentifier, '1'));
+  store.dispatch(actions.load('1'));
 
   await store.whenComplete(() => {
-    const identifier = selectors.identifier(store.getState());
-    expect(identifier).toEqual('testIdentifier');
-
     const formState = selectors.formState(store.getState());
     expect(formState).toEqual(formStates.ERROR_STATE);
 

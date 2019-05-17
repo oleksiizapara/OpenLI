@@ -1,7 +1,6 @@
 import { formStates } from 'readingMessage/actions';
 
 export const loadedSampleMessage = {
-  identifier: 'uniqueId',
   id: 'uniqueIdReadingMessage',
   readingMessage: {
     id: 'uniqueIdReadingMessage',
@@ -12,4 +11,37 @@ export const loadedSampleMessage = {
   },
   formState: formStates.LOADED_STATE,
   error: ''
+};
+
+export const loadingSampleMessage = {
+  id: '',
+  readingMessage: {
+    id: '',
+    title: '',
+    content: ''
+  },
+  formState: formStates.LOADING_STATE,
+  error: ''
+};
+
+export const createSampleMessage = {
+  id: '',
+  readingMessage: {
+    id: '',
+    title: '',
+    content: ''
+  },
+  formState: formStates.LOADED_STATE,
+  error: ''
+};
+
+export const errorSampleMessage = {
+  id: '',
+  readingMessage: {
+    id: '',
+    title: '',
+    content: ''
+  },
+  formState: formStates.ERROR_STATE,
+  error: 'We got an error'
 };

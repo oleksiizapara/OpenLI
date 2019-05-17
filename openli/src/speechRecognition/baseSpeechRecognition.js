@@ -48,31 +48,31 @@ export default function baseSpeechRecognition(options) {
         };
       }
 
-      updateListening(listening) {
+      updateListening = listening => {
         if (this.state.listening !== listening) {
           this.setState({ listening });
           // eslint-disable-next-line react/prop-types
           this.props.dispatch(actions.listeningUpdated(listening));
         }
-      }
+      };
 
-      updateInterim(interimTranscript) {
+      updateInterim = interimTranscript => {
         if (this.state.interimTranscript !== interimTranscript) {
           this.setState({ interimTranscript });
           // eslint-disable-next-line react/prop-types
           this.props.dispatch(actions.interimUpdated(interimTranscript));
         }
-      }
+      };
 
-      updateFinal(finalTranscript) {
+      updateFinal = finalTranscript => {
         if (this.state.finalTranscript !== finalTranscript) {
           this.setState({ finalTranscript });
           // eslint-disable-next-line react/prop-types
           this.props.dispatch(actions.finalUpdated(finalTranscript));
         }
-      }
+      };
 
-      disconnect(disconnectType) {
+      disconnect = disconnectType => {
         if (recognition) {
           switch (disconnectType) {
             case 'ABORT':
@@ -89,9 +89,9 @@ export default function baseSpeechRecognition(options) {
               recognition.stop();
           }
         }
-      }
+      };
 
-      onRecognitionDisconnect() {
+      onRecognitionDisconnect = () => {
         listening = false;
         if (pauseAfterDisconnect) {
           this.updateListening(listening);
@@ -103,9 +103,9 @@ export default function baseSpeechRecognition(options) {
           }
         }
         pauseAfterDisconnect = false;
-      }
+      };
 
-      updateTranscript(event) {
+      updateTranscript = event => {
         interimTranscript = '';
         finalTranscript = '';
         for (let i = event.resultIndex; i < event.results.length; ++i) {
@@ -123,24 +123,24 @@ export default function baseSpeechRecognition(options) {
         }
         this.updateFinal(finalTranscript);
         this.updateInterim(interimTranscript);
-      }
+      };
 
-      concatTranscripts(...transcriptParts) {
+      concatTranscripts = (...transcriptParts) => {
         return transcriptParts
           .map(t => t.trim())
           .join(' ')
           .trim();
-      }
+      };
 
-      resetTranscript() {
+      resetTranscript = () => {
         interimTranscript = '';
         finalTranscript = '';
         this.disconnect('RESET');
         this.updateFinal(finalTranscript);
         this.updateInterim(interimTranscript);
-      }
+      };
 
-      startListening() {
+      startListening = () => {
         if (recognition && !listening) {
           if (!recognition.continuous) {
             this.resetTranscript();
@@ -153,19 +153,19 @@ export default function baseSpeechRecognition(options) {
           listening = true;
           this.updateListening(listening);
         }
-      }
+      };
 
-      abortListening() {
+      abortListening = () => {
         listening = false;
         this.updateListening(listening);
         this.disconnect('ABORT');
-      }
+      };
 
-      stopListening() {
+      stopListening = () => {
         listening = false;
         this.updateListening(listening);
         this.disconnect('STOP');
-      }
+      };
 
       render() {
         return (

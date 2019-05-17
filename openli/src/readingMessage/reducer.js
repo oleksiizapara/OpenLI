@@ -1,10 +1,8 @@
 import produce from 'immer';
-import uuid from 'uuid/v4';
 
 import { key, actionTypes, formStates } from './actions';
 
 export const selectors = {
-  identifier: state => state[key].identifier,
   id: state => state[key].id,
   readingMessage: state => state[key].readingMessage,
   formState: state => state[key].formState,
@@ -21,7 +19,6 @@ const initialReadingMessage = () => {
 };
 
 const initialState = {
-  identifier: uuid(),
   id: '',
   readingMessage: initialReadingMessage(),
   formState: formStates.DEFAULT_STATE,
@@ -40,7 +37,6 @@ export default function(state = initialState, action) {
         draft.formState = formStates.LOADING_STATE;
         break;
       case actionTypes.CREATE:
-        draft.identifier = action.payload.identifier;
         draft.id = '';
         draft.readingMessage = initialReadingMessage();
         draft.formState = formStates.LOADED_STATE;
@@ -59,6 +55,12 @@ export default function(state = initialState, action) {
       case actionTypes.ERROR:
         draft.formState = formStates.ERROR_STATE;
         draft.error = action.payload.error;
+        break;
+      case actionTypes.TO_DEFAULT:
+        draft.formState = formStates.default;
+        draft.error = '';
+        draft.id = '';
+        draft.readingMessage = initialReadingMessage();
         break;
       default:
         break;

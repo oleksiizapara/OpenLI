@@ -57,6 +57,17 @@ export const signConfirmSchema = yup.object().shape({
     .required()
 });
 
+export const createOrEditReadingMessageSchema = yup.object().shape({
+  title: yup
+    .string()
+    .max(255, errorMessages.readingMessageInvalidTitle)
+    .required(),
+  content: yup
+    .string()
+    .max(5000, errorMessages.readingMessageInvalidContent)
+    .required()
+});
+
 export const changePasswordSchema = yup.object().shape({
   newPassword: registerPasswordValidation
 });

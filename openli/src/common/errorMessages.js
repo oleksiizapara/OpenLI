@@ -12,6 +12,9 @@ const invalidAuthenticationCode = 'invalid authentication code';
 const speechRecognitionsIsNotSupported = 'Speech recognitions is not supported';
 const genericNotFoundMessage = 'Page was not found';
 
+const readingMessageInvalidTitle = 'invalid Title';
+const readingMessageInvalidContent = 'invalid Content';
+
 export const errorMessages = {
   readingMessageWasNotCreated,
   readingMessageWasNotUpdated,
@@ -24,5 +27,7 @@ export const errorMessages = {
   invalidLogin,
   invalidAuthenticationCode,
   speechRecognitionsIsNotSupported,
-  genericNotFoundMessage
+  genericNotFoundMessage,
+  readingMessageInvalidTitle,
+  readingMessageInvalidContent
 };

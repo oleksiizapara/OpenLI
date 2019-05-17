@@ -20,7 +20,7 @@ import * as controlMocks from 'mocks/controlMocks';
 
 const initialSpeechRecognitionState = {};
 const initialReadingState = readingMocks.readingSample;
-const initialReadingMessageState = readingMessageMocks.loadedSampleMessage;
+const initialReadingMessageState = readingMessageMocks.createSampleMessage;
 const initialReviewState = reviewMocks.loadedMock;
 const initialSettingsState = settingsMocks.authenticatedState;
 const initialControlState = controlMocks.defaultMock;

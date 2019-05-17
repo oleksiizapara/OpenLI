@@ -1,28 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import useReactRouter from 'use-react-router';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import Form from './Form';
 import { Formik } from 'formik';
 
-import { Message, Loader } from 'semantic-ui-react';
-
-import uuid from 'uuid/v4';
-
 import { selectors } from '../reducer';
 import { actions, formStates } from '../actions';
 import { createOrEditReadingMessageSchema } from 'common/validationSchema';
+import { Message } from 'semantic-ui-react';
 
-const Edit = () => {
+const Create = () => {
   const dispatch = useDispatch();
 
-  const { match } = useReactRouter();
-
   useEffect(() => {
-    dispatch(actions.load(match.params.id));
+    dispatch(actions.create());
     return () => dispatch(actions.toDefault());
-  }, [dispatch, match.params.id]);
+  }, [dispatch]);
 
   const id = useSelector(state => selectors.id(state));
 
@@ -54,4 +48,4 @@ const Edit = () => {
   }
 };
 
-export default Edit;
+export default Create;

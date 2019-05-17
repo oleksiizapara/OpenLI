@@ -1,5 +1,6 @@
 export const key = 'readingMessage';
 
+const TO_DEFAULT = `[${key}] TO_DEFAULT`;
 const CREATE = `[${key}] CREATE`;
 const LOAD = `[${key}] LOAD`;
 const LOADED = `[${key}] LOADED`;
@@ -9,6 +10,7 @@ const PUBLISHED = `[${key}] PUBLISHED`;
 const ERROR = `[${key}] ERROR`;
 
 export const actionTypes = {
+  TO_DEFAULT,
   CREATE,
   LOAD,
   LOADED,
@@ -34,48 +36,50 @@ export const formStates = {
   ERROR_STATE
 };
 
-export const load = (identifier, id) => ({
+const toDefault = () => ({
+  type: LOAD,
+  payload: {}
+});
+
+const load = id => ({
   type: LOAD,
   payload: {
-    identifier,
     id
   }
 });
 
-export const loaded = () => ({
+const loaded = () => ({
   type: LOADED,
   payload: {}
 });
 
-export const create = identifier => ({
+const create = () => ({
   type: CREATE,
-  payload: {
-    identifier
-  }
+  payload: {}
 });
 
-export const updated = readingMessage => ({
+const updated = readingMessage => ({
   type: UPDATED,
   payload: {
     readingMessage
   }
 });
 
-export const publish = readingMessage => ({
+const publish = readingMessage => ({
   type: PUBLISH,
   payload: {
     readingMessage
   }
 });
 
-export const published = readingMessage => ({
+const published = readingMessage => ({
   type: PUBLISHED,
   payload: {
     readingMessage
   }
 });
 
-export const error = error => ({
+const error = error => ({
   type: ERROR,
   payload: {
     error
@@ -83,6 +87,7 @@ export const error = error => ({
 });
 
 export const actions = {
+  toDefault,
   create,
   load,
   loaded,
