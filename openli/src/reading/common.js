@@ -3,8 +3,6 @@ import produce from 'immer';
 
 import { actionTypes as speechRecognitionActionTypes } from 'speechRecognition/actions';
 
-import { formStates } from './actions';
-
 export const splitTextOnWords = text => {
   if (text) {
     var viewWords = text.match(/[\w]+[^\w]*/g);

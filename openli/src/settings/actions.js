@@ -1,10 +1,11 @@
 export const key = 'settings';
 
-export const USER_UPDATED = `${key} USER_UPDATED`;
-export const USER_UNREGISTERED = `${key} USER_UNREGISTERED`;
+const USER_UPDATED = `[${key}] USER_UPDATED`;
+const USER_UNREGISTERED = `[${key}] USER_UNREGISTERED`;
 
 export const actionTypes = {
-  USER_UPDATED
+  USER_UPDATED,
+  USER_UNREGISTERED
 };
 
 const userUpdated = user => ({

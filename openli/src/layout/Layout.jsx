@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Dropdown } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import { NavBar } from './NavBar';

@@ -6,29 +6,26 @@ import { Button } from 'semantic-ui-react';
 import { actions } from '../actions';
 
 import { selectors as readingSelector } from 'reading/reducer';
-import { formStates as readingFormStates } from 'reading/actions';
 
 import * as constants from 'common/constants';
 
 const RecordingButton = () => {
-  const readingFormState = useSelector(state =>
-    readingSelector.formState(state)
-  );
+  const isReading = useSelector(state => readingSelector.isReading(state));
 
   const dispatch = useDispatch();
 
-  return readingFormState === readingFormStates.READING_STATE ? (
+  return !isReading ? (
     <Button
       circular
       icon='microphone'
-      color={constants.recordActiveColor}
+      color={constants.recordUnActiveColor}
       onClick={() => dispatch(actions.start())}
     />
   ) : (
     <Button
       circular
       icon='microphone'
-      color={constants.recordUnActiveColor}
+      color={constants.recordActiveColor}
       onClick={() => dispatch(actions.stop())}
     />
   );

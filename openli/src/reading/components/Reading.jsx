@@ -2,17 +2,17 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import useReactRouter from 'use-react-router';
 
-import { Message, Divider, Grid, Image, Header } from 'semantic-ui-react';
+import { Message, Divider, Grid, Header } from 'semantic-ui-react';
 
 import { actions, formStates } from '../actions';
 import { selectors } from '../reducer';
-import { selectors as speechRecognitionSelectors } from 'speechRecognition/reducer';
 
 import Word from './Word';
 import Review from 'review/components/Review';
 import { Layout } from 'layout/Layout';
 import ReadingHistory from './ReadingHistory';
 import ReadingControls from 'control/components/Control';
+import ChromeSpeechRecognition from 'speechRecognition/ChromeSpeechRecognition';
 
 const ReadingHeader = () => <Header as='h2'>Reading</Header>;
 
@@ -28,12 +28,6 @@ const Reading = () => {
   const error = useSelector(state => selectors.error(state));
 
   const words = useSelector(state => selectors.words(state));
-  const interimTranscript = useSelector(state =>
-    speechRecognitionSelectors.interimTranscript(state)
-  );
-  const finalTranscript = useSelector(state =>
-    speechRecognitionSelectors.finalTranscript(state)
-  );
 
   switch (formState) {
     case formStates.LOADING_STATE:
@@ -44,12 +38,7 @@ const Reading = () => {
       return (
         <>
           {words.map(word => (
-            <Word
-              key={word.index}
-              word={word}
-              interimTranscript={interimTranscript}
-              finalTranscript={finalTranscript}
-            />
+            <Word key={word.index} word={word} />
           ))}
         </>
       );
@@ -70,6 +59,7 @@ export default function ReadingLayout() {
             <Review />
           </Grid.Column>
           <Grid.Column width={4}>
+            <ChromeSpeechRecognition />
             <ReadingControls />
             <Divider />
             <ReadingHistory />

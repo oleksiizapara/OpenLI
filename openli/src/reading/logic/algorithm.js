@@ -2,14 +2,11 @@ import { createLogic } from 'redux-logic';
 import produce from 'immer';
 import Enumerable from 'linq';
 
-import { actionTypes, actions, formStates } from './actions';
+import { actionTypes, actions, formStates } from '../actions';
 
-import { selectors } from './reducer';
+import { selectors } from '../reducer';
 
-import {
-  actionTypes as speechRecognitionActionTypes,
-  resetRecording
-} from 'speechRecognition/actions';
+import { actionTypes as speechRecognitionActionTypes } from 'speechRecognition/actions';
 
 import * as queryHelper from 'common/queryHelper';
 import { errorMessages } from 'common/errorMessages';
@@ -21,7 +18,7 @@ import {
   validateRecognizedWords,
   calculateNotRecognisedWords,
   updateTranscript
-} from './common';
+} from '../common';
 
 export const loadWords = createLogic({
   type: actionTypes.LOAD,
@@ -182,13 +179,6 @@ export const recognitionInterimWords = createLogic({
     const recognisedWordIndexes = validateRecognizedWords(
       rawRecognisedWordIndexes
     );
-
-    if (
-      recognisedWordIndexes.length > 5 &&
-      Enumerable.from(recognisedWordIndexes).all(x => x == -1)
-    ) {
-      dispatch(resetRecording());
-    }
 
     const normalizedRecognisedWordIndexes = Enumerable.from(
       recognisedWordIndexes

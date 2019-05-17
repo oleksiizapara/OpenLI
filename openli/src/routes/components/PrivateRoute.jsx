@@ -8,12 +8,15 @@ import { selectors } from 'settings/reducer';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const user = useSelector(state => selectors.user(state));
+  const isLoaded = useSelector(state => selectors.isLoaded(state));
 
   return (
     <Route
       {...rest}
       render={props =>
-        user !== undefined ? (
+        !isLoaded ? (
+          <></>
+        ) : user ? (
           <Component {...props} />
         ) : (
           <Redirect to='/sign_in' />

@@ -1,51 +1,58 @@
-// unique key namespace used by combineReducers.
-// By convention it will match the directory structure to
-// make it easy to locate the src.
-// Also action types will prefix with the capitalized version
 export const key = 'speechRecognition';
 
-// action type constants
-export const FINAL_UPDATED = '[speechRecognition] FINAL_UPDATED';
-export const INTERIM_UPDATED = '[speechRecognition] INTERIM_UPDATED';
-export const LISTENING_UPDATED = '[speechRecognition] LISTENING_UPDATED';
-export const RESET_RECORDING = '[speechRecognition] RESET_RECORDING';
+const FINAL_UPDATED = `[${key}] FINAL_UPDATED`;
+const INTERIM_UPDATED = `[${key}] INTERIM_UPDATED`;
+const LISTENING_UPDATED = `[${key}] LISTENING_UPDATED`;
+const COMMAND_UPDATED = `{${key}} COMMAND_UPDATED`;
 
 export const actionTypes = {
   FINAL_UPDATED,
   INTERIM_UPDATED,
-  LISTENING_UPDATED
+  LISTENING_UPDATED,
+  COMMAND_UPDATED
 };
 
-// action creators
-export const finalUpdated = finalTranscript => ({
-  type: FINAL_UPDATED,
+const START = 'START_COMMAND';
+const STOP = 'STOP_COMMAND';
+const RESET = 'RESTART_COMMAND';
+
+export const commands = {
+  START,
+  STOP,
+  RESET
+};
+
+const finalUpdated = finalTranscript => ({
+  type: actionTypes.FINAL_UPDATED,
   payload: {
     finalTranscript
   }
 });
 
-export const interimUpdated = interimTranscript => ({
-  type: INTERIM_UPDATED,
+const interimUpdated = interimTranscript => ({
+  type: actionTypes.INTERIM_UPDATED,
   payload: {
     interimTranscript
   }
 });
 
-export const listeningUpdated = listening => ({
-  type: LISTENING_UPDATED,
+const listeningUpdated = listening => ({
+  type: actionTypes.LISTENING_UPDATED,
   payload: {
     listening
   }
 });
 
-export const resetRecording = () => ({
-  type: RESET_RECORDING,
-  payload: {}
+const commandUpdated = command => ({
+  type: actionTypes.COMMAND_UPDATED,
+  payload: {
+    command
+  }
 });
 
 export const actions = {
-  finalUpdated: finalUpdated,
-  interimUpdated: interimUpdated,
-  listeningUpdated: listeningUpdated,
-  resetRecording: resetRecording
+  finalUpdated,
+  interimUpdated,
+  listeningUpdated,
+  commandUpdated
 };

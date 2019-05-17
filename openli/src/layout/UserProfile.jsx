@@ -10,6 +10,8 @@ import { Menu } from 'semantic-ui-react';
 import { Auth } from 'aws-amplify';
 
 export const UserProfile = () => {
+  const { history } = useReactRouter();
+
   const isLoaded = useSelector(state => selectors.isLoaded(state));
   const user = useSelector(state => selectors.user(state));
 
@@ -27,6 +29,7 @@ export const UserProfile = () => {
           onClick={async () => {
             try {
               await Auth.signOut();
+              history.push('/');
             } catch (exception) {
               console.log(exception);
             }

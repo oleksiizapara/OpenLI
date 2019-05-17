@@ -10,12 +10,15 @@ import {
 import { Link } from 'react-router-dom';
 
 import { Formik } from 'formik';
+import useReactRouter from 'use-react-router';
 
 import { signInSchema } from 'common/validationSchema';
 
 import { Auth } from 'aws-amplify';
 
 const SignIn = () => {
+  const { history } = useReactRouter();
+
   return (
     <div className='login-form'>
       <style>
@@ -43,6 +46,7 @@ const SignIn = () => {
             onSubmit={async (values, actions) => {
               try {
                 await Auth.signIn(values.email, values.password);
+                history.push('/');
               } catch (errors) {
                 actions.setErrors({ response: errors.message });
               } finally {
@@ -100,7 +104,7 @@ const SignIn = () => {
                     <Message error content={errors.password} />
                   )}
 
-                  <Button fluid size='large'>
+                  <Button fluid size='large' type='submit'>
                     Login
                   </Button>
 

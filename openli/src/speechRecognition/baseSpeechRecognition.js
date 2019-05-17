@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { listeningUpdated, interimUpdated, finalUpdated } from './actions';
-import { selectors as speechSelector } from './reducer';
+import { actions } from './actions';
+
 export default function baseSpeechRecognition(options) {
   const SpeechRecognitionInner = function(WrappedComponent) {
     const BrowserSpeechRecognition =
@@ -49,20 +49,23 @@ export default function baseSpeechRecognition(options) {
       }
 
       updateListening(listening) {
-        if (this.props.listening !== listening) {
-          this.props.dispatch(listeningUpdated(listening));
+        if (this.state.listening !== listening) {
+          this.setState({ listening });
+          this.props.dispatch(actions.listeningUpdated(listening));
         }
       }
 
       updateInterim(interimTranscript) {
-        if (this.props.interimTranscript !== interimTranscript) {
-          this.props.dispatch(interimUpdated(interimTranscript));
+        if (this.state.interimTranscript !== interimTranscript) {
+          this.setState({ interimTranscript });
+          this.props.dispatch(actions.interimUpdated(interimTranscript));
         }
       }
 
       updateFinal(finalTranscript) {
-        if (this.props.finalTranscript !== finalTranscript) {
-          this.props.dispatch(finalUpdated(finalTranscript));
+        if (this.state.finalTranscript !== finalTranscript) {
+          this.setState({ finalTranscript });
+          this.props.dispatch(actions.finalUpdated(finalTranscript));
         }
       }
 
@@ -176,16 +179,7 @@ export default function baseSpeechRecognition(options) {
       }
     }
 
-    function mapStateToProps(state) {
-      return {
-        ...state,
-        listening: speechSelector.listening(state),
-        finalTranscript: speechSelector.finalTranscript(state),
-        interimTranscript: speechSelector.interimTranscript(state)
-      };
-    }
-
-    return connect(mapStateToProps)(SpeechRecognitionContainer);
+    return connect()(SpeechRecognitionContainer);
   };
 
   if (typeof options === 'function') {

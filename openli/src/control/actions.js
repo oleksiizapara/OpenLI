@@ -78,8 +78,8 @@ export const error = error => ({
 });
 
 export const actions = {
-  startReading: start,
-  stopReading: stop,
-  resetReading: reset,
+  start,
+  stop,
+  reset,
   error
 };

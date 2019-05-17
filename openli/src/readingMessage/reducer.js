@@ -60,6 +60,8 @@ export default function(state = initialState, action) {
         draft.formState = formStates.ERROR_STATE;
         draft.error = action.payload.error;
         break;
+      default:
+        break;
     }
   });
 }

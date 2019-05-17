@@ -1,40 +1,27 @@
 import produce from 'immer';
 
-import {
-  key,
-  FINAL_UPDATED,
-  INTERIM_UPDATED,
-  LISTENING_UPDATED,
-  RESET_RECORDING
-} from './actions';
+import { key, actionTypes } from './actions';
 
 export const selectors = {
-  finalTranscript: state => state[key].finalTranscript,
-  interimTranscript: state => state[key].interimTranscript,
-  listening: state => state[key].listening
+  listening: state => state[key].listening,
+  command: state => state[key].command
 };
 
 const initialState = {
-  finalTranscript: '',
-  interimTranscript: '',
-  listening: false
+  listening: false,
+  command: undefined
 };
 
 export default function(state = initialState, action) {
   return produce(state, draft => {
     switch (action.type) {
-      case FINAL_UPDATED:
-        draft.finalTranscript = action.payload.finalTranscript;
-        break;
-      case INTERIM_UPDATED:
-        draft.interimTranscript = action.payload.interimTranscript;
-        break;
-      case LISTENING_UPDATED:
+      case actionTypes.LISTENING_UPDATED:
         draft.listening = action.payload.listening;
         break;
-      case RESET_RECORDING:
-        draft.finalTranscript = '';
-        draft.interimTranscript = '';
+      case actionTypes.COMMAND_UPDATED:
+        draft.command = { name: action.payload.command };
+        break;
+      default:
         break;
     }
   });

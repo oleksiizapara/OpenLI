@@ -1,7 +1,7 @@
 import React from 'react';
-import { Header, Message, Divider, Grid, Image } from 'semantic-ui-react';
+import { Header } from 'semantic-ui-react';
 
-import ReadingSearchItem from './ReadingSearchItem';
+// import ReadingSearchItem from './ReadingSearchItem';
 import Layout from 'layout/Layout';
 
 const ReadingSearchHeader = () => <Header as='h2'>Reading Search</Header>;

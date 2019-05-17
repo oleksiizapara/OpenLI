@@ -2,7 +2,7 @@ import { createMockStore } from 'redux-logic-test';
 
 import { key, actions, formStates } from '../actions';
 import { selectors } from '../reducer';
-import logic from '../logic';
+import logic from '../logic/algorithm';
 
 import { actions as speechRecognitionActions } from 'speechRecognition/actions';
 import reducer from 'rootReducer';
@@ -257,44 +257,6 @@ describe.each([
     });
   }
 );
-
-describe.each([
-  [
-    [
-      { index: 0, word: 'e' },
-      { index: 1, word: 'e' },
-      { index: 2, word: 'e' },
-      { index: 3, word: 'e' },
-      { index: 4, word: 'e' },
-      { index: 5, word: 'e' }
-    ],
-    'a b c d l k'
-  ]
-])('[redux-logic] resetRecording', (baseWords, interimText) => {
-  test(`[redux-logic] resetRecording ${interimText}`, async () => {
-    const initialState = {
-      [key]: {
-        words: baseWords,
-        formState: formStates.READING_STATE
-      }
-    };
-
-    const store = createMockStore({
-      initialState,
-      reducer,
-      logic
-    });
-
-    store.dispatch(speechRecognitionActions.interimUpdated(interimText));
-
-    await store.whenComplete(() => {
-      const interimText = speechRecognitionSelector.interimTranscript(
-        store.getState()
-      );
-      expect(interimText).toEqual('');
-    });
-  });
-});
 
 test(`[redux-logic] UTCTime added on final recognised words `, async () => {
   const initialState = {
