@@ -51,6 +51,7 @@ export default function baseSpeechRecognition(options) {
       updateListening(listening) {
         if (this.state.listening !== listening) {
           this.setState({ listening });
+          // eslint-disable-next-line react/prop-types
           this.props.dispatch(actions.listeningUpdated(listening));
         }
       }
@@ -58,6 +59,7 @@ export default function baseSpeechRecognition(options) {
       updateInterim(interimTranscript) {
         if (this.state.interimTranscript !== interimTranscript) {
           this.setState({ interimTranscript });
+          // eslint-disable-next-line react/prop-types
           this.props.dispatch(actions.interimUpdated(interimTranscript));
         }
       }
@@ -65,11 +67,12 @@ export default function baseSpeechRecognition(options) {
       updateFinal(finalTranscript) {
         if (this.state.finalTranscript !== finalTranscript) {
           this.setState({ finalTranscript });
+          // eslint-disable-next-line react/prop-types
           this.props.dispatch(actions.finalUpdated(finalTranscript));
         }
       }
 
-      disconnect = disconnectType => {
+      disconnect(disconnectType) {
         if (recognition) {
           switch (disconnectType) {
             case 'ABORT':
@@ -86,7 +89,7 @@ export default function baseSpeechRecognition(options) {
               recognition.stop();
           }
         }
-      };
+      }
 
       onRecognitionDisconnect() {
         listening = false;
@@ -129,15 +132,15 @@ export default function baseSpeechRecognition(options) {
           .trim();
       }
 
-      resetTranscript = () => {
+      resetTranscript() {
         interimTranscript = '';
         finalTranscript = '';
         this.disconnect('RESET');
         this.updateFinal(finalTranscript);
         this.updateInterim(interimTranscript);
-      };
+      }
 
-      startListening = () => {
+      startListening() {
         if (recognition && !listening) {
           if (!recognition.continuous) {
             this.resetTranscript();
@@ -150,19 +153,19 @@ export default function baseSpeechRecognition(options) {
           listening = true;
           this.updateListening(listening);
         }
-      };
+      }
 
-      abortListening = () => {
+      abortListening() {
         listening = false;
         this.updateListening(listening);
         this.disconnect('ABORT');
-      };
+      }
 
-      stopListening = () => {
+      stopListening() {
         listening = false;
         this.updateListening(listening);
         this.disconnect('STOP');
-      };
+      }
 
       render() {
         return (

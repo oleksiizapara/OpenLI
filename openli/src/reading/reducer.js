@@ -35,7 +35,7 @@ export default function(state = initialState, action) {
       case actionTypes.LOAD:
         draft.formState = formStates.LOADING_STATE;
         break;
-      case actionTypes.UPDATE_READING_MESSAGE:
+      case actionTypes.UPDATE_readingMessageWasNotFound:
         draft.readingMessage = action.payload.readingMessage;
         break;
       case actionTypes.UPDATE_WORDS:

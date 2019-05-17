@@ -6,6 +6,10 @@ import App, { MockedApp } from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { Analytics } from '../node_modules/aws-amplify/lib/index';
 
+window.LOG_LEVEL = process.env.REACT_APP_LOG_LEVEL
+  ? process.env.REACT_APP_LOG_LEVEL
+  : 'ERROR';
+
 if (process.env.NODE_ENV !== 'production') {
   Analytics.disable();
 }

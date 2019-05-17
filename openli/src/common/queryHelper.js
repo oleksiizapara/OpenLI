@@ -2,6 +2,7 @@ import * as queries from 'graphql/queries';
 import * as customQueries from 'graphql_custom/queries';
 
 import { graphqlOperation, Analytics, API } from 'aws-amplify';
+import logger from './logger';
 
 const assertErrors = response => {
   if (response && response.errors && response.errors.length > 0) {
@@ -23,7 +24,7 @@ export const getUser = async username => {
         error: e.message
       }
     });
-    console.log(e);
+    logger.debug('GetUserError', e);
   }
 };
 
@@ -41,6 +42,6 @@ export const getReadingMessage = async id => {
         error: e.message
       }
     });
-    console.log(e);
+    logger.debug('getReadingMessageError', e);
   }
 };

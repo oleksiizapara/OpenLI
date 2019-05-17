@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { Auth } from 'aws-amplify';
 
 import { actions } from '../actions';
+import logger from 'common/logger';
 
 const reduxListener = dispatch => async data => {
   switch (data.payload.event) {
@@ -36,10 +37,10 @@ const reduxListener = dispatch => async data => {
 
 // {id: "ap-southeast-2:b121c590-ff4b-4df7-aeff-698cbc1e07aa", username: "7acbba31-78be-4901-9cb4-6293b0744611", attributes: {…}}
 // attributes:
-// email: "skyvolga@gmail.com"
+// email: "ivan.smith@mail.com"
 // email_verified: true
-// family_name: "Zapara"
-// name: "Oleksii"
+// family_name: "Smith"
+// name: "Ivan"
 // sub: "7acbba31-78be-4901-9cb4-6293b0744611"
 // __proto__: Object
 // id: "ap-southeast-2:b121c590-ff4b-4df7-aeff-698cbc1e07aa"
@@ -80,6 +81,7 @@ const AuthRedux = () => {
         );
       } catch (exception) {
         dispatch(actions.userUnregistered());
+        logger.debug(exception);
       }
     };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Field, Form as FormikForm } from 'formik';
+import { Form as FormikForm } from 'formik';
 
 // import * as Yup from 'yup';
 
@@ -33,7 +33,7 @@ export default function Form(props) {
               name='title'
               label='Title'
               fullWidth
-              autoComplete='new_reading_message title'
+              autoComplete='new_readingMessageWasNotFound title'
               component={TextField}
             />
           </Grid>
@@ -46,7 +46,7 @@ export default function Form(props) {
               multiline
               rows={3}
               rowsMax={12}
-              autoComplete='new_reading_message content'
+              autoComplete='new_readingMessageWasNotFound content'
               component={TextField}
             />
           </Grid>
@@ -56,7 +56,7 @@ export default function Form(props) {
               name='tags'
               label='Tags'
               fullWidth
-              autoComplete='new_reading_message tags'
+              autoComplete='new_readingMessageWasNotFound tags'
               component={TextField}
             />
           </Grid>

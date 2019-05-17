@@ -6,7 +6,6 @@ import logic from '../logic/algorithm';
 
 import { actions as speechRecognitionActions } from 'speechRecognition/actions';
 import reducer from 'rootReducer';
-import { selectors as speechRecognitionSelector } from 'speechRecognition/reducer';
 
 import * as queryHelper from 'common/queryHelper';
 import { errorMessages } from 'common/errorMessages';
@@ -79,7 +78,7 @@ test(`[redux-logic] api return exception`, async () => {
     expect(formState).toEqual(formStates.ERROR_STATE);
 
     const error = selectors.error(store.getState());
-    expect(error).toEqual(errorMessages.READING_MESSAGE_WAS_NOT_FOUND);
+    expect(error).toEqual(errorMessages.readingMessageWasNotFound);
   });
 });
 

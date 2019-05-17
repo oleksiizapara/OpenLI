@@ -21,7 +21,7 @@ export const loadingReadingMessage = createLogic({
     const readingMessage = await queryHelper.getReadingMessage(id);
 
     if (!readingMessage) {
-      dispatch(actions.error(errorMessages.READING_MESSAGE_WAS_NOT_FOUND));
+      dispatch(actions.error(errorMessages.readingMessageWasNotFound));
       done();
       return;
     }
@@ -49,7 +49,7 @@ export const publishReadingMessage = createLogic({
       );
 
       if (!newReadingMessage) {
-        dispatch(actions.error(errorMessages.READING_MESSAGE_WAS_NOT_UPDATED));
+        dispatch(actions.error(errorMessages.readingMessageWasNotUpdated));
         done();
         return;
       }
@@ -62,7 +62,7 @@ export const publishReadingMessage = createLogic({
       );
 
       if (!newReadingMessage) {
-        dispatch(actions.error(errorMessages.READING_MESSAGE_WAS_NOT_UPDATED));
+        dispatch(actions.error(errorMessages.readingMessageWasNotCreated));
         done();
         return;
       }

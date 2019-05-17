@@ -1,5 +1,6 @@
-const READING_MESSAGE_WAS_NOT_CREATED = 'Reading message was not created.';
-const READING_MESSAGE_WAS_NOT_FOUND = 'Reading message was not found';
+const readingMessageWasNotCreated = 'Reading message was not created.';
+const readingMessageWasNotUpdated = 'Reading message was not updated.';
+const readingMessageWasNotFound = 'Reading message was not found';
 
 const emailNotLongEnough = 'email must be at least 3 characters';
 const passwordNotLongEnough = 'password must be at least 3 characters';
@@ -12,8 +13,9 @@ const speechRecognitionsIsNotSupported = 'Speech recognitions is not supported';
 const genericNotFoundMessage = 'Page was not found';
 
 export const errorMessages = {
-  READING_MESSAGE_WAS_NOT_CREATED,
-  READING_MESSAGE_WAS_NOT_FOUND,
+  readingMessageWasNotCreated,
+  readingMessageWasNotUpdated,
+  readingMessageWasNotFound,
   emailNotLongEnough,
   passwordNotLongEnough,
   invalidEmail,

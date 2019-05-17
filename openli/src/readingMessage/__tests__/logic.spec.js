@@ -143,7 +143,7 @@ test(`[redux-logic] load edit readingMessage does not exist`, async () => {
     expect(formState).toEqual(formStates.ERROR_STATE);
 
     const error = selectors.error(store.getState());
-    expect(error).toEqual(errorMessages.READING_MESSAGE_WAS_NOT_FOUND);
+    expect(error).toEqual(errorMessages.readingMessageWasNotFound);
   });
 });
 
@@ -226,7 +226,7 @@ test(`[redux-logic] publish created readingMessage error API`, async () => {
     expect(formState).toEqual(formStates.ERROR_STATE);
 
     const error = selectors.error(store.getState());
-    expect(error).toEqual(errorMessages.READING_MESSAGE_WAS_NOT_UPDATED);
+    expect(error).toEqual(errorMessages.readingMessageWasNotCreated);
   });
 });
 
@@ -321,6 +321,6 @@ test(`[redux-logic] publish updated readingMessage error API`, async () => {
     expect(formState).toEqual(formStates.ERROR_STATE);
 
     const error = selectors.error(store.getState());
-    expect(error).toEqual(errorMessages.READING_MESSAGE_WAS_NOT_UPDATED);
+    expect(error).toEqual(errorMessages.readingMessageWasNotUpdated);
   });
 });
