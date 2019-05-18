@@ -469,6 +469,7 @@ const loadedSampleHistoryTranscript = {
   lastRecognisedWord: undefined,
   recognisedWords: [{ index: 0, word: 'a' }],
   transcript: {
+    index: 0,
     content: 'b',
     lastRecognisedWord: { index: 0, isFinalRecognised: true, word: 'a' },
     recognisedWords: [{ index: 1, word: 'b' }],
@@ -477,12 +478,73 @@ const loadedSampleHistoryTranscript = {
   transcriptIndex: 1,
   transcriptType: 'final',
   transcripts: [
-    { content: 'a', transcriptType: 'final' },
     {
+      index: 0,
+      content: 'a',
+      transcriptType: 'final'
+    },
+    {
+      index: 1,
       content: 'b',
       lastRecognisedWord: { index: 0, isFinalRecognised: true, word: 'a' },
       recognisedWords: [{ index: 1, word: 'b' }],
       transcriptType: 'final'
+    },
+    {
+      index: 2,
+      content: 'b',
+      lastRecognisedWord: { index: 0, isFinalRecognised: true, word: 'a' },
+      recognisedWords: [{ index: 1, word: 'b' }],
+      transcriptType: 'final'
+    },
+    {
+      index: 3,
+      content: 'b',
+      lastRecognisedWord: { index: 0, isFinalRecognised: true, word: 'a' },
+      recognisedWords: [{ index: 1, word: 'b' }],
+      transcriptType: 'final'
+    },
+    {
+      index: 4,
+      content: 'b',
+      lastRecognisedWord: { index: 0, isFinalRecognised: true, word: 'a' },
+      recognisedWords: [{ index: 1, word: 'b' }],
+      transcriptType: 'final'
+    },
+    {
+      index: 5,
+      content: 'b',
+      lastRecognisedWord: { index: 0, isFinalRecognised: true, word: 'a' },
+      recognisedWords: [{ index: 1, word: 'b' }],
+      transcriptType: 'final'
+    },
+    {
+      index: 6,
+      content: 'b',
+      lastRecognisedWord: { index: 0, isFinalRecognised: true, word: 'a' },
+      recognisedWords: [{ index: 1, word: 'b' }],
+      transcriptType: 'final'
+    },
+    {
+      index: 7,
+      content: 'b',
+      lastRecognisedWord: { index: 0, isFinalRecognised: true, word: 'a' },
+      recognisedWords: [{ index: 1, word: 'b' }],
+      transcriptType: 'interim'
+    },
+    {
+      index: 8,
+      content: 'b',
+      lastRecognisedWord: { index: 0, isFinalRecognised: true, word: 'a' },
+      recognisedWords: [{ index: 1, word: 'b' }],
+      transcriptType: 'interim'
+    },
+    {
+      index: 9,
+      content: 'ff',
+      lastRecognisedWord: { index: 0, isFinalRecognised: true, word: 'a' },
+      recognisedWords: [{ index: 1, word: 'b' }],
+      transcriptType: 'interim'
     }
   ]
 };

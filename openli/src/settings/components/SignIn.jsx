@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+
 import {
   Grid,
   Header,
@@ -16,8 +18,11 @@ import { signInSchema } from 'common/validationSchema';
 
 import { Auth } from 'aws-amplify';
 
+import { actions as settingsActions } from 'settings/actions';
+
 const SignIn = () => {
   const { history } = useReactRouter();
+  const dispatch = useDispatch();
 
   return (
     <div className='login-form'>
@@ -47,6 +52,7 @@ const SignIn = () => {
               try {
                 await Auth.signIn(values.email, values.password);
                 history.push('/');
+                dispatch(settingsActions.userFetch());
               } catch (errors) {
                 actions.setErrors({ response: errors.message });
               } finally {

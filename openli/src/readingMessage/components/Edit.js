@@ -13,6 +13,8 @@ import uuid from 'uuid/v4';
 import { selectors } from '../reducer';
 import { actions, formStates } from '../actions';
 import { createOrEditReadingMessageSchema } from 'common/validationSchema';
+import { of } from 'zen-observable';
+import logger from 'common/logger';
 
 const Edit = () => {
   const dispatch = useDispatch();
@@ -35,6 +37,8 @@ const Edit = () => {
     formState == formStates.LOADING_STATE ||
     formState == formStates.PUBLISHING_STATE;
 
+  logger.debug({ loading, readingMessage, formState });
+
   switch (formState) {
     case formStates.PUBLISHED_STATE:
       return <Redirect to={{ pathname: `/reading/${id}` }} />;
@@ -43,6 +47,7 @@ const Edit = () => {
     default:
       return (
         <Formik
+          enableReinitialize
           render={props => <Form {...props} loading={loading} />}
           initialValues={readingMessage}
           validationSchema={createOrEditReadingMessageSchema}

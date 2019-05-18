@@ -37,6 +37,7 @@ const Create = () => {
     default:
       return (
         <Formik
+          enableReinitialize
           render={props => <Form {...props} loading={loading} />}
           initialValues={readingMessage}
           validationSchema={createOrEditReadingMessageSchema}

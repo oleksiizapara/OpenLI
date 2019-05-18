@@ -14,9 +14,9 @@ export const selectors = {
 
 const initTranscriptState = () => {
   return {
-    transcripts: [],
-    transcriptIndex: undefined,
-    transcript: undefined
+    groups: [],
+    transcript: undefined,
+    lastRecognisedWord: undefined
   };
 };
 

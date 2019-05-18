@@ -38,6 +38,14 @@ export const formStates = {
   ERROR_STATE
 };
 
+const final = 'final';
+const interim = 'interim;';
+
+export const transcriptTypes = {
+  final,
+  interim
+};
+
 export const load = id => ({
   type: actionTypes.LOAD,
   payload: {

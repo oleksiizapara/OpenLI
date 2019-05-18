@@ -173,6 +173,7 @@ export default function baseSpeechRecognition(options) {
             startListening={this.startListening}
             abortListening={this.abortListening}
             stopListening={this.stopListening}
+            resetTranscript={this.resetTranscript}
             recognition={recognition}
             browserSupportsSpeechRecognition={browserSupportsSpeechRecognition}
             {...this.state}

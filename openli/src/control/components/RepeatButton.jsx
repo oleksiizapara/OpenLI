@@ -14,7 +14,7 @@ const RepeatButton = () => {
       circular
       icon='repeat'
       color={constants.controlDefaultColor}
-      onClick={() => dispatch(actions.repeat())}
+      onClick={() => dispatch(actions.reset())}
     />
   );
 };

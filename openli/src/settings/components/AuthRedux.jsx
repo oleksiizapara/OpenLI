@@ -52,40 +52,7 @@ const AuthRedux = () => {
   Hub.listen('auth', reduxListener(dispatch));
 
   useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const userInfo = await Auth.currentUserInfo();
-        if (!userInfo) {
-          dispatch(actions.userUnregistered());
-          return;
-        }
-
-        const {
-          username: id,
-          attributes: {
-            name,
-            family_name: familyName,
-            email,
-            email_verified: emailVerified
-          }
-        } = userInfo;
-
-        dispatch(
-          actions.userUpdated({
-            id,
-            name,
-            familyName,
-            email,
-            emailVerified
-          })
-        );
-      } catch (exception) {
-        dispatch(actions.userUnregistered());
-        logger.debug(exception);
-      }
-    };
-
-    fetchUserInfo();
+    dispatch(actions.userFetch());
   }, [dispatch]);
 
   return <></>;

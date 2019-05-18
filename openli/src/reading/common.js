@@ -1,7 +1,9 @@
 import Enumerable from 'linq';
 import produce from 'immer';
+import uuid from 'uuid/v4';
 
 import { actionTypes as speechRecognitionActionTypes } from 'speechRecognition/actions';
+import { transcriptTypes } from './actions';
 
 export const splitTextOnWords = text => {
   if (text) {
@@ -127,36 +129,52 @@ export const updateTranscript = (
   var newTranscript = undefined;
   if (action.type === speechRecognitionActionTypes.FINAL_UPDATED) {
     newTranscript = {
-      transcriptType: 'final',
+      type: transcriptTypes.final,
       content: action.payload.finalTranscript,
       lastRecognisedWord,
-      recognisedWords
+      recognisedWords,
+      key: uuid()
     };
   }
   if (action.type === speechRecognitionActionTypes.INTERIM_UPDATED) {
     newTranscript = {
-      transcriptType: 'interim',
+      type: transcriptTypes.interim,
       content: action.payload.interimTranscript,
       lastRecognisedWord,
-      recognisedWords
+      recognisedWords,
+      key: uuid()
     };
   }
-  if (newTranscript) {
-    if (!transcript) {
-      return {
-        transcripts: [newTranscript],
-        transcriptIndex: 0,
-        transcript: newTranscript
-      };
-    } else {
-      const updatedTranscript = produce(transcript, draft => {
-        draft.transcripts.push(newTranscript);
-        draft.transcriptIndex = draft.transcripts.length - 1;
-        draft.transcript = newTranscript;
-      });
-      return updatedTranscript;
-    }
+
+  if (transcript && newTranscript && newTranscript.content !== '') {
+    const updatedTranscript = produce(transcript, draft => {
+      addTranscriptToGroup(newTranscript, draft.groups);
+      draft.transcript = newTranscript;
+      draft.lastRecognisedWord = lastRecognisedWord;
+      draft.recognisedWords = recognisedWords;
+    });
+    return updatedTranscript;
   }
 
   return undefined;
+};
+
+export const addTranscriptToGroup = (newTranscript, groups) => {
+  if (
+    newTranscript.type === transcriptTypes.interim &&
+    (groups.length === 0 || groups[groups.length - 1].final)
+  ) {
+    groups.push({ index: groups.length, interim: [newTranscript] });
+  } else if (newTranscript.type === transcriptTypes.interim) {
+    groups[groups.length - 1].interim.push(newTranscript);
+  } else if (
+    newTranscript.type === transcriptTypes.final &&
+    !groups[groups.length - 1].final
+  ) {
+    groups[groups.length - 1].final = newTranscript;
+  } else if (newTranscript.type === transcriptTypes.final) {
+    groups.push({ index: groups.length, final: [newTranscript] });
+  }
+
+  return groups;
 };

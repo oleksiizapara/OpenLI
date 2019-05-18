@@ -19,6 +19,7 @@ import {
   calculateNotRecognisedWords,
   updateTranscript
 } from '../common';
+import logger from 'common/logger';
 
 export const loadWords = createLogic({
   type: actionTypes.LOAD,
@@ -136,6 +137,8 @@ export const recognitionFinalWords = createLogic({
       onlyUpdatedWords
     );
 
+    logger.debug(updatedTranscript);
+
     if (updatedTranscript) {
       dispatch(actions.updateTranscript(updatedTranscript));
     }
@@ -223,6 +226,8 @@ export const recognitionInterimWords = createLogic({
       lastRecognisedWord,
       onlyUpdatedWords
     );
+
+    logger.debug(updatedTranscript);
 
     if (updatedTranscript) {
       dispatch(actions.updateTranscript(updatedTranscript));

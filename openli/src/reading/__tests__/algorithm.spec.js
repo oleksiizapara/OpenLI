@@ -420,33 +420,35 @@ describe.each([
 describe.each([
   [
     {
-      transcript: undefined,
-      formState: formStates.READING_STATE
-    },
-    'a',
-    {
-      transcripts: [{ transcriptType: 'final', content: 'a' }],
-      transcriptIndex: 0,
-      transcript: { transcriptType: 'final', content: 'a' }
-    }
-  ],
-  [
-    {
       transcript: {
-        transcripts: [{ transcriptType: 'final', content: 'a' }],
-        transcriptIndex: 0,
-        transcript: { transcriptType: 'final', content: 'a' }
+        groups: [{ interim: [{ type: 'interim', content: 'a' }] }],
+        transcript: { transcriptType: 'interim', content: 'a' }
       },
       formState: formStates.READING_STATE
     },
     'b',
     {
-      transcripts: [
-        { transcriptType: 'final', content: 'a' },
-        { transcriptType: 'final', content: 'b' }
+      groups: [
+        {
+          interim: [{ type: 'interim', content: 'a' }],
+          final: { type: 'final', content: 'b' }
+        }
       ],
-      transcriptIndex: 1,
-      transcript: { transcriptType: 'final', content: 'b' }
+      transcript: { type: 'final', content: 'b' }
+    }
+  ],
+  [
+    {
+      transcript: {
+        groups: [],
+        transcript: undefined
+      },
+      formState: formStates.READING_STATE
+    },
+    '',
+    {
+      groups: [],
+      transcript: undefined
     }
   ]
 ])(
@@ -476,33 +478,75 @@ describe.each([
 describe.each([
   [
     {
-      transcript: undefined,
+      transcript: { groups: [], transcript: undefined },
       formState: formStates.READING_STATE
     },
     'a',
     {
-      transcripts: [{ transcriptType: 'interim', content: 'a' }],
-      transcriptIndex: 0,
-      transcript: { transcriptType: 'interim', content: 'a' }
+      groups: [
+        {
+          interim: [
+            {
+              content: 'a',
+              type: 'interim;'
+            }
+          ]
+        }
+      ],
+      transcript: {
+        content: 'a',
+        type: 'interim;'
+      }
     }
   ],
   [
     {
       transcript: {
-        transcripts: [{ transcriptType: 'interim', content: 'a' }],
-        transcriptIndex: 0,
-        transcript: { transcriptType: 'interim', content: 'a' }
+        groups: [
+          {
+            interim: [
+              {
+                content: 'a',
+                type: 'interim;'
+              }
+            ]
+          }
+        ],
+        transcript: {
+          content: 'a',
+          type: 'interim;'
+        }
       },
       formState: formStates.READING_STATE
     },
     'b',
     {
-      transcripts: [
-        { transcriptType: 'interim', content: 'a' },
-        { transcriptType: 'interim', content: 'b' }
+      groups: [
+        {
+          interim: [
+            { content: 'a', type: 'interim;' },
+            { content: 'b', type: 'interim;' }
+          ]
+        }
       ],
-      transcriptIndex: 1,
-      transcript: { transcriptType: 'interim', content: 'b' }
+      transcript: {
+        content: 'b',
+        type: 'interim;'
+      }
+    }
+  ],
+  [
+    {
+      transcript: {
+        groups: [],
+        transcript: undefined
+      },
+      formState: formStates.READING_STATE
+    },
+    '',
+    {
+      groups: [],
+      transcript: undefined
     }
   ]
 ])(
@@ -538,10 +582,10 @@ test(`[redux-logic] final transcript lastRecognisedWordIndex will be updated dur
       ],
       transcript: {
         content: 'a',
-        lastRecognisedWord: undefined,
+        lastRecognisedWord: { index: 0, word: 'a', isFinalRecognised: true },
         recognisedWords: [{ index: 0, word: 'a' }],
         transcriptType: 'final',
-        transcripts: [{ transcriptType: 'final', content: 'a' }]
+        groups: [{ index: 0, final: { transcriptType: 'final', content: 'a' } }]
       },
       formState: formStates.READING_STATE
     }
@@ -559,25 +603,33 @@ test(`[redux-logic] final transcript lastRecognisedWordIndex will be updated dur
     const transcript = selectors.transcript(store.getState());
     expect(transcript).toMatchObject({
       content: 'a',
-      lastRecognisedWord: undefined,
-      recognisedWords: [{ index: 0, word: 'a' }],
+      groups: [
+        { index: 0, final: { content: 'a', transcriptType: 'final' } },
+        {
+          index: 1,
+          final: [
+            {
+              content: 'b',
+              lastRecognisedWord: {
+                index: 0,
+                isFinalRecognised: true,
+                word: 'a'
+              },
+              recognisedWords: [{ index: 1, word: 'b' }],
+              type: 'final'
+            }
+          ]
+        }
+      ],
+      lastRecognisedWord: { index: 0, isFinalRecognised: true, word: 'a' },
+      recognisedWords: [{ index: 1, word: 'b' }],
       transcript: {
         content: 'b',
         lastRecognisedWord: { index: 0, isFinalRecognised: true, word: 'a' },
         recognisedWords: [{ index: 1, word: 'b' }],
-        transcriptType: 'final'
+        type: 'final'
       },
-      transcriptIndex: 1,
-      transcriptType: 'final',
-      transcripts: [
-        { content: 'a', transcriptType: 'final' },
-        {
-          content: 'b',
-          lastRecognisedWord: { index: 0, isFinalRecognised: true, word: 'a' },
-          recognisedWords: [{ index: 1, word: 'b' }],
-          transcriptType: 'final'
-        }
-      ]
+      transcriptType: 'final'
     });
   });
 });
