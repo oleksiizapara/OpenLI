@@ -125,6 +125,10 @@ const SignIn = () => {
           <Message>
             New to us? <Link to='/sign_up'>Sign Up</Link>
           </Message>
+
+          <Message>
+            <Link to='/recovery_password'>Forgot Password?</Link>
+          </Message>
         </Grid.Column>
       </Grid>
     </div>

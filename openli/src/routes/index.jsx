@@ -10,6 +10,7 @@ import SignUp from 'settings/components/SignUp';
 import GenericNotFound from 'layout/GenericNotFound';
 import EditPage from 'readingMessage/components/EditPage';
 import CreatePage from 'readingMessage/components/CreatePage';
+import RecoveryPassword from 'settings/components/RecoveryPassword';
 
 export const Routes = () => (
   <BrowserRouter>
@@ -17,6 +18,7 @@ export const Routes = () => (
       <Route exact={true} path='/' component={Home} />
       <Route path='/sign_in' component={SignIn} />
       <Route path='/sign_up' component={SignUp} />
+      <Route path='/recovery_password' component={RecoveryPassword} />
       <PrivateRoute path='/reading/:id' component={Reading} />
       <PrivateRoute path='/reading/' component={ReadingSearch} />
       <PrivateRoute path='/reading_add' component={CreatePage} />

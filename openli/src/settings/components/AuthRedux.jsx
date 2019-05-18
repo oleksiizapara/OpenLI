@@ -4,10 +4,7 @@ import { Hub } from 'aws-amplify';
 
 import { useDispatch } from 'react-redux';
 
-import { Auth } from 'aws-amplify';
-
 import { actions } from '../actions';
-import logger from 'common/logger';
 
 const reduxListener = dispatch => async data => {
   switch (data.payload.event) {
