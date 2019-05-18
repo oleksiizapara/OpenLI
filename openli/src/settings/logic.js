@@ -18,6 +18,7 @@ export const userFetch = createLogic({
       const userInfo = await Auth.currentUserInfo();
       if (!userInfo) {
         dispatch(actions.userUnregistered());
+        done();
         return;
       }
 
