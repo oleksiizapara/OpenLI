@@ -1,6 +1,8 @@
 type User @model @auth(rules: [{ allow: owner, ownerField: "id" }]) {
   id: ID!
   username: String!
+  name: String!
+  familyName: String!
   readingMessages: [ReadingMessage]
     @connection(name: "ReadingMessages", keyField: "authorId")
   createdAt: String

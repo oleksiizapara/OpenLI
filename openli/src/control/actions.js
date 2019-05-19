@@ -81,5 +81,9 @@ export const actions = {
   start,
   stop,
   reset,
-  error
+  error,
+  backward,
+  fastBackward,
+  forward,
+  fastForward
 };

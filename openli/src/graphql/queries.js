@@ -5,6 +5,8 @@ export const getUser = `query GetUser($id: ID!) {
   getUser(id: $id) {
     id
     username
+    name
+    familyName
     readingMessages {
       items {
         id
@@ -30,6 +32,8 @@ export const listUsers = `query ListUsers(
     items {
       id
       username
+      name
+      familyName
       readingMessages {
         nextToken
       }
@@ -46,6 +50,8 @@ export const getReadingMessage = `query GetReadingMessage($id: ID!) {
     author {
       id
       username
+      name
+      familyName
       readingMessages {
         nextToken
       }
@@ -71,6 +77,8 @@ export const listReadingMessages = `query ListReadingMessages(
       author {
         id
         username
+        name
+        familyName
         createdAt
         updatedAt
       }

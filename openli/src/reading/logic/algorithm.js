@@ -18,7 +18,9 @@ import {
   validateRecognizedWords,
   calculateNotRecognisedWords,
   updateTranscript,
-  finalizeWords
+  finalizeWords,
+  calculateLastRecognisedWord,
+  calculateSkipWord
 } from '../common';
 import logger from 'common/logger';
 
@@ -66,9 +68,8 @@ export const recognitionFinalWords = createLogic({
     const finalTranscriptWords = splitTextOnWords(finalTranscript);
     const words = selectors.words(getState());
 
-    const lastRecognisedWord = Enumerable.from(words).lastOrDefault(
-      x => x.isFinalRecognised
-    );
+    const lastRecognisedWord = calculateLastRecognisedWord(words);
+
     const testedWords = Enumerable.from(words)
       .skip(lastRecognisedWord ? lastRecognisedWord.index : 0)
       .where(x => !x.isFinalRecognised)
@@ -170,9 +171,7 @@ export const recognitionInterimWords = createLogic({
     const interimTranscriptWords = splitTextOnWords(interimTranscript);
     const words = selectors.words(getState());
 
-    const lastRecognisedWord = Enumerable.from(words).lastOrDefault(
-      x => x.isFinalRecognised
-    );
+    const lastRecognisedWord = calculateLastRecognisedWord(words);
     const testedWords = Enumerable.from(words)
       .skip(lastRecognisedWord ? lastRecognisedWord.index : 0)
       .where(x => !x.isFinalRecognised)
@@ -261,8 +260,10 @@ export const skipWord = createLogic({
 
     const finalizedWords = finalizeWords(words);
 
-    if (finalizedWords !== words) {
-      dispatch(actions.updateWords(finalizedWords));
+    const updatedWords = calculateSkipWord(finalizedWords);
+
+    if (updatedWords !== words) {
+      dispatch(actions.updateWords(updatedWords));
     }
 
     done();

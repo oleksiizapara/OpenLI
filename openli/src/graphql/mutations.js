@@ -5,6 +5,8 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
   createUser(input: $input) {
     id
     username
+    name
+    familyName
     readingMessages {
       items {
         id
@@ -25,6 +27,8 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
   updateUser(input: $input) {
     id
     username
+    name
+    familyName
     readingMessages {
       items {
         id
@@ -45,6 +49,8 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
   deleteUser(input: $input) {
     id
     username
+    name
+    familyName
     readingMessages {
       items {
         id
@@ -67,6 +73,8 @@ export const createReadingMessage = `mutation CreateReadingMessage($input: Creat
     author {
       id
       username
+      name
+      familyName
       readingMessages {
         nextToken
       }
@@ -87,6 +95,8 @@ export const updateReadingMessage = `mutation UpdateReadingMessage($input: Updat
     author {
       id
       username
+      name
+      familyName
       readingMessages {
         nextToken
       }
@@ -107,6 +117,8 @@ export const deleteReadingMessage = `mutation DeleteReadingMessage($input: Delet
     author {
       id
       username
+      name
+      familyName
       readingMessages {
         nextToken
       }

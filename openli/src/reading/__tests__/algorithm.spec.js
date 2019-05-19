@@ -710,7 +710,10 @@ test(`[redux-logic] interimUpdated, finishReading invoked, formStatus will becom
 test(`[redux-logic] skipWord invoked `, async () => {
   const initialState = {
     [key]: {
-      words: [{ index: 0, word: 'a', isInterimRecognised: true }],
+      words: [
+        { index: 0, word: 'a', isInterimRecognised: true },
+        { index: 1, word: 'b' }
+      ],
       formState: formStates.READING_STATE
     }
   };
@@ -731,7 +734,8 @@ test(`[redux-logic] skipWord invoked `, async () => {
         word: 'a',
         isInterimRecognised: true,
         isFinalRecognised: true
-      }
+      },
+      { index: 1, word: 'b', isFinalRecognised: true, isNotRecognisedCount: 1 }
     ]);
   });
 });

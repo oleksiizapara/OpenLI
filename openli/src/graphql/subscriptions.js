@@ -5,6 +5,8 @@ export const onCreateUser = `subscription OnCreateUser {
   onCreateUser {
     id
     username
+    name
+    familyName
     readingMessages {
       items {
         id
@@ -25,6 +27,8 @@ export const onUpdateUser = `subscription OnUpdateUser {
   onUpdateUser {
     id
     username
+    name
+    familyName
     readingMessages {
       items {
         id
@@ -45,6 +49,8 @@ export const onDeleteUser = `subscription OnDeleteUser {
   onDeleteUser {
     id
     username
+    name
+    familyName
     readingMessages {
       items {
         id
@@ -67,6 +73,8 @@ export const onCreateReadingMessage = `subscription OnCreateReadingMessage {
     author {
       id
       username
+      name
+      familyName
       readingMessages {
         nextToken
       }
@@ -87,6 +95,8 @@ export const onUpdateReadingMessage = `subscription OnUpdateReadingMessage {
     author {
       id
       username
+      name
+      familyName
       readingMessages {
         nextToken
       }
@@ -107,6 +117,8 @@ export const onDeleteReadingMessage = `subscription OnDeleteReadingMessage {
     author {
       id
       username
+      name
+      familyName
       readingMessages {
         nextToken
       }

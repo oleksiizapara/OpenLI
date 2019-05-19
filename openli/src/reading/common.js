@@ -193,3 +193,22 @@ export const finalizeWords = words => {
       });
   });
 };
+
+export const calculateLastRecognisedWord = words =>
+  Enumerable.from(words).lastOrDefault(x => x.isFinalRecognised);
+
+export const calculateSkipWord = words => {
+  const lastRecognisedWord = calculateLastRecognisedWord(words);
+
+  return produce(words, draft => {
+    if (lastRecognisedWord && lastRecognisedWord.index + 1 < words.length) {
+      draft[lastRecognisedWord.index + 1].isFinalRecognised = true;
+
+      if (!draft[lastRecognisedWord.index + 1].isNotRecognisedCount) {
+        draft[lastRecognisedWord.index + 1].isNotRecognisedCount = 1;
+      } else {
+        draft[lastRecognisedWord.index + 1].isNotRecognisedCount++;
+      }
+    }
+  });
+};

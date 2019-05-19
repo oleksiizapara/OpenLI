@@ -5,6 +5,12 @@ export const getReadingMessage = `query GetReadingMessage($id: ID!) {
     id
     title
     content
+    authorId
+  	author {
+      name
+      familyName
+    }
+    createdAt
   }
 }
 `;
