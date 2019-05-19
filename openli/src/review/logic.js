@@ -2,6 +2,8 @@ import { createLogic } from 'redux-logic';
 
 import { actionTypes, actions } from './actions';
 
+import { actionTypes as readingActionTypes } from 'reading/actions';
+import { selectors as readingSelectors } from 'reading/reducer';
 import {
   calculateTotalWordCount,
   calculateReadingSpeed,
@@ -38,4 +40,21 @@ export const calculate = createLogic({
   }
 });
 
-export default [calculate];
+export const onReadingFinished = createLogic({
+  type: readingActionTypes.READ_FINISHED,
+
+  processOptions: {
+    dispatchReturn: true
+  },
+
+  async process({ getState }, dispatch, done) {
+    const words = readingSelectors.words(getState());
+    const readingMessage = readingSelectors.readingMessage(getState());
+
+    dispatch(actions.load({ words, readingMessage }));
+
+    done();
+  }
+});
+
+export default [calculate, onReadingFinished];

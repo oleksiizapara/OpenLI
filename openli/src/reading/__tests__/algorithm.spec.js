@@ -633,3 +633,47 @@ test(`[redux-logic] final transcript lastRecognisedWordIndex will be updated dur
     });
   });
 });
+
+test(`[redux-logic] finalUpdated, finishReading invoked, formStatus will become REVIEW_STATE  `, async () => {
+  const initialState = {
+    [key]: {
+      words: [{ index: 0, word: 'a' }],
+      formState: formStates.READING_STATE
+    }
+  };
+
+  const store = createMockStore({
+    initialState,
+    reducer,
+    logic
+  });
+
+  store.dispatch(speechRecognitionActions.finalUpdated('a'));
+
+  await store.whenComplete(() => {
+    const formState = selectors.formState(store.getState());
+    expect(formState).toEqual(formStates.REVIEW_STATE);
+  });
+});
+
+test(`[redux-logic] interimUpdated, finishReading invoked, formStatus will become REVIEW_STATE  `, async () => {
+  const initialState = {
+    [key]: {
+      words: [{ index: 0, word: 'a' }],
+      formState: formStates.READING_STATE
+    }
+  };
+
+  const store = createMockStore({
+    initialState,
+    reducer,
+    logic
+  });
+
+  store.dispatch(speechRecognitionActions.interimUpdated('a'));
+
+  await store.whenComplete(() => {
+    const formState = selectors.formState(store.getState());
+    expect(formState).toEqual(formStates.REVIEW_STATE);
+  });
+});

@@ -143,6 +143,11 @@ export const recognitionFinalWords = createLogic({
       dispatch(actions.updateTranscript(updatedTranscript));
     }
 
+    const latestWord = Enumerable.from(updatedWords).lastOrDefault();
+    if (latestWord && latestWord.isFinalRecognised) {
+      dispatch(actions.finishReading());
+    }
+
     done();
   }
 });
@@ -231,6 +236,11 @@ export const recognitionInterimWords = createLogic({
 
     if (updatedTranscript) {
       dispatch(actions.updateTranscript(updatedTranscript));
+    }
+
+    const latestWord = Enumerable.from(updatedWords).lastOrDefault();
+    if (latestWord && latestWord.isInterimRecognised) {
+      dispatch(actions.finishReading());
     }
 
     done();
