@@ -3,7 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import useReactRouter from 'use-react-router';
 import { Link } from 'react-router-dom';
 
-import { Message, Divider, Grid, Header, Icon } from 'semantic-ui-react';
+import {
+  Message,
+  Divider,
+  Grid,
+  Header,
+  Icon,
+  Container
+} from 'semantic-ui-react';
 
 import { actions, formStates } from '../actions';
 import { selectors } from '../reducer';
@@ -55,6 +62,11 @@ const Reading = () => {
           {words.map(word => (
             <Word key={word.index} word={word} />
           ))}
+          <Container textAlign='right'>{`${readingMessage.author.name} ${
+            readingMessage.author.familyName
+          }, ${new Date(
+            readingMessage.createdAt
+          ).toLocaleDateString()}`}</Container>
         </>
       );
     default:
