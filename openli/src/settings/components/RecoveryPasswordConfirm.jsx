@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import useReactRouter from 'use-react-router';
 
 import { Message, Segment, Button, Form } from 'semantic-ui-react';
@@ -8,15 +7,10 @@ import { Message, Segment, Button, Form } from 'semantic-ui-react';
 import { Formik } from 'formik';
 import { Auth } from 'aws-amplify';
 
-import { recoveryPasswordSecondStepSchema } from 'common/validationSchema';
-import { actions as settingsActions } from 'settings/actions';
-import logger from 'common/logger';
+import { recoveryPasswordConfirmSchema } from 'common/validationSchema';
 
-const RecoveryPasswordSecondStep = ({ email }) => {
+const RecoveryPasswordConfirm = ({ email }) => {
   const { history } = useReactRouter();
-  const dispatch = useDispatch();
-
-  logger.debug(email);
 
   return (
     <Formik
@@ -26,7 +20,7 @@ const RecoveryPasswordSecondStep = ({ email }) => {
         newPassword: '',
         newPasswordConfirm: ''
       }}
-      validationSchema={recoveryPasswordSecondStepSchema}
+      validationSchema={recoveryPasswordConfirmSchema}
       onSubmit={async (values, actions) => {
         try {
           await Auth.forgotPasswordSubmit(
@@ -126,7 +120,7 @@ const RecoveryPasswordSecondStep = ({ email }) => {
             )}
 
             <Button fluid size='large' type='submit'>
-              Recovery Password
+              Recovery Password Confirm
             </Button>
 
             {!!errors.response && <Message error content={errors.response} />}
@@ -137,8 +131,8 @@ const RecoveryPasswordSecondStep = ({ email }) => {
   );
 };
 
-RecoveryPasswordSecondStep.propTypes = {
+RecoveryPasswordConfirm.propTypes = {
   email: PropTypes.string
 };
 
-export default RecoveryPasswordSecondStep;
+export default RecoveryPasswordConfirm;

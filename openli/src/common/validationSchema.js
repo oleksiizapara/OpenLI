@@ -2,31 +2,34 @@ import * as yup from 'yup';
 
 import { errorMessages } from './errorMessages';
 
-export const registerPasswordValidation = yup
+const emailValidation = yup
+  .string()
+  .min(3, errorMessages.invalidEmail)
+  .max(255, errorMessages.invalidEmail)
+  .email(errorMessages.invalidEmail)
+  .required();
+
+const passwordValidation = yup
   .string()
   .min(3, errorMessages.passwordNotLongEnough)
   .max(255)
   .required();
 
-const userEmailValidation = yup
+const passwordConfirmValidation = name =>
+  yup
+    .string()
+    .oneOf([yup.ref(name), null], errorMessages.passwordsMustMatch)
+    .required(errorMessages.passwordsConfirmIsRequired);
+
+const codeValidation = yup
   .string()
-  .min(3, errorMessages.invalidLogin)
-  .max(255, errorMessages.invalidLogin)
-  .email(errorMessages.invalidLogin)
+  .length(6, errorMessages.invalidAuthenticationCode)
   .required();
 
 export const signUpSchema = yup.object().shape({
-  email: yup
-    .string()
-    .min(3, errorMessages.emailNotLongEnough)
-    .max(255)
-    .email(errorMessages.invalidEmail)
-    .required(),
-  password: registerPasswordValidation,
-  passwordConfirm: yup
-    .string()
-    .oneOf([yup.ref('password'), null], errorMessages.passwordsMustMatch)
-    .required(errorMessages.passwordsConfirmIsRequired),
+  email: emailValidation,
+  password: passwordValidation,
+  passwordConfirm: passwordConfirmValidation('password'),
   name: yup
     .string()
     .max(255)
@@ -37,52 +40,25 @@ export const signUpSchema = yup.object().shape({
     .required()
 });
 
+export const signUpConfirmSchema = yup.object().shape({
+  email: emailValidation,
+  code: codeValidation
+});
+
 export const signInSchema = yup.object().shape({
-  email: yup
-    .string()
-    .min(3, errorMessages.invalidLogin)
-    .max(255, errorMessages.invalidLogin)
-    .email(errorMessages.invalidLogin)
-    .required(),
-  password: yup
-    .string()
-    .min(3, errorMessages.invalidLogin)
-    .max(255, errorMessages.invalidLogin)
-    .required()
+  email: emailValidation,
+  password: passwordValidation
 });
 
-export const signConfirmSchema = yup.object().shape({
-  email: yup
-    .string()
-    .min(3, errorMessages.invalidLogin)
-    .max(255, errorMessages.invalidLogin)
-    .email(errorMessages.invalidLogin)
-    .required(),
-  authenticationCode: yup
-    .string()
-    .length(6, errorMessages.invalidAuthenticationCode)
-    .required()
+export const recoveryPasswordSchema = yup.object().shape({
+  email: emailValidation
 });
 
-export const recoveryPasswordFirstStepSchema = yup.object().shape({
-  email: userEmailValidation
-});
-
-export const recoveryPasswordSecondStepSchema = yup.object().shape({
-  email: userEmailValidation,
-  code: yup
-    .string()
-    .length(6, errorMessages.invalidAuthenticationCode)
-    .required(),
-  newPassword: yup
-    .string()
-    .min(3, errorMessages.passwordNotLongEnough)
-    .max(255)
-    .required(),
-  newPasswordConfirm: yup
-    .string()
-    .oneOf([yup.ref('newPassword'), null], errorMessages.passwordsMustMatch)
-    .required(errorMessages.passwordsConfirmIsRequired)
+export const recoveryPasswordConfirmSchema = yup.object().shape({
+  email: emailValidation,
+  code: codeValidation,
+  newPassword: passwordValidation,
+  newPasswordConfirm: passwordConfirmValidation('newPassword')
 });
 
 export const createOrEditReadingMessageSchema = yup.object().shape({
@@ -97,5 +73,5 @@ export const createOrEditReadingMessageSchema = yup.object().shape({
 });
 
 export const changePasswordSchema = yup.object().shape({
-  newPassword: registerPasswordValidation
+  newPassword: passwordValidation
 });

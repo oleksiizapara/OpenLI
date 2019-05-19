@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import useReactRouter from 'use-react-router';
 
-import { signConfirmSchema } from 'common/validationSchema';
+import { signUpConfirmSchema } from 'common/validationSchema';
 
 import { Auth } from 'aws-amplify';
 
@@ -42,7 +42,7 @@ const SignConfirm = () => {
 
           <Formik
             initialValues={{ email: '', authenticationCode: '' }}
-            validationSchema={signConfirmSchema}
+            validationSchema={signUpConfirmSchema}
             onSubmit={async (values, actions) => {
               try {
                 await Auth.confirmSignUp(
@@ -80,10 +80,10 @@ const SignConfirm = () => {
                     icon='user'
                     iconPosition='left'
                     placeholder='E-mail address'
-                    error={!!errors.username}
+                    error={!!errors.email}
                     onChange={handleChange}
                     onBlur={handleBlur}
-                    value={values.username}
+                    value={values.email}
                   />
 
                   {!!errors.email && touched.email && (
@@ -92,7 +92,6 @@ const SignConfirm = () => {
 
                   <Form.Input
                     fluid
-                    icon='lock'
                     iconPosition='left'
                     placeholder='Authentication Code'
                     name='authenticationCode'

@@ -1,63 +1,77 @@
-import React, {useState} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import {
-  Grid,
-  Header,
-  Message,
-  Segment,
-  Button,
-  Form
-} from 'semantic-ui-react';
+import { Message, Segment, Button, Form } from 'semantic-ui-react';
 
 import { Formik } from 'formik';
-import useReactRouter from 'use-react-router';
 
-import { signInSchema } from 'common/validationSchema';
+import { recoveryPasswordSchema } from 'common/validationSchema';
 
 import { Auth } from 'aws-amplify';
-import RecoveryPasswordFirstStep from './RecoveryPasswordFirstStep';
-import RecoveryPasswordSecondStep from './RecoveryPasswordSecondStep';
 
-const RecoveryPassword = () => {
-  const { history } = useReactRouter();
-  const [isSecondStep, setIsSecondStep] = useState(false);
-  const [email, setEmail] = useState(false);
-
-
-  const showSecondStep = (email) => {
-    setEmail(email);
-    setIsSecondStep(true);
-  }
-
+const RecoveryPassword = ({ showNextStep }) => {
   return (
-    <div className='login-form'>
-      <style>
-        {`
-        body > div,
-        body > div > div,
-        body > div > div > div.login-form {
-          height: 100%;
+    <Formik
+      initialValues={{ email: '' }}
+      validationSchema={recoveryPasswordSchema}
+      onSubmit={async (values, actions) => {
+        try {
+          await Auth.forgotPassword(values.email);
+          showNextStep(values.email);
+        } catch (errors) {
+          actions.setErrors({ response: errors.message });
+        } finally {
+          actions.setSubmitting(false);
         }
-      `}
-      </style>
-      <Grid
-        textAlign='center'
-        style={{ height: '100%' }}
-        verticalAlign='middle'
-      >
-        <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as='h2' textAlign='center'>
-            OpenLI
-          </Header>
-      { (!isSecondStep) 
-      ? (<RecoveryPasswordFirstStep showSecondStep={showSecondStep}/> ) 
+      }}
+    >
+      {({
+        isSubmitting,
+        values,
+        errors,
+        touched,
+        handleBlur,
+        handleChange,
+        handleSubmit,
+        isValid
+      }) => (
+        <Form
+          size='large'
+          error={!isValid}
+          onSubmit={handleSubmit}
+          loading={isSubmitting}
+        >
+          <Segment stacked>
+            <Form.Input
+              fluid
+              name='email'
+              icon='user'
+              iconPosition='left'
+              placeholder='E-mail address'
+              error={!!errors.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.email}
+            />
 
-      : (<RecoveryPasswordSecondStep email={email}/>)}
+            {!!errors.email && touched.email && (
+              <Message error content={errors.email} />
+            )}
 
-        </Grid.Column>
-      </Grid>
-    </div>
+            <Button fluid size='large' type='submit'>
+              Recovery Password
+            </Button>
+
+            {!!errors.response && <Message error content={errors.response} />}
+          </Segment>
+        </Form>
+      )}
+    </Formik>
   );
 };
 
 export default RecoveryPassword;
+
+RecoveryPassword.propTypes = {
+  showNextStep: PropTypes.func
+};

@@ -1,23 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import useReactRouter from 'use-react-router';
 
 import { Message, Segment, Button, Form } from 'semantic-ui-react';
 
 import { Formik } from 'formik';
 
-import { recoveryPasswordFirstStepSchema } from 'common/validationSchema';
-
 import { Auth } from 'aws-amplify';
 
-const RecoveryPasswordFirstStep = ({ showSecondStep }) => {
+import { signUpConfirmSchema } from 'common/validationSchema';
+
+const SignUpConfirm = ({ email }) => {
+  const { history } = useReactRouter();
+
   return (
     <Formik
-      initialValues={{ email: '' }}
-      validationSchema={recoveryPasswordFirstStepSchema}
+      initialValues={{
+        email: email,
+        code: ''
+      }}
+      validationSchema={signUpConfirmSchema}
       onSubmit={async (values, actions) => {
         try {
-          await Auth.forgotPassword(values.email);
-          showSecondStep(values.email);
+          await Auth.confirmSignUp(values.email, values.code);
+          history.push('/sign_in');
         } catch (errors) {
           actions.setErrors({ response: errors.message });
         } finally {
@@ -44,22 +50,38 @@ const RecoveryPasswordFirstStep = ({ showSecondStep }) => {
           <Segment stacked>
             <Form.Input
               fluid
+              readOnly
               name='email'
               icon='user'
               iconPosition='left'
               placeholder='E-mail address'
-              error={!!errors.username}
+              error={!!errors.email && touched.email}
               onChange={handleChange}
               onBlur={handleBlur}
-              value={values.username}
+              value={values.email}
             />
 
             {!!errors.email && touched.email && (
               <Message error content={errors.email} />
             )}
 
+            <Form.Input
+              fluid
+              name='code'
+              iconPosition='left'
+              placeholder='Code'
+              error={!!errors.code && touched.code}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.code}
+            />
+
+            {!!errors.code && touched.code && (
+              <Message error content={errors.code} />
+            )}
+
             <Button fluid size='large' type='submit'>
-              Recovery Password
+              Sign Up Confirm
             </Button>
 
             {!!errors.response && <Message error content={errors.response} />}
@@ -70,8 +92,8 @@ const RecoveryPasswordFirstStep = ({ showSecondStep }) => {
   );
 };
 
-export default RecoveryPasswordFirstStep;
+export default SignUpConfirm;
 
-RecoveryPasswordFirstStep.propTypes = {
-  showSecondStep: PropTypes.func
+SignUpConfirm.propTypes = {
+  email: PropTypes.string
 };

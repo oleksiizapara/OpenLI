@@ -8,6 +8,7 @@ import { Dropdown } from 'semantic-ui-react';
 import { selectors } from 'settings/reducer';
 import { Menu } from 'semantic-ui-react';
 import { Auth } from 'aws-amplify';
+import logger from 'common/logger';
 
 export const UserProfile = () => {
   const { history } = useReactRouter();
@@ -20,7 +21,7 @@ export const UserProfile = () => {
   ) : !user ? (
     <>
       <Menu.Item as={Link} content='Sign In' key='sign_in' to='/sign_in' />
-      <Menu.Item content='Sign Up' key='sign_up' to='/sign_up' />
+      <Menu.Item as={Link} content='Sign Up' key='sign_up' to='/sign_up' />
     </>
   ) : (
     <Dropdown item icon='user' direction='left'>
@@ -31,7 +32,7 @@ export const UserProfile = () => {
               await Auth.signOut();
               history.push('/');
             } catch (exception) {
-              console.log(exception);
+              logger.debug(exception);
             }
           }}
         >
