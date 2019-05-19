@@ -10,7 +10,10 @@ export const calculateReadingSpeed = words => {
   const firstWordTime = words[0].time;
   const lastWordTime = words[words.length - 1].time;
 
-  return (lastWordTime - firstWordTime) / calculateTotalWordCount(words);
+  return Math.round(
+    (calculateTotalWordCount(words) * 60 * 1000) /
+      (lastWordTime - firstWordTime)
+  );
 };
 
 const dirtyCalculateRecognisedWords = words => {

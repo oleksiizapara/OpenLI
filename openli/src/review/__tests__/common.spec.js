@@ -16,16 +16,17 @@ describe.each([[[], 0], [[{}], 1]])('', (words, wordCount) => {
 });
 
 describe.each([
-  [[{ time: 1 }], 0],
-  [[{ time: 1 }, { time: 3 }], 1],
-  [[{ time: 1 }, { time: 2 }, { time: 4 }], 1]
-])('', (words, wordCount) => {
+  [[{ time: 1000 }], 0],
+  [[{ time: 1000 }, { time: 3000 }], 60],
+  [[{ time: 1000 }, { time: 4500 }], 34],
+  [[{ time: 1000 }, { time: 2000 }, { time: 4000 }], 60]
+])('', (words, readingSpeed) => {
   test(`calculate Reading Speed, words: ${JSON.stringify(
     words
-  )}, totalLength: ${wordCount}`, () => {
+  )}, totalLength: ${readingSpeed}`, () => {
     const calculatedReadingSpeed = calculateReadingSpeed(words);
 
-    expect(calculatedReadingSpeed).toEqual(wordCount);
+    expect(calculatedReadingSpeed).toEqual(readingSpeed);
   });
 });
 

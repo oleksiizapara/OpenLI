@@ -28,8 +28,8 @@ test(`[redux-logic] calculate`, async () => {
   store.dispatch(
     actions.load({
       words: [
-        { word: 'a', time: 1 },
-        { word: 'b', time: 3, isNotRecognisedCount: 1 }
+        { word: 'a', time: 1000 },
+        { word: 'b', time: 3000, isNotRecognisedCount: 1 }
       ],
       readingMessage: { content: 'a' }
     })
@@ -40,7 +40,7 @@ test(`[redux-logic] calculate`, async () => {
     expect(totalWords).toEqual(2);
 
     const readingSpeed = selectors.readingSpeed(store.getState());
-    expect(readingSpeed).toEqual(1);
+    expect(readingSpeed).toEqual(60);
 
     const recognisedWords = selectors.recognisedWords(store.getState());
     expect(recognisedWords).toEqual(['a']);
