@@ -178,3 +178,7 @@ export const addTranscriptToGroup = (newTranscript, groups) => {
 
   return groups;
 };
+
+export const isEditable = (readingMessage, user) => {
+  return !!(readingMessage && user && readingMessage.authorId == user.id);
+};

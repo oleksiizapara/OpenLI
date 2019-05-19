@@ -3,7 +3,8 @@ import {
   recogniseWords,
   validateRecognizedWords,
   getTooltipWordIndex,
-  calculateNotRecognisedWords
+  calculateNotRecognisedWords,
+  isEditable
 } from '../common';
 
 describe.each([
@@ -165,6 +166,22 @@ describe.each([
       expect(calculatedNotRecognisedWordIndexes).toEqual(
         notRecognisedWordIndexes
       );
+    });
+  }
+);
+
+describe.each([
+  [undefined, undefined, false],
+  [{ authorId: 'uniqueId' }, undefined, false],
+  [{ authorId: 'uniqueId' }, { id: 'uniqueId' }, true]
+])(
+  `[redux-logic] isEditable reading Message`,
+  (readingMessage, user, expectedResult) => {
+    test(`[redux-logic] IsEditable message: ${JSON.stringify(
+      readingMessage
+    )}, user: ${JSON.stringify(user)}`, () => {
+      const result = isEditable(readingMessage, user);
+      expect(result).toEqual(expectedResult);
     });
   }
 );

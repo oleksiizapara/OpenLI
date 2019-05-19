@@ -1,7 +1,9 @@
+export const mockedUserId = 'mockedUserId';
+
 export const authenticatedState = {
   isLoaded: true,
   user: {
-    id: '7acbba31-78be-4901-9cb4-6293b0744611',
+    id: mockedUserId,
     name: 'Vlad',
     familyName: 'Mocked',
     email: 'vlad@mocked.com',

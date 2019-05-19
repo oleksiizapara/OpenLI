@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import useReactRouter from 'use-react-router';
+import { Link } from 'react-router-dom';
 
-import { Message, Divider, Grid, Header } from 'semantic-ui-react';
+import { Message, Divider, Grid, Header, Icon } from 'semantic-ui-react';
 
 import { actions, formStates } from '../actions';
 import { selectors } from '../reducer';
+import { selectors as settingsSelectors } from 'settings/reducer';
 
 import Word from './Word';
 import Review from 'review/components/Review';
@@ -13,6 +15,7 @@ import { Layout } from 'layout/Layout';
 import ReadingHistory from './ReadingHistory';
 import ReadingControls from 'control/components/Control';
 import ChromeSpeechRecognition from 'speechRecognition/ChromeSpeechRecognition';
+import { isEditable } from 'reading/common';
 
 const ReadingHeader = () => <Header as='h2'>Reading</Header>;
 
@@ -28,6 +31,10 @@ const Reading = () => {
   const error = useSelector(state => selectors.error(state));
 
   const words = useSelector(state => selectors.words(state));
+  const readingMessage = useSelector(state => selectors.readingMessage(state));
+
+  const user = useSelector(state => settingsSelectors.user(state));
+  const isShowEditLink = isEditable(readingMessage, user);
 
   switch (formState) {
     case formStates.LOADING_STATE:
@@ -37,6 +44,14 @@ const Reading = () => {
     case formStates.REVIEW_STATE:
       return (
         <>
+          <Header as='h4'>
+            {isShowEditLink && (
+              <Link to={`/reading_edit/${readingMessage.id}`}>
+                <Icon name='edit' />
+              </Link>
+            )}
+            {readingMessage.title}
+          </Header>
           {words.map(word => (
             <Word key={word.index} word={word} />
           ))}

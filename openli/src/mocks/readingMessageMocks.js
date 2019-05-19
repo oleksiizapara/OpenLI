@@ -1,4 +1,5 @@
 import { formStates } from 'readingMessage/actions';
+import { mockedUserId } from './settingsMocks';
 
 export const loadedSampleMessage = {
   id: 'uniqueIdReadingMessage',
@@ -29,7 +30,8 @@ export const createSampleMessage = {
   readingMessage: {
     id: '',
     title: '',
-    content: ''
+    content: '',
+    authorId: mockedUserId
   },
   formState: formStates.LOADED_STATE,
   error: ''
