@@ -4,7 +4,8 @@ import {
   validateRecognizedWords,
   getTooltipWordIndex,
   calculateNotRecognisedWords,
-  isEditable
+  isEditable,
+  finalizeWords
 } from '../common';
 
 describe.each([
@@ -185,3 +186,24 @@ describe.each([
     });
   }
 );
+
+describe.each([
+  [[], []],
+  [[{ word: 'a', index: 0 }], [{ word: 'a', index: 0 }]],
+  [
+    [{ word: 'a', index: 0, isInterimRecognised: true }],
+    [
+      {
+        word: 'a',
+        index: 0,
+        isInterimRecognised: true,
+        isFinalRecognised: true
+      }
+    ]
+  ]
+])(`[redux-logic] finalizeWords test`, (words, expectedResult) => {
+  test(`[redux-logic] finalizeWords words: ${JSON.stringify(words)}`, () => {
+    const result = finalizeWords(words);
+    expect(result).toEqual(expectedResult);
+  });
+});

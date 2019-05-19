@@ -182,3 +182,14 @@ export const addTranscriptToGroup = (newTranscript, groups) => {
 export const isEditable = (readingMessage, user) => {
   return !!(readingMessage && user && readingMessage.authorId == user.id);
 };
+
+export const finalizeWords = words => {
+  return produce(words, draft => {
+    Enumerable.from(draft)
+      .where(x => x.isInterimRecognised && !x.isFinalRecognised)
+      .toArray()
+      .forEach(x => {
+        x.isFinalRecognised = true;
+      });
+  });
+};

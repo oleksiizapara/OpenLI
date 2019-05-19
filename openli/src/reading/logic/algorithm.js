@@ -17,7 +17,8 @@ import {
   recogniseWords,
   validateRecognizedWords,
   calculateNotRecognisedWords,
-  updateTranscript
+  updateTranscript,
+  finalizeWords
 } from '../common';
 import logger from 'common/logger';
 
@@ -118,11 +119,10 @@ export const recognitionFinalWords = createLogic({
       });
     });
 
-    if (
-      normalizedRecognisedWordIndexes.length > 0 ||
-      notRecognisedWordIndexes.length > 0
-    ) {
-      dispatch(actions.updateWords(updatedWords));
+    const finalizedWords = finalizeWords(updatedWords);
+
+    if (words !== finalizedWords) {
+      dispatch(actions.updateWords(finalizedWords));
     }
 
     const onlyUpdatedWords = Enumerable.from(normalizedRecognisedWordIndexes)
@@ -200,8 +200,6 @@ export const recognitionInterimWords = createLogic({
       .where(x => x !== -1)
       .toArray();
 
-    var isWordsChanged = false;
-
     const updatedWords = produce(words, draft => {
       normalizedRecognisedWordIndexes.forEach(x => {
         if (!draft[x].isInterimRecognised) {
@@ -210,13 +208,11 @@ export const recognitionInterimWords = createLogic({
           if (!('time' in draft[x])) {
             draft[x].time = date.getUTCtime();
           }
-
-          isWordsChanged = true;
         }
       });
     });
 
-    if (isWordsChanged) {
+    if (words !== updatedWords) {
       dispatch(actions.updateWords(updatedWords));
     }
 
@@ -247,4 +243,35 @@ export const recognitionInterimWords = createLogic({
   }
 });
 
-export default [loadWords, recognitionFinalWords, recognitionInterimWords];
+export const skipWord = createLogic({
+  type: actionTypes.SKIP_WORD,
+
+  processOptions: {
+    dispatchReturn: true
+  },
+
+  process({ getState }, dispatch, done) {
+    const formState = selectors.formState(getState());
+    if (formState !== formStates.READING_STATE) {
+      done();
+      return;
+    }
+
+    const words = selectors.words(getState());
+
+    const finalizedWords = finalizeWords(words);
+
+    if (finalizedWords !== words) {
+      dispatch(actions.updateWords(finalizedWords));
+    }
+
+    done();
+  }
+});
+
+export default [
+  loadWords,
+  recognitionFinalWords,
+  recognitionInterimWords,
+  skipWord
+];

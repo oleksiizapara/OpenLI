@@ -93,4 +93,32 @@ const reset = createLogic({
   }
 });
 
-export default [start, stop, reset];
+const forward = createLogic({
+  type: controlActionTypes.FORWARD,
+
+  processOptions: {
+    dispatchReturn: true
+  },
+
+  async process({ getState }, dispatch, done) {
+    const formState = selectors.formState(getState());
+    const isReading = selectors.isReading(getState());
+    if (
+      formState !== formStates.READING_STATE ||
+      (formState === formStates.READING_STATE && !isReading)
+    ) {
+      done();
+      return;
+    }
+
+    dispatch(readingActions.skipWord());
+
+    dispatch(
+      speechRecognitionActions.commandUpdated(speechRecognitionCommands.RESET)
+    );
+
+    done();
+  }
+});
+
+export default [start, stop, reset, forward];

@@ -9,6 +9,7 @@ const ERROR = `[${key}] ERROR`;
 const UPDATE_READING_MESSAGE = `[${key}] UPDATE_READING_MESSAGE`;
 const UPDATE_WORDS = `[${key}] UPDATE_WORDS`;
 const UPDATE_TRANSCRIPT = `[${key}] UPDATE_TRANSCRIPT`;
+const SKIP_WORD = `[${key}] SKIP_WORD`;
 
 export const actionTypes = {
   LOAD,
@@ -19,7 +20,8 @@ export const actionTypes = {
   ERROR,
   UPDATE_READING_MESSAGE,
   UPDATE_WORDS,
-  UPDATE_TRANSCRIPT
+  UPDATE_TRANSCRIPT,
+  SKIP_WORD
 };
 
 const DEFAULT_STATE = 'DEFAULT_STATE';
@@ -46,59 +48,64 @@ export const transcriptTypes = {
   interim
 };
 
-export const load = id => ({
+const load = id => ({
   type: actionTypes.LOAD,
   payload: {
     id
   }
 });
 
-export const loaded = () => ({
+const loaded = () => ({
   type: actionTypes.LOADED,
   payload: {}
 });
 
-export const startReading = () => ({
+const startReading = () => ({
   type: actionTypes.READ_STARTED,
   payload: {}
 });
 
-export const stopReading = () => ({
+const stopReading = () => ({
   type: actionTypes.READ_STOPPED,
   payload: {}
 });
 
-export const finishReading = () => ({
+const finishReading = () => ({
   type: actionTypes.READ_FINISHED,
   payload: {}
 });
 
-export const error = error => ({
+const error = error => ({
   type: actionTypes.ERROR,
   payload: {
     error
   }
 });
 
-export const updateReadingMessage = readingMessage => ({
+const updateReadingMessage = readingMessage => ({
   type: actionTypes.UPDATE_READING_MESSAGE,
   payload: {
     readingMessage
   }
 });
 
-export const updateWords = words => ({
+const updateWords = words => ({
   type: actionTypes.UPDATE_WORDS,
   payload: {
     words
   }
 });
 
-export const updateTranscript = transcript => ({
+const updateTranscript = transcript => ({
   type: actionTypes.UPDATE_TRANSCRIPT,
   payload: {
     transcript
   }
+});
+
+const skipWord = () => ({
+  type: actionTypes.SKIP_WORD,
+  payload: {}
 });
 
 export const actions = {
@@ -110,5 +117,6 @@ export const actions = {
   updateTranscript,
   error,
   updateReadingMessage,
-  updateWords
+  updateWords,
+  skipWord
 };

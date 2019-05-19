@@ -257,6 +257,35 @@ describe.each([
   }
 );
 
+test(`[redux-logic] finalUpdate isInterimRecognised changed to  isFinalRecognised`, async () => {
+  const initialState = {
+    [key]: {
+      words: [{ index: 0, word: 'a', isInterimRecognised: true }],
+      formState: formStates.READING_STATE
+    }
+  };
+
+  const store = createMockStore({
+    initialState,
+    reducer,
+    logic
+  });
+
+  store.dispatch(speechRecognitionActions.finalUpdated(''));
+
+  await store.whenComplete(() => {
+    const words = selectors.words(store.getState());
+    expect(words).toMatchObject([
+      {
+        index: 0,
+        word: 'a',
+        isInterimRecognised: true,
+        isFinalRecognised: true
+      }
+    ]);
+  });
+});
+
 test(`[redux-logic] UTCTime added on final recognised words `, async () => {
   const initialState = {
     [key]: {
@@ -675,5 +704,34 @@ test(`[redux-logic] interimUpdated, finishReading invoked, formStatus will becom
   await store.whenComplete(() => {
     const formState = selectors.formState(store.getState());
     expect(formState).toEqual(formStates.REVIEW_STATE);
+  });
+});
+
+test(`[redux-logic] skipWord invoked `, async () => {
+  const initialState = {
+    [key]: {
+      words: [{ index: 0, word: 'a', isInterimRecognised: true }],
+      formState: formStates.READING_STATE
+    }
+  };
+
+  const store = createMockStore({
+    initialState,
+    reducer,
+    logic
+  });
+
+  store.dispatch(actions.skipWord());
+
+  await store.whenComplete(() => {
+    const words = selectors.words(store.getState());
+    expect(words).toEqual([
+      {
+        index: 0,
+        word: 'a',
+        isInterimRecognised: true,
+        isFinalRecognised: true
+      }
+    ]);
   });
 });
