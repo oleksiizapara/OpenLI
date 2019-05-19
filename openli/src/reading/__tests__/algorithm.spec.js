@@ -685,7 +685,7 @@ test(`[redux-logic] finalUpdated, finishReading invoked, formStatus will become 
   });
 });
 
-test(`[redux-logic] interimUpdated, finishReading invoked, formStatus will become REVIEW_STATE  `, async () => {
+test(`[redux-logic] interimUpdated, finishReading invoked, formStatus will become REVIEW_STATE, latest interim words will become final`, async () => {
   const initialState = {
     [key]: {
       words: [{ index: 0, word: 'a' }],
@@ -704,6 +704,16 @@ test(`[redux-logic] interimUpdated, finishReading invoked, formStatus will becom
   await store.whenComplete(() => {
     const formState = selectors.formState(store.getState());
     expect(formState).toEqual(formStates.REVIEW_STATE);
+
+    const words = selectors.words(store.getState());
+    expect(words).toMatchObject([
+      {
+        index: 0,
+        word: 'a',
+        isInterimRecognised: true,
+        isFinalRecognised: true
+      }
+    ]);
   });
 });
 

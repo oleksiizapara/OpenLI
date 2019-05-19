@@ -20,7 +20,8 @@ import {
   updateTranscript,
   finalizeWords,
   calculateLastRecognisedWord,
-  calculateSkipWord
+  calculateSkipWord,
+  isFinishedReading
 } from '../common';
 import logger from 'common/logger';
 
@@ -211,8 +212,12 @@ export const recognitionInterimWords = createLogic({
       });
     });
 
-    if (words !== updatedWords) {
-      dispatch(actions.updateWords(updatedWords));
+    const finalizedWords = isFinishedReading(updatedWords)
+      ? finalizeWords(updatedWords)
+      : updatedWords;
+
+    if (words !== finalizedWords) {
+      dispatch(actions.updateWords(finalizedWords));
     }
 
     const onlyUpdatedWords = Enumerable.from(normalizedRecognisedWordIndexes)
@@ -233,8 +238,7 @@ export const recognitionInterimWords = createLogic({
       dispatch(actions.updateTranscript(updatedTranscript));
     }
 
-    const latestWord = Enumerable.from(updatedWords).lastOrDefault();
-    if (latestWord && latestWord.isInterimRecognised) {
+    if (isFinishedReading(finalizedWords)) {
       dispatch(actions.finishReading());
     }
 

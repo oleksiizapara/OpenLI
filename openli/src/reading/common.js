@@ -212,3 +212,11 @@ export const calculateSkipWord = words => {
     }
   });
 };
+
+export const isFinishedReading = words => {
+  const latestWord = Enumerable.from(words).lastOrDefault();
+  return (
+    latestWord &&
+    (latestWord.isInterimRecognised || latestWord.isFinalRecognised)
+  );
+};
