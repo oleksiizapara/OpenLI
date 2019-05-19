@@ -2,7 +2,11 @@ import { createLogic } from 'redux-logic';
 
 import { actionTypes as controlActionTypes } from 'control/actions';
 
-import { actions as readingActions, formStates } from 'reading/actions';
+import {
+  actionTypes as readingActionTypes,
+  actions as readingActions,
+  formStates
+} from 'reading/actions';
 
 import {
   actions as speechRecognitionActions,
@@ -121,4 +125,20 @@ const forward = createLogic({
   }
 });
 
-export default [start, stop, reset, forward];
+const readFinished = createLogic({
+  type: readingActionTypes.READ_FINISHED,
+
+  processOptions: {
+    dispatchReturn: true
+  },
+
+  async process(_, dispatch, done) {
+    dispatch(
+      speechRecognitionActions.commandUpdated(speechRecognitionCommands.STOP)
+    );
+
+    done();
+  }
+});
+
+export default [start, stop, reset, forward, readFinished];
