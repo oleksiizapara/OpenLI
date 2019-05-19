@@ -15,6 +15,7 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
         content
         createdAt
         updatedAt
+        access
       }
       nextToken
     }
@@ -37,6 +38,7 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
         content
         createdAt
         updatedAt
+        access
       }
       nextToken
     }
@@ -59,6 +61,7 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
         content
         createdAt
         updatedAt
+        access
       }
       nextToken
     }
@@ -86,6 +89,7 @@ export const createReadingMessage = `mutation CreateReadingMessage($input: Creat
     content
     createdAt
     updatedAt
+    access
   }
 }
 `;
@@ -108,6 +112,7 @@ export const updateReadingMessage = `mutation UpdateReadingMessage($input: Updat
     content
     createdAt
     updatedAt
+    access
   }
 }
 `;
@@ -130,6 +135,7 @@ export const deleteReadingMessage = `mutation DeleteReadingMessage($input: Delet
     content
     createdAt
     updatedAt
+    access
   }
 }
 `;

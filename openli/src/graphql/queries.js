@@ -15,6 +15,7 @@ export const getUser = `query GetUser($id: ID!) {
         content
         createdAt
         updatedAt
+        access
       }
       nextToken
     }
@@ -63,6 +64,7 @@ export const getReadingMessage = `query GetReadingMessage($id: ID!) {
     content
     createdAt
     updatedAt
+    access
   }
 }
 `;
@@ -87,6 +89,7 @@ export const listReadingMessages = `query ListReadingMessages(
       content
       createdAt
       updatedAt
+      access
     }
     nextToken
   }

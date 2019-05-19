@@ -1,6 +1,7 @@
 import * as mutations from 'graphql_custom/mutations';
 import { graphqlOperation, Analytics, API } from 'aws-amplify';
 import logger from './logger';
+import { readingMessagePrepareToSave } from './common';
 
 const assertErrors = response => {
   if (response && response.errors && response.errors.length > 0) {
@@ -28,8 +29,10 @@ export const createUser = async user => {
 
 export const createReadingMessage = async message => {
   try {
+    const savingMessage = readingMessagePrepareToSave(message);
+
     const response = await API.graphql(
-      graphqlOperation(mutations.createReadingMessage, { input: message })
+      graphqlOperation(mutations.createReadingMessage, { input: savingMessage })
     );
     assertErrors(response);
     return response.data.createReadingMessage;
@@ -46,8 +49,10 @@ export const createReadingMessage = async message => {
 
 export const updateReadingMessage = async message => {
   try {
+    const savingMessage = readingMessagePrepareToSave(message);
+
     const response = await API.graphql(
-      graphqlOperation(mutations.updateReadingMessage, { input: message })
+      graphqlOperation(mutations.updateReadingMessage, { input: savingMessage })
     );
     assertErrors(response);
     return response.data.updateReadingMessage;

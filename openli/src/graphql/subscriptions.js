@@ -15,6 +15,7 @@ export const onCreateUser = `subscription OnCreateUser {
         content
         createdAt
         updatedAt
+        access
       }
       nextToken
     }
@@ -37,6 +38,7 @@ export const onUpdateUser = `subscription OnUpdateUser {
         content
         createdAt
         updatedAt
+        access
       }
       nextToken
     }
@@ -59,6 +61,7 @@ export const onDeleteUser = `subscription OnDeleteUser {
         content
         createdAt
         updatedAt
+        access
       }
       nextToken
     }
@@ -86,6 +89,7 @@ export const onCreateReadingMessage = `subscription OnCreateReadingMessage {
     content
     createdAt
     updatedAt
+    access
   }
 }
 `;
@@ -108,6 +112,7 @@ export const onUpdateReadingMessage = `subscription OnUpdateReadingMessage {
     content
     createdAt
     updatedAt
+    access
   }
 }
 `;
@@ -130,6 +135,7 @@ export const onDeleteReadingMessage = `subscription OnDeleteReadingMessage {
     content
     createdAt
     updatedAt
+    access
   }
 }
 `;

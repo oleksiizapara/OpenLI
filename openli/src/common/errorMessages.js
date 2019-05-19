@@ -11,8 +11,9 @@ const invalidCode = 'invalid code';
 const speechRecognitionsIsNotSupported = 'Speech recognitions is not supported';
 const genericNotFoundMessage = 'Page was not found';
 
-const readingMessageInvalidTitle = 'invalid Title';
-const readingMessageInvalidContent = 'invalid Content';
+const readingMessageInvalidTitle = ' Title is invalid';
+const readingMessageInvalidContent = 'Content is invalid';
+const invalidReadingMessageAccess = 'Access is invalid';
 
 export const errorMessages = {
   readingMessageWasNotCreated,
@@ -27,5 +28,6 @@ export const errorMessages = {
   speechRecognitionsIsNotSupported,
   genericNotFoundMessage,
   readingMessageInvalidTitle,
-  readingMessageInvalidContent
+  readingMessageInvalidContent,
+  invalidReadingMessageAccess
 };

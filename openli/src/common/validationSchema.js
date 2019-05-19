@@ -69,7 +69,8 @@ export const createOrEditReadingMessageSchema = yup.object().shape({
   content: yup
     .string()
     .max(5000, errorMessages.readingMessageInvalidContent)
-    .required()
+    .required(),
+  access: yup.mixed().required(errorMessages.invalidReadingMessageAccess)
 });
 
 export const changePasswordSchema = yup.object().shape({

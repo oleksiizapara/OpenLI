@@ -10,6 +10,7 @@ export const getReadingMessage = `query GetReadingMessage($id: ID!) {
       name
       familyName
     }
+    access
     createdAt
   }
 }

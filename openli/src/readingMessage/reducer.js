@@ -13,7 +13,8 @@ const initialReadingMessage = () => {
   return {
     id: '',
     title: '',
-    content: ''
+    content: '',
+    access: ''
     // tags: ''
   };
 };

@@ -13,13 +13,18 @@ describe.each([
   [
     {
       id: '',
-      readingMessage: { id: '', title: '', content: '' },
+      readingMessage: { id: '', title: '', content: '', access: '' },
       formState: formStates.DEFAULT_STATE,
       error: ''
     },
     {
       id: 'notNull',
-      readingMessage: { id: 'notNull', title: 'notNull', content: 'notNull' },
+      readingMessage: {
+        id: 'notNull',
+        title: 'notNull',
+        content: 'notNull',
+        access: 'notNull'
+      },
       formState: formStates.DEFAULT_STATE,
       error: 'not null'
     }
@@ -45,7 +50,8 @@ describe.each([
       expect(readingMessage).toEqual({
         id: '',
         title: '',
-        content: ''
+        content: '',
+        access: ''
       });
 
       const formState = selectors.formState(store.getState());

@@ -19,4 +19,10 @@ type ReadingMessage
   content: String!
   createdAt: String
   updatedAt: String
+  access: ReadingMessageAccess
+}
+
+enum ReadingMessageAccess {
+  PUBLIC
+  PRIVATE
 }
