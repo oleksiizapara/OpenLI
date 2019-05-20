@@ -64,8 +64,7 @@ export const recogniseWords = (words, possibleRecognisedWords) => {
   return recWords;
 };
 
-export const 
-isFinalRecognised: true, = (
+export const filterRecognisedWordIndexes = (
   rawRecogniseWordIndexes,
   transcriptWords
 ) => {
