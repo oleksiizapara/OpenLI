@@ -118,12 +118,10 @@ export const validateRecognizedWords = recognisedWords => {
       recognisedWords.length / unrecognizedWordsCount >= 3 ||
       isStartedWithRecognisedWords)
   ) {
-    var previousIndex = 0;
-    for (var wordIndex in allRecognizedWords) {
-      if (allRecognizedWords[wordIndex] > previousIndex + 1) {
+    for (var i = 0; i < allRecognizedWords.length - 1; i++) {
+      if (allRecognizedWords[i + 1] <= allRecognizedWords[i]) {
         return allUnrecognizedWords;
       }
-      previousIndex = allRecognizedWords[wordIndex];
     }
 
     return recognisedWords;

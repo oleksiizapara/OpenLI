@@ -77,6 +77,102 @@ describe.each([
     [
       {
         index: 0,
+        word: 'you'
+      },
+      {
+        index: 2,
+        word: 'can'
+      },
+      {
+        index: 3,
+        word: 'find'
+      },
+      {
+        index: 4,
+        word: 'there'
+      },
+      {
+        index: 5,
+        word: 'the'
+      },
+      {
+        index: 6,
+        word: 'oldest'
+      },
+      {
+        index: 7,
+        word: 'and'
+      },
+      {
+        index: 8,
+        word: 'the'
+      },
+      {
+        index: 9,
+        word: 'newest'
+      },
+      {
+        index: 9,
+        word: 'books'
+      }
+    ],
+    'you can find the oldest and other newest books',
+    [
+      {
+        index: 0,
+        word: 'you',
+        isFinalRecognised: true
+      },
+      {
+        index: 2,
+        word: 'can',
+        isFinalRecognised: true
+      },
+      {
+        index: 3,
+        word: 'find',
+        isFinalRecognised: true
+      },
+      {
+        index: 4,
+        word: 'there'
+      },
+      {
+        index: 5,
+        word: 'the',
+        isFinalRecognised: true
+      },
+      {
+        index: 6,
+        word: 'oldest',
+        isFinalRecognised: true
+      },
+      {
+        index: 7,
+        word: 'and',
+        isFinalRecognised: true
+      },
+      {
+        index: 8,
+        word: 'the'
+      },
+      {
+        index: 9,
+        word: 'newest',
+        isFinalRecognised: true
+      },
+      {
+        index: 9,
+        word: 'books',
+        isFinalRecognised: true
+      }
+    ]
+  ],
+
+  [
+    [
+      {
+        index: 0,
         word: 'authentication',
         isFinalRecognised: true,
         isInterimRecognised: true

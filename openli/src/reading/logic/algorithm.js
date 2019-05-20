@@ -109,6 +109,15 @@ export const recognitionFinalWords = createLogic({
       recognisedWordIndexes
     );
 
+    logger.debug({
+      finalTranscriptWords,
+      words,
+      lastRecognisedWord,
+      testedWords,
+      rawRecognisedWordIndexes,
+      normalizedRecognisedWordIndexes
+    });
+
     const updatedWords = produce(words, draft => {
       normalizedRecognisedWordIndexes.forEach(x => {
         draft[x].isFinalRecognised = true;
@@ -211,13 +220,14 @@ export const recognitionInterimWords = createLogic({
       .where(x => x !== -1)
       .toArray();
 
-    console.log({
+    logger.debug({
       interimTranscriptWords,
       words,
       lastRecognisedWord,
       testedWords,
       rawRecognisedWordIndexes,
-      normalizedRecognisedWordIndexes
+      normalizedRecognisedWordIndexes,
+      filteredRawRecognisedWordIndexes
     });
 
     const updatedWords = produce(words, draft => {
