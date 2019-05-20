@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { Field } from 'formik';
@@ -7,6 +8,7 @@ import { Message, Button, Form } from 'semantic-ui-react';
 import readingMessageAccess from 'common/readingMessageAccess';
 import SelectField from 'common/Components/SelectField';
 import InputField from 'common/Components/InputField';
+import { actions } from '../actions';
 
 const ReadingMessageForm = ({
   loading,
@@ -17,7 +19,8 @@ const ReadingMessageForm = ({
   handleBlur,
   handleChange,
   handleSubmit,
-  isValid
+  isValid,
+  readingMessageId
 }) => {
   const accessOptions = [
     {
@@ -31,6 +34,8 @@ const ReadingMessageForm = ({
       value: readingMessageAccess.PRIVATE
     }
   ];
+
+  const dispatch = useDispatch();
 
   return (
     <Form
@@ -61,7 +66,18 @@ const ReadingMessageForm = ({
         component={SelectField}
       />
 
-      <Button size='large' type='submit'>
+      {readingMessageId && (
+        <Button
+          secondary
+          size='large'
+          type='button'
+          onClick={() => dispatch(actions.delete(readingMessageId))}
+        >
+          Delete
+        </Button>
+      )}
+
+      <Button primary size='large' type='submit'>
         Publish
       </Button>
 
@@ -81,5 +97,6 @@ ReadingMessageForm.propTypes = {
   handleBlur: PropTypes.func,
   handleChange: PropTypes.func,
   handleSubmit: PropTypes.func,
-  isValid: PropTypes.bool
+  isValid: PropTypes.bool,
+  readingMessageId: PropTypes.string
 };

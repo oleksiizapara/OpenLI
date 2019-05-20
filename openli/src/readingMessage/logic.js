@@ -7,7 +7,7 @@ import * as mutationHelper from 'common/mutationHelper';
 
 import { errorMessages } from 'common/errorMessages';
 
-export const loadingReadingMessage = createLogic({
+const loadingReadingMessage = createLogic({
   type: actionTypes.LOAD,
   latest: true,
 
@@ -32,7 +32,7 @@ export const loadingReadingMessage = createLogic({
   }
 });
 
-export const publishReadingMessage = createLogic({
+const publishReadingMessage = createLogic({
   type: actionTypes.PUBLISH,
   latest: true,
 
@@ -73,4 +73,32 @@ export const publishReadingMessage = createLogic({
   }
 });
 
-export default [loadingReadingMessage, publishReadingMessage];
+const deleteReadingMessage = createLogic({
+  type: actionTypes.DELETE,
+  latest: true,
+
+  processOptions: {
+    dispatchReturn: true
+  },
+
+  async process({ action }, dispatch, done) {
+    const { id } = action.payload;
+
+    const response = await mutationHelper.deleteReadingMessage(id);
+
+    if (!response) {
+      dispatch(actions.error(errorMessages.readingMessageWasNotDeleted));
+      done();
+      return;
+    }
+
+    dispatch(actions.deleted());
+    done();
+  }
+});
+
+export default [
+  loadingReadingMessage,
+  publishReadingMessage,
+  deleteReadingMessage
+];

@@ -63,14 +63,14 @@ describe.each([
 describe.each([
   [
     {
-      identifier: 'uniqueId',
       id: '',
       readingMessage: { id: '', title: '', content: '' },
       formState: formStates.DEFAULT_STATE,
       error: ''
-    },
+    }
+  ],
+  [
     {
-      identifier: 'uniqueId',
       id: 'notNull',
       readingMessage: { id: 'notNull', title: 'notNull', content: 'notNull' },
       formState: formStates.PUBLISHED_STATE,
@@ -97,8 +97,7 @@ describe.each([
       content: 'testContent'
     });
 
-    const testIdentifier = 'testIdentifier';
-    store.dispatch(actions.load(testIdentifier, '1'));
+    store.dispatch(actions.load('1'));
 
     await store.whenComplete(() => {
       const readingMessage = selectors.readingMessage(store.getState());
@@ -145,7 +144,6 @@ test(`[redux-logic] load edit readingMessage does not exist`, async () => {
 test(`[redux-logic] publish created readingMessage`, async () => {
   const initialState = {
     [key]: {
-      identifier: 'testIdentifier',
       id: '',
       readingMessage: { id: '', title: '', content: '' },
       formState: formStates.LOADED_STATE
@@ -187,7 +185,6 @@ test(`[redux-logic] publish created readingMessage`, async () => {
 test(`[redux-logic] publish created readingMessage error API`, async () => {
   const initialState = {
     [key]: {
-      identifier: 'testIdentifier',
       id: '',
       readingMessage: { id: '', title: '', content: '' },
       formState: formStates.LOADED_STATE
@@ -228,7 +225,6 @@ test(`[redux-logic] publish created readingMessage error API`, async () => {
 test(`[redux-logic] publish edited readingMessage`, async () => {
   const initialState = {
     [key]: {
-      identifier: 'testIdentifier',
       id: 'testId',
       readingMessage: { id: '', title: '', content: '' },
       formState: formStates.LOADED_STATE
@@ -274,7 +270,6 @@ test(`[redux-logic] publish edited readingMessage`, async () => {
 test(`[redux-logic] publish updated readingMessage error API`, async () => {
   const initialState = {
     [key]: {
-      identifier: 'testIdentifier',
       id: 'testId',
       readingMessage: {
         id: 'testId',
@@ -319,3 +314,93 @@ test(`[redux-logic] publish updated readingMessage error API`, async () => {
     expect(error).toEqual(errorMessages.readingMessageWasNotUpdated);
   });
 });
+
+describe.each([
+  [
+    {
+      id: 'NotNull',
+      readingMessage: { id: 'NotNull', title: '', content: '' },
+      formState: formStates.DEFAULT_STATE,
+      error: ''
+    },
+    formStates.DELETED_STATE
+  ]
+])(
+  '[redux-logic] delete readingMessage successful',
+  (initialKeyState, expectedFormState) => {
+    test(`[redux-logic] load edit readingMessage ${JSON.stringify(
+      initialKeyState
+    )}`, async () => {
+      const initialState = {
+        [key]: initialKeyState
+      };
+
+      const store = createMockStore({
+        initialState,
+        reducer,
+        logic
+      });
+
+      mutationHelper.deleteReadingMessage = jest.fn().mockResolvedValue({
+        id: '1'
+      });
+
+      store.dispatch(actions.delete('1'));
+
+      await store.whenComplete(() => {
+        const readingMessage = selectors.readingMessage(store.getState());
+        expect(readingMessage).toMatchObject({ id: '' });
+
+        const formState = selectors.formState(store.getState());
+        expect(formState).toEqual(expectedFormState);
+      });
+    });
+  }
+);
+
+describe.each([
+  [
+    {
+      id: 'NotNull',
+      readingMessage: { id: 'NotNull', title: '', content: '' },
+      formState: formStates.DEFAULT_STATE,
+      error: ''
+    },
+    formStates.ERROR_STATE,
+    errorMessages.readingMessageWasNotDeleted
+  ]
+])(
+  '[redux-logic] delete readingMessage successful',
+  (initialKeyState, expectedFormState) => {
+    test(`[redux-logic] load edit readingMessage error api ${JSON.stringify(
+      initialKeyState
+    )}`, async () => {
+      const initialState = {
+        [key]: initialKeyState
+      };
+
+      const store = createMockStore({
+        initialState,
+        reducer,
+        logic
+      });
+
+      mutationHelper.deleteReadingMessage = jest
+        .fn()
+        .mockResolvedValue(undefined);
+
+      store.dispatch(actions.delete('1'));
+
+      await store.whenComplete(() => {
+        const readingMessage = selectors.readingMessage(store.getState());
+        expect(readingMessage).toMatchObject({ id: 'NotNull' });
+
+        const formState = selectors.formState(store.getState());
+        expect(formState).toEqual(expectedFormState);
+
+        const error = selectors.error(store.getState());
+        expect(error).toEqual('Reading message was not deleted');
+      });
+    });
+  }
+);

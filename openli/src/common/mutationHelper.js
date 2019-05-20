@@ -70,7 +70,7 @@ export const updateReadingMessage = async message => {
 export const deleteReadingMessage = async id => {
   try {
     const response = await API.graphql(
-      graphqlOperation(mutations.deleteReadingMessage, { input: id })
+      graphqlOperation(mutations.deleteReadingMessage, { input: { id } })
     );
     assertErrors(response);
     return response.data.deleteReadingMessage;

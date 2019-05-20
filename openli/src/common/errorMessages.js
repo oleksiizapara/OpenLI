@@ -1,7 +1,7 @@
 const readingMessageWasNotCreated = 'Reading message was not created.';
 const readingMessageWasNotUpdated = 'Reading message was not updated.';
 const readingMessageWasNotFound = 'Reading message was not found';
-
+const readingMessageWasNotDeleted = 'Reading message was not deleted';
 const emailNotLongEnough = 'email must be at least 3 characters';
 const passwordNotLongEnough = 'password must be at least 3 characters';
 const invalidEmail = 'email must be a valid email';
@@ -19,6 +19,7 @@ export const errorMessages = {
   readingMessageWasNotCreated,
   readingMessageWasNotUpdated,
   readingMessageWasNotFound,
+  readingMessageWasNotDeleted,
   emailNotLongEnough,
   passwordNotLongEnough,
   invalidEmail,

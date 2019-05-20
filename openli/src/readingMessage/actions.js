@@ -8,6 +8,8 @@ const UPDATED = `[${key}] UPDATED`;
 const PUBLISH = `[${key}] PUBLISH`;
 const PUBLISHED = `[${key}] PUBLISHED`;
 const ERROR = `[${key}] ERROR`;
+const DELETE = `[${key}] DELETE`;
+const DELETED = `[${key}] DELETED`;
 
 export const actionTypes = {
   TO_DEFAULT,
@@ -17,73 +19,87 @@ export const actionTypes = {
   UPDATED,
   PUBLISH,
   PUBLISHED,
-  ERROR
+  ERROR,
+  DELETE,
+  DELETED
 };
 
 const DEFAULT_STATE = 'DEFAULT_STATE';
 const LOADING_STATE = 'LOADING_STATE';
 const LOADED_STATE = 'LOADED_STATE';
-const PUBLISHING_STATE = 'PUBLISHING_STATE';
 const PUBLISHED_STATE = 'PUBLISHED_STATE';
 const ERROR_STATE = 'ERROR_STATE';
+const DELETED_STATE = 'DELETED_STATE';
 
 export const formStates = {
   DEFAULT_STATE,
   LOADING_STATE,
   LOADED_STATE,
-  PUBLISHING_STATE,
   PUBLISHED_STATE,
-  ERROR_STATE
+  ERROR_STATE,
+  DELETED_STATE
 };
 
 const toDefault = () => ({
-  type: LOAD,
+  type: actionTypes.LOAD,
   payload: {}
 });
 
 const load = id => ({
-  type: LOAD,
+  type: actionTypes.LOAD,
   payload: {
     id
   }
 });
 
 const loaded = () => ({
-  type: LOADED,
+  type: actionTypes.LOADED,
   payload: {}
 });
 
 const create = () => ({
-  type: CREATE,
+  type: actionTypes.CREATE,
   payload: {}
 });
 
 const updated = readingMessage => ({
-  type: UPDATED,
+  type: actionTypes.UPDATED,
   payload: {
     readingMessage
   }
 });
 
 const publish = readingMessage => ({
-  type: PUBLISH,
+  type: actionTypes.PUBLISH,
   payload: {
     readingMessage
   }
 });
 
 const published = readingMessage => ({
-  type: PUBLISHED,
+  type: actionTypes.PUBLISHED,
   payload: {
     readingMessage
   }
 });
 
 const error = error => ({
-  type: ERROR,
+  type: actionTypes.ERROR,
   payload: {
     error
   }
+});
+
+const deleteReadingMessage = id => ({
+  type: actionTypes.DELETE,
+  payload: {
+    id
+  }
+});
+
+const deletedReadingMessage = () => ({
+  type: actionTypes.DELETED,
+  payload: {}
 });
 
 export const actions = {
@@ -94,5 +110,7 @@ export const actions = {
   updated,
   publish,
   published,
-  error
+  error,
+  delete: deleteReadingMessage,
+  deleted: deletedReadingMessage
 };

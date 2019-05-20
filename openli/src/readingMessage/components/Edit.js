@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import useReactRouter from 'use-react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -6,14 +6,11 @@ import { Redirect } from 'react-router-dom';
 import Form from './Form';
 import { Formik } from 'formik';
 
-import { Message, Loader } from 'semantic-ui-react';
-
-import uuid from 'uuid/v4';
+import { Message } from 'semantic-ui-react';
 
 import { selectors } from '../reducer';
 import { actions, formStates } from '../actions';
 import { createOrEditReadingMessageSchema } from 'common/validationSchema';
-import { of } from 'zen-observable';
 import logger from 'common/logger';
 
 const Edit = () => {
@@ -42,13 +39,17 @@ const Edit = () => {
   switch (formState) {
     case formStates.PUBLISHED_STATE:
       return <Redirect to={{ pathname: `/reading/${id}` }} />;
+    case formStates.DELETED_STATE:
+      return <Redirect to={{ pathname: `/` }} />;
     case formStates.ERROR_STATE:
       return <Message error content={error} />;
     default:
       return (
         <Formik
           enableReinitialize
-          render={props => <Form {...props} loading={loading} />}
+          render={props => (
+            <Form {...props} loading={loading} readingMessageId={id} />
+          )}
           initialValues={readingMessage}
           validationSchema={createOrEditReadingMessageSchema}
           onSubmit={values => {

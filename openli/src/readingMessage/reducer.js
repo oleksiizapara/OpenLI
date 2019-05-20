@@ -46,7 +46,15 @@ export default function(state = initialState, action) {
         draft.formState = formStates.LOADED_STATE;
         break;
       case actionTypes.PUBLISH:
-        draft.formState = formStates.PUBLISHING_STATE;
+        draft.formState = formStates.LOADING_STATE;
+        break;
+      case actionTypes.DELETE:
+        draft.formState = formStates.LOADING_STATE;
+        break;
+      case actionTypes.DELETED:
+        draft.formState = formStates.DELETED_STATE;
+        draft.id = '';
+        draft.readingMessage = initialReadingMessage();
         break;
       case actionTypes.PUBLISHED:
         draft.id = action.payload.readingMessage.id;
@@ -58,7 +66,7 @@ export default function(state = initialState, action) {
         draft.error = action.payload.error;
         break;
       case actionTypes.TO_DEFAULT:
-        draft.formState = formStates.default;
+        draft.formState = formStates.DEFAULT_STATE;
         draft.error = '';
         draft.id = '';
         draft.readingMessage = initialReadingMessage();
