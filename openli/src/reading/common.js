@@ -65,6 +65,13 @@ export const recogniseWords = (words, possibleRecognisedWords) => {
 };
 
 export const validateRecognizedWords = recognisedWords => {
+  const startedRecognisedWords = Enumerable.from(recognisedWords).takeWhile(
+    x => x !== -1
+  );
+  const isStartedWithRecognisedWords =
+    startedRecognisedWords.count() > 0 &&
+    startedRecognisedWords.all(x => x !== -1);
+
   const unrecognizedWordsCount = Enumerable.from(recognisedWords)
     .where(x => x === -1)
     .count();
@@ -81,7 +88,8 @@ export const validateRecognizedWords = recognisedWords => {
   if (
     recognisedWords.length > 0 &&
     (unrecognizedWordsCount === 0 ||
-      recognisedWords.length / unrecognizedWordsCount >= 3)
+      recognisedWords.length / unrecognizedWordsCount >= 3 ||
+      isStartedWithRecognisedWords)
   ) {
     var previousIndex = 0;
     for (var wordIndex in allRecognizedWords) {

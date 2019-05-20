@@ -41,7 +41,7 @@ export const formStates = {
 };
 
 const final = 'final';
-const interim = 'interim;';
+const interim = 'interim';
 
 export const transcriptTypes = {
   final,

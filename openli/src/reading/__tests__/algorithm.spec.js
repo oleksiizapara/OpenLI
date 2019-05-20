@@ -2,7 +2,7 @@ import { createMockStore } from 'redux-logic-test';
 
 import { key, actions, formStates } from '../actions';
 import { selectors } from '../reducer';
-import logic from '../logic/algorithm';
+import logic from 'rootLogic';
 
 import { actions as speechRecognitionActions } from 'speechRecognition/actions';
 import reducer from 'rootReducer';
@@ -34,20 +34,10 @@ test(`[redux-logic] load words`, async () => {
 
   await store.whenComplete(() => {
     const words = selectors.words(store.getState());
-    expect(words[0]).toMatchObject({
-      index: 0,
-      word: 'a',
-      viewWord: 'a ',
-      afterWord: ' ',
-      preWord: ''
-    });
-    expect(words[1]).toMatchObject({
-      index: 1,
-      word: 'b',
-      viewWord: 'b',
-      afterWord: '',
-      preWord: ''
-    });
+    expect(words).toEqual([
+      { afterWord: ' ', index: 0, preWord: '', viewWord: 'a ', word: 'a' },
+      { afterWord: '', index: 1, preWord: '', viewWord: 'b', word: 'b' }
+    ]);
 
     const formState = selectors.formState(store.getState());
     expect(formState).toEqual(formStates.LOADED_STATE);
@@ -211,6 +201,58 @@ describe.each([
 );
 
 describe.each([
+  [
+    [
+      {
+        afterWord: ' ',
+        index: 0,
+        preWord: '',
+        viewWord: 'Table ',
+        word: 'Table'
+      },
+      {
+        afterWord: ' ',
+        index: 1,
+        preWord: '',
+        viewWord: 'have ',
+        word: 'have'
+      },
+      {
+        afterWord: ' ',
+        index: 2,
+        preWord: '',
+        viewWord: 'have ',
+        word: 'have'
+      },
+      { afterWord: ' ', index: 3, preWord: '', viewWord: 'have ', word: 'have' }
+    ],
+    'table',
+    [
+      {
+        afterWord: ' ',
+        index: 0,
+        preWord: '',
+        viewWord: 'Table ',
+        word: 'Table',
+        isInterimRecognised: true
+      },
+      {
+        afterWord: ' ',
+        index: 1,
+        preWord: '',
+        viewWord: 'have ',
+        word: 'have'
+      },
+      {
+        afterWord: ' ',
+        index: 2,
+        preWord: '',
+        viewWord: 'have ',
+        word: 'have'
+      },
+      { afterWord: ' ', index: 3, preWord: '', viewWord: 'have ', word: 'have' }
+    ]
+  ],
   [
     [{ index: 0, word: 'a' }],
     'a',
@@ -517,14 +559,14 @@ describe.each([
           interim: [
             {
               content: 'a',
-              type: 'interim;'
+              type: 'interim'
             }
           ]
         }
       ],
       transcript: {
         content: 'a',
-        type: 'interim;'
+        type: 'interim'
       }
     }
   ],
@@ -536,14 +578,14 @@ describe.each([
             interim: [
               {
                 content: 'a',
-                type: 'interim;'
+                type: 'interim'
               }
             ]
           }
         ],
         transcript: {
           content: 'a',
-          type: 'interim;'
+          type: 'interim'
         }
       },
       formState: formStates.READING_STATE
@@ -553,14 +595,14 @@ describe.each([
       groups: [
         {
           interim: [
-            { content: 'a', type: 'interim;' },
-            { content: 'b', type: 'interim;' }
+            { content: 'a', type: 'interim' },
+            { content: 'b', type: 'interim' }
           ]
         }
       ],
       transcript: {
         content: 'b',
-        type: 'interim;'
+        type: 'interim'
       }
     }
   ],

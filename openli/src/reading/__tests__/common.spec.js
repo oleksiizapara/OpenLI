@@ -90,7 +90,8 @@ describe.each([
   [[2], [-1]],
   [[3], [-1]],
   [[0, 1], [0, 1]],
-  [[0, -1], [-1, -1]],
+  [[0, -1], [0, -1]],
+  [[0, -1, -1], [0, -1, -1]],
   [[0, 1, -1], [0, 1, -1]],
   [[0, -1, 2], [-1, -1, -1]],
   [[0, -1, 1], [0, -1, 1]],
@@ -98,7 +99,9 @@ describe.each([
   [[-1, 1, 2], [-1, 1, 2]],
   [[-1, 1, 2, 3], [-1, 1, 2, 3]]
 ])('bla bla', (recognisedWords, expectedValidatedWords) => {
-  test(`[reading common.js].validateRecognizedWords `, () => {
+  test(`[reading common.js].validateRecognizedWords ${JSON.stringify(
+    recognisedWords
+  )} ${JSON.stringify(expectedValidatedWords)}`, () => {
     const validatedWords = validateRecognizedWords(recognisedWords);
     expect(validatedWords).toEqual(expectedValidatedWords);
   });
