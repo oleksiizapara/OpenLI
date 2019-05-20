@@ -191,6 +191,36 @@ describe.each([
 );
 
 describe.each([
+  [
+    [
+      { word: 'a', index: 0 },
+      { word: 'b', index: 1, isInterimRecognised: true }
+    ],
+    [
+      { word: 'a', index: 0, isNotRecognisedCount: 1 },
+      {
+        word: 'b',
+        index: 1,
+        isInterimRecognised: true,
+        isFinalRecognised: true
+      }
+    ]
+  ],
+  [
+    [
+      { word: 'a', index: 0, isNotRecognisedCount: 1 },
+      { word: 'b', index: 1, isInterimRecognised: true }
+    ],
+    [
+      { word: 'a', index: 0, isNotRecognisedCount: 2 },
+      {
+        word: 'b',
+        index: 1,
+        isInterimRecognised: true,
+        isFinalRecognised: true
+      }
+    ]
+  ],
   [[], []],
   [[{ word: 'a', index: 0 }], [{ word: 'a', index: 0 }]],
   [

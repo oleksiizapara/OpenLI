@@ -218,12 +218,29 @@ export const isEditable = (readingMessage, user) => {
 
 export const finalizeWords = words => {
   return produce(words, draft => {
-    Enumerable.from(draft)
+    const draftEnumerable = Enumerable.from(draft);
+
+    draftEnumerable
       .where(x => x.isInterimRecognised && !x.isFinalRecognised)
       .toArray()
       .forEach(x => {
         x.isFinalRecognised = true;
       });
+
+    const lastFinalRecognised = draftEnumerable.lastOrDefault(
+      x => x.isFinalRecognised
+    );
+    if (lastFinalRecognised) {
+      draftEnumerable
+        .where(
+          x => x.index <= lastFinalRecognised.index && !x.isFinalRecognised
+        )
+        .forEach(x => {
+          x.isNotRecognisedCount = !x.isNotRecognisedCount
+            ? 1
+            : x.isNotRecognisedCount + 1;
+        });
+    }
   });
 };
 
