@@ -31,6 +31,7 @@ describe.each([
 });
 
 describe.each([
+  [[{ word: 'a' }, { word: 'A' }], ['a']],
   [[], []],
   [[{ word: 'a' }], ['a']],
   [[{ word: 'a' }, { word: 'a' }], ['a']],
@@ -46,6 +47,13 @@ describe.each([
 });
 
 describe.each([
+  [
+    [
+      { word: 'a', isNotRecognisedCount: 1 },
+      { word: 'A', isNotRecognisedCount: 1 }
+    ],
+    ['a']
+  ],
   [[], []],
   [[{ word: 'a' }], []],
   [[{ word: 'a', isNotRecognisedCount: 1 }], ['a']],

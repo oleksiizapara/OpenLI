@@ -26,9 +26,11 @@ const dirtyCalculateRecognisedWords = words => {
 };
 
 export const calculateRecognisedWords = words => {
-  return Enumerable.from(dirtyCalculateRecognisedWords(words))
-    .except(dirtyCalculateNotRecognisedWords(words))
-    .toArray();
+  return removeDuplicateWithCapitalLetters(
+    Enumerable.from(dirtyCalculateRecognisedWords(words))
+      .except(dirtyCalculateNotRecognisedWords(words))
+      .toArray()
+  );
 };
 
 const dirtyCalculateNotRecognisedWords = words => {
@@ -40,6 +42,20 @@ const dirtyCalculateNotRecognisedWords = words => {
     .toArray();
 };
 
+const removeDuplicateWithCapitalLetters = words => {
+  const lowCaseWords = Enumerable.from(words)
+    .where(x => x.toLowerCase() === x)
+    .toDictionary(x => x);
+
+  return Enumerable.from(words)
+    .where(
+      x => x.toLowerCase() === x || !lowCaseWords.contains(x.toLowerCase())
+    )
+    .toArray();
+};
+
 export const calculateNotRecognisedWords = words => {
-  return Enumerable.from(dirtyCalculateNotRecognisedWords(words)).toArray();
+  return removeDuplicateWithCapitalLetters(
+    Enumerable.from(dirtyCalculateNotRecognisedWords(words)).toArray()
+  );
 };
