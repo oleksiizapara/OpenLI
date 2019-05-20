@@ -4,12 +4,14 @@ const LOAD = `[${key}] LOAD`;
 const LOADED = `[${key}] LOADED`;
 const CALCULATED = `[${key}] CALCULATED`;
 const ERROR = `[${key}] ERROR`;
+const TO_DEFAULT = `[${key}] TO_DEFAULT`;
 
 export const actionTypes = {
   LOAD,
   LOADED,
   CALCULATED,
-  ERROR
+  ERROR,
+  TO_DEFAULT
 };
 
 export const DEFAULT_STATE = 'DEFAULT_STATE';
@@ -51,9 +53,15 @@ const calculated = data => ({
   payload: data
 });
 
+const toDefault = () => ({
+  type: actionTypes.TO_DEFAULT,
+  payload: {}
+});
+
 export const actions = {
   load,
   loaded,
   calculated,
-  error
+  error,
+  toDefault
 };

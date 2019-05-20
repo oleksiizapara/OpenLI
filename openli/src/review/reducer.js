@@ -48,6 +48,15 @@ export default function(state = initialState, action) {
         draft.error = action.payload.error;
         draft.formState = formStates.ERROR_STATE;
         break;
+      case actionTypes.TO_DEFAULT:
+        draft.formState = formStates.DEFAULT_STATE;
+        draft.words = [];
+        draft.readingMessage = undefined;
+        draft.totalWords = undefined;
+        draft.readingSpeed = undefined;
+        draft.recognisedWords = undefined;
+        draft.notRecognisedWords = undefined;
+        break;
       default:
         break;
     }

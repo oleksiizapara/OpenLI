@@ -39,6 +39,10 @@ const Control = () => {
           <ForwardButton />
           <FastForwardButton />
         </>
+      ) : readingFormState === readingFormStates.REVIEW_STATE ? (
+        <>
+          <RepeatButton />
+        </>
       ) : (
         <></>
       )}

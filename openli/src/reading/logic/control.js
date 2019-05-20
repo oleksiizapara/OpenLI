@@ -8,6 +8,8 @@ import {
   formStates
 } from 'reading/actions';
 
+import { actions as reviewActions } from 'review/actions';
+
 import {
   actions as speechRecognitionActions,
   commands as speechRecognitionCommands
@@ -71,7 +73,7 @@ const stop = createLogic({
   }
 });
 
-const reset = createLogic({
+const resetReading = createLogic({
   type: controlActionTypes.RESET,
 
   processOptions: {
@@ -141,4 +143,27 @@ const readFinished = createLogic({
   }
 });
 
-export default [start, stop, reset, forward, readFinished];
+const resetReview = createLogic({
+  type: controlActionTypes.RESET,
+
+  processOptions: {
+    dispatchReturn: true
+  },
+
+  async process({ getState }, dispatch, done) {
+    const readingMessage = selectors.readingMessage(getState());
+    const formState = selectors.formState(getState());
+    if (formState !== formStates.REVIEW_STATE) {
+      done();
+      return;
+    }
+
+    dispatch(readingActions.load(readingMessage.id));
+
+    dispatch(reviewActions.toDefault());
+
+    done();
+  }
+});
+
+export default [start, stop, resetReading, forward, readFinished, resetReview];
