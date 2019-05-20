@@ -74,6 +74,69 @@ test(`[redux-logic] api return exception`, async () => {
 
 describe.each([
   [
+    [
+      {
+        index: 0,
+        word: 'authentication',
+        isFinalRecognised: true,
+        isInterimRecognised: true
+      },
+
+      {
+        index: 1,
+        word: 'scheme'
+      },
+      {
+        index: 2,
+        word: 'with'
+      },
+      {
+        index: 3,
+        word: 'Amazon'
+      },
+      {
+        index: 4,
+        word: 'Cognito'
+      },
+      {
+        index: 5,
+        word: 'user'
+      }
+    ],
+    'table with Amazon cognito',
+    [
+      {
+        index: 0,
+        word: 'authentication',
+        isFinalRecognised: true,
+        isInterimRecognised: true
+      },
+      {
+        index: 1,
+        word: 'scheme'
+      },
+      {
+        index: 2,
+        word: 'with',
+        isFinalRecognised: true
+      },
+      {
+        index: 3,
+        word: 'Amazon',
+        isFinalRecognised: true
+      },
+      {
+        index: 4,
+        word: 'Cognito',
+        isFinalRecognised: true
+      },
+      {
+        index: 5,
+        word: 'user'
+      }
+    ]
+  ],
+  [
     [{ index: 0, word: 'Another' }],
     'Another',
     [
@@ -201,6 +264,69 @@ describe.each([
 );
 
 describe.each([
+  [
+    [
+      {
+        index: 0,
+        word: 'authentication',
+        isFinalRecognised: true,
+        isInterimRecognised: true
+      },
+
+      {
+        index: 1,
+        word: 'scheme'
+      },
+      {
+        index: 2,
+        word: 'with'
+      },
+      {
+        index: 3,
+        word: 'Amazon'
+      },
+      {
+        index: 4,
+        word: 'Cognito'
+      },
+      {
+        index: 5,
+        word: 'user'
+      }
+    ],
+    'table with Amazon cognito',
+    [
+      {
+        index: 0,
+        word: 'authentication',
+        isFinalRecognised: true,
+        isInterimRecognised: true
+      },
+      {
+        index: 1,
+        word: 'scheme'
+      },
+      {
+        index: 2,
+        word: 'with',
+        isInterimRecognised: true
+      },
+      {
+        index: 3,
+        word: 'Amazon',
+        isInterimRecognised: true
+      },
+      {
+        index: 4,
+        word: 'Cognito',
+        isInterimRecognised: true
+      },
+      {
+        index: 5,
+        word: 'user'
+      }
+    ]
+  ],
   [
     [
       {

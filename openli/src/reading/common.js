@@ -64,6 +64,34 @@ export const recogniseWords = (words, possibleRecognisedWords) => {
   return recWords;
 };
 
+export const 
+isFinalRecognised: true, = (
+  rawRecogniseWordIndexes,
+  transcriptWords
+) => {
+  if (transcriptWords.length === 0) {
+    return rawRecogniseWordIndexes;
+  }
+
+  const maxTranscriptWordIndex = Enumerable.from(transcriptWords).max(
+    x => x.index
+  );
+  const tailTrimmedRecognisedWordIndexes = Enumerable.from(
+    rawRecogniseWordIndexes
+  )
+    .reverse()
+    .skipWhile(x => x === -1)
+    .reverse();
+
+  if (
+    maxTranscriptWordIndex === tailTrimmedRecognisedWordIndexes.lastOrDefault()
+  ) {
+    return tailTrimmedRecognisedWordIndexes.toArray();
+  }
+
+  return rawRecogniseWordIndexes;
+};
+
 export const validateRecognizedWords = recognisedWords => {
   const startedRecognisedWords = Enumerable.from(recognisedWords).takeWhile(
     x => x !== -1

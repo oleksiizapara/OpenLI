@@ -21,7 +21,8 @@ import {
   finalizeWords,
   calculateLastRecognisedWord,
   calculateSkipWord,
-  isFinishedReading
+  isFinishedReading,
+  filterRecognisedWordIndexes
 } from '../common';
 import logger from 'common/logger';
 
@@ -77,13 +78,18 @@ export const recognitionFinalWords = createLogic({
       .take(Math.max(finalTranscriptWords.length + 1, 3))
       .toArray();
 
-    const rawRecogniseWordIndexes = recogniseWords(
+    const rawRecognisedWordIndexes = recogniseWords(
       testedWords,
       finalTranscriptWords
     );
 
+    const filteredRawRecognisedWordIndexes = filterRecognisedWordIndexes(
+      rawRecognisedWordIndexes,
+      finalTranscriptWords
+    );
+
     const recognisedWordIndexes = validateRecognizedWords(
-      rawRecogniseWordIndexes
+      filteredRawRecognisedWordIndexes
     );
 
     const normalizedRecognisedWordIndexes = Enumerable.from(
@@ -184,8 +190,13 @@ export const recognitionInterimWords = createLogic({
       interimTranscriptWords
     );
 
+    const filteredRawRecognisedWordIndexes = filterRecognisedWordIndexes(
+      rawRecognisedWordIndexes,
+      interimTranscriptWords
+    );
+
     const recognisedWordIndexes = validateRecognizedWords(
-      rawRecognisedWordIndexes
+      filteredRawRecognisedWordIndexes
     );
 
     const normalizedRecognisedWordIndexes = Enumerable.from(
@@ -199,6 +210,15 @@ export const recognitionInterimWords = createLogic({
       })
       .where(x => x !== -1)
       .toArray();
+
+    console.log({
+      interimTranscriptWords,
+      words,
+      lastRecognisedWord,
+      testedWords,
+      rawRecognisedWordIndexes,
+      normalizedRecognisedWordIndexes
+    });
 
     const updatedWords = produce(words, draft => {
       normalizedRecognisedWordIndexes.forEach(x => {

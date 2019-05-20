@@ -5,7 +5,8 @@ import {
   getTooltipWordIndex,
   calculateNotRecognisedWords,
   isEditable,
-  finalizeWords
+  finalizeWords,
+  filterRecognisedWordIndexes
 } from '../common';
 
 describe.each([
@@ -210,3 +211,33 @@ describe.each([
     expect(result).toEqual(expectedResult);
   });
 });
+
+describe.each([
+  [[0], [{ index: 0 }], [0]],
+  [[], [], []],
+  [[0, -1], [{ index: 0 }], [0]],
+  [
+    [-1, 1, 2, 3, -1],
+    [{ index: 0 }, { index: 1 }, { index: 2 }, { index: 3 }],
+    [-1, 1, 2, 3]
+  ]
+])(
+  '',
+  (
+    rawRecogniseWordIndexes,
+    transcriptWords,
+    expectedFilteredRawRecogniseWordIndexes
+  ) => {
+    test(`[reading common.js] filterRecognisedWords ${JSON.stringify(
+      rawRecogniseWordIndexes
+    )} ${JSON.stringify(transcriptWords)}`, () => {
+      const filteredRawRecogniseWordIndexes = filterRecognisedWordIndexes(
+        rawRecogniseWordIndexes,
+        transcriptWords
+      );
+      expect(filteredRawRecogniseWordIndexes).toEqual(
+        expectedFilteredRawRecogniseWordIndexes
+      );
+    });
+  }
+);
