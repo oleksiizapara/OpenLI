@@ -23,6 +23,10 @@ export default function(state = initialState, action) {
         draft.isLoaded = true;
         draft.user = null;
         break;
+      case actionTypes.USER_FETCH:
+        draft.isLoaded = false;
+        draft.user = null;
+        break;
       default:
         break;
     }
