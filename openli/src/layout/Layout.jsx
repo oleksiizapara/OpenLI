@@ -6,7 +6,7 @@ import { NavBar } from './NavBar';
 
 export const defaultLeftItems = [
   { as: Link, content: 'Home', key: 'home', to: '/', active: true },
-  { as: Link, content: 'Reading', key: 'reading', to: '/reading_search' },
+  { as: Link, content: 'Reading', key: 'reading', to: '/reading' },
   { as: Link, content: 'Progress', key: 'progress', to: '/progress' },
   {
     as: Link,

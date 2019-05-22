@@ -25,6 +25,11 @@ import {
   reducer as readingListReducer
 } from './readingList/index';
 
+import {
+  key as readingSearchKey,
+  reducer as readingSearchReducer
+} from './readingSearch/index';
+
 export default combineReducers({
   [speechRecognitionKey]: speechRecognitionReducer,
   [readingKey]: readingReducer,
@@ -32,5 +37,6 @@ export default combineReducers({
   [reviewKey]: reviewReducer,
   [settingsKey]: settingsReducer,
   [controlKey]: controlReducer,
-  [readingListKey]: readingListReducer
+  [readingListKey]: readingListReducer,
+  [readingSearchKey]: readingSearchReducer
 });

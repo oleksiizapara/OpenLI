@@ -1,11 +1,13 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
+
 import { Link } from 'react-router-dom';
 
 import { Header, Segment, Container, Icon } from 'semantic-ui-react';
 import readingMessageAccess from 'common/readingMessageAccess';
 
-const ReadingListItem = ({ message }) => {
+const ReadingMessage = ({ message }) => {
   return (
     <>
       <Header attached='top' as='h3'>
@@ -29,8 +31,8 @@ const ReadingListItem = ({ message }) => {
   );
 };
 
-ReadingListItem.propTypes = {
+ReadingMessage.propTypes = {
   message: PropTypes.object
 };
 
-export default ReadingListItem;
+export default ReadingMessage;

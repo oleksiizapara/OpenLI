@@ -76,3 +76,7 @@ export const createOrEditReadingMessageSchema = yup.object().shape({
 export const changePasswordSchema = yup.object().shape({
   newPassword: passwordValidation
 });
+
+export const readingSearchSchema = yup.object().shape({
+  searchText: yup.string()
+});

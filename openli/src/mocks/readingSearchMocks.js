@@ -1,4 +1,4 @@
-import { formStates } from 'readingList/actions';
+import { formStates } from 'readingSearch/actions';
 import { mockedUserId, mockedAuthor } from './settingsMocks';
 import readingMessageAccess from 'common/readingMessageAccess';
 
@@ -19,7 +19,26 @@ const sampleMessage = id => {
 };
 
 export const defaultMock = {
+  formState: formStates.DEFAULT_STATE,
+  searchText: '',
+  messages: [],
+  error: undefined,
+  activePage: undefined,
+  totalPages: undefined
+};
+
+export const loadingMock = {
+  formState: formStates.LOADING_STATE,
+  searchText: 'SearchText',
+  messages: [],
+  error: undefined,
+  activePage: undefined,
+  totalPages: undefined
+};
+
+export const searchedMock = {
   formState: formStates.LOADED_STATE,
+  searchText: '',
   messages: [
     sampleMessage(1),
     sampleMessage(2),
@@ -28,5 +47,5 @@ export const defaultMock = {
   ],
   error: undefined,
   activePage: 1,
-  totalPages: 10
+  totalPages: 2
 };

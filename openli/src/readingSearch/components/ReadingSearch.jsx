@@ -1,45 +1,82 @@
 import React from 'react';
-import { Header } from 'semantic-ui-react';
+import { useSelector, useDispatch } from 'react-redux';
 
-// import ReadingSearchItem from './ReadingSearchItem';
-import Layout from 'layout/Layout';
+import { Message, Form, Icon } from 'semantic-ui-react';
+import { Formik } from 'formik';
 
-const ReadingSearchHeader = () => <Header as='h2'>Reading Search</Header>;
+import { formStates, actions } from '../actions';
+import { selectors } from '../reducer';
+
+import ReadingSearchResult from './ReadingSearchResult';
+import { readingSearchSchema } from 'common/validationSchema';
 
 const ReadingSearch = () => {
+  const dispatch = useDispatch();
+  const formState = useSelector(state => selectors.formState(state));
+  const searchText = useSelector(state => selectors.searchText(state));
+
+  const loading = formState === formStates.LOADING_STATE;
+
   return (
     <>
-      {/* <Grid
-        className='root'
-        container
-        direction='column'
-        justify='flex-start'
-        alignItems='stretch'
-        spacing={1}
+      <Formik
+        enableReinitialize
+        initialValues={{ searchText: searchText }}
+        validationSchema={readingSearchSchema}
+        onSubmit={(values, onSubmitActions) => {
+          dispatch(
+            actions.search({
+              searchText: values.searchText,
+              pageId: 1
+            })
+          );
+          onSubmitActions.setSubmitting(false);
+        }}
       >
-        <Grid item>
-          <ReadingSearchBar
-            onRequestAdd={() => {
-              history.push('/reading_add');
-            }}
-          />
-        </Grid>
-        <Grid item>
-          <ReadingSearchItem />
-        </Grid>
-        <Grid item>
-          <ReadingSearchItem />
-        </Grid>
-      </Grid> */}
+        {({
+          isSubmitting,
+          values,
+          errors,
+          touched,
+          handleBlur,
+          handleChange,
+          handleSubmit,
+          isValid,
+          submitForm
+        }) => (
+          <Form
+            error={!isValid}
+            onSubmit={handleSubmit}
+            loading={isSubmitting || loading}
+          >
+            <Form.Input
+              icon={
+                <Icon
+                  name='search'
+                  inverted
+                  circular
+                  link
+                  onClick={() => submitForm()}
+                />
+              }
+              name='searchText'
+              placeholder='Search...'
+              error={!!errors.searchText && touched.searchText}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.searchText}
+            />
+
+            {!!errors.searchText && touched.searchText && (
+              <Message error content={errors.searchText} />
+            )}
+          </Form>
+        )}
+      </Formik>
+
+      <ReadingSearchResult />
     </>
   );
 };
 
-export default function ReadingSearchLayout() {
-  return (
-    <Layout>
-      <ReadingSearchHeader />
-      <ReadingSearch />
-    </Layout>
-  );
-}
+export default ReadingSearch;

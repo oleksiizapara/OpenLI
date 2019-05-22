@@ -4,6 +4,7 @@ import { logic as readingMessageLogic } from './readingMessage/index';
 import { logic as reviewLogic } from './review/index';
 import { logic as settingsLogic } from './settings/index';
 import { logic as readingListLogic } from './readingList/index';
+import { logic as readingSearchLogic } from './readingSearch/index';
 
 export default [
   ...speechRecognitionLogic,
@@ -11,5 +12,6 @@ export default [
   ...readingMessageLogic,
   ...reviewLogic,
   ...settingsLogic,
-  ...readingListLogic
+  ...readingListLogic,
+  ...readingSearchLogic
 ];

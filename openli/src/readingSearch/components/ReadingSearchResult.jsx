@@ -6,9 +6,10 @@ import { Loader, Message, Pagination, Segment } from 'semantic-ui-react';
 import { formStates, actions } from '../actions';
 import { selectors } from '../reducer';
 import { selectors as settingsSelectors } from 'settings/reducer';
+
 import ReadingMessage from 'common/Components/ReadingMessage';
 
-const ReadingList = () => {
+const ReadingSearchResult = () => {
   const dispatch = useDispatch();
   const formState = useSelector(state => selectors.formState(state));
   const messages = useSelector(state => selectors.messages(state));
@@ -18,7 +19,6 @@ const ReadingList = () => {
 
   const isLoaded = useSelector(state => settingsSelectors.isLoaded(state));
   useEffect(() => {
-    dispatch(actions.load(1));
     return () => dispatch(actions.toDefault());
   }, [dispatch, isLoaded]);
 
@@ -51,4 +51,4 @@ const ReadingList = () => {
   }
 };
 
-export default ReadingList;
+export default ReadingSearchResult;
