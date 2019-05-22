@@ -10,4 +10,11 @@ export const authenticatedState = {
     emailVerified: true
   }
 };
+
+export const mockedAuthor = {
+  id: mockedUserId,
+  name: 'Stiven',
+  familyName: 'Ivanov'
+};
+
 export const unregisteredUserState = { isLoaded: true, user: undefined };

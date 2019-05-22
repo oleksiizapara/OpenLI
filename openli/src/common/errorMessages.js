@@ -14,6 +14,7 @@ const genericNotFoundMessage = 'Page was not found';
 const readingMessageInvalidTitle = ' Title is invalid';
 const readingMessageInvalidContent = 'Content is invalid';
 const invalidReadingMessageAccess = 'Access is invalid';
+const readingMessagesWasNotFound = 'Reading messages was not found';
 
 export const errorMessages = {
   readingMessageWasNotCreated,
@@ -30,5 +31,6 @@ export const errorMessages = {
   genericNotFoundMessage,
   readingMessageInvalidTitle,
   readingMessageInvalidContent,
-  invalidReadingMessageAccess
+  invalidReadingMessageAccess,
+  readingMessagesWasNotFound
 };

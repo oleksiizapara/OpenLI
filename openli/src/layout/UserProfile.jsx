@@ -27,6 +27,12 @@ export const UserProfile = () => {
     <Dropdown item icon='user' direction='left'>
       <Dropdown.Menu>
         <Dropdown.Item
+          as={Link}
+          content='Your List'
+          key='reading_list'
+          to='/reading_list'
+        />
+        <Dropdown.Item
           onClick={async () => {
             try {
               await Auth.signOut();
@@ -35,9 +41,8 @@ export const UserProfile = () => {
               logger.debug(exception);
             }
           }}
-        >
-          Sign Out
-        </Dropdown.Item>
+          content='Sign Out'
+        />
       </Dropdown.Menu>
     </Dropdown>
   );

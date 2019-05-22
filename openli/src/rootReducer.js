@@ -20,11 +20,17 @@ import {
   reducer as readingMessageReducer
 } from './readingMessage/index';
 
+import {
+  key as readingListKey,
+  reducer as readingListReducer
+} from './readingList/index';
+
 export default combineReducers({
   [speechRecognitionKey]: speechRecognitionReducer,
   [readingKey]: readingReducer,
   [readingMessageKey]: readingMessageReducer,
   [reviewKey]: reviewReducer,
   [settingsKey]: settingsReducer,
-  [controlKey]: controlReducer
+  [controlKey]: controlReducer,
+  [readingListKey]: readingListReducer
 });

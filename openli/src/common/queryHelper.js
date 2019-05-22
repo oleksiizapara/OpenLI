@@ -45,3 +45,35 @@ export const getReadingMessage = async id => {
     logger.debug('getReadingMessageError', e);
   }
 };
+
+export const getReadingMessagesByAuthor = async ({
+  authorId,
+  nextToken,
+  pageSize
+}) => {
+  try {
+    const response = await API.graphql(
+      graphqlOperation(customQueries.getReadingMessagesByAuthor, {
+        authorId,
+        nextToken,
+        pageSize
+      })
+    );
+    assertErrors(response);
+    const {
+      data: { listReadingMessages: data }
+    } = response;
+    return {
+      nextToken: data.nextToken,
+      messages: data.items
+    };
+  } catch (e) {
+    Analytics.record({
+      name: 'getReadingMessageByAuthorError',
+      attributes: {
+        error: e.message
+      }
+    });
+    logger.debug('getReadingMessageByAuthorError', e);
+  }
+};

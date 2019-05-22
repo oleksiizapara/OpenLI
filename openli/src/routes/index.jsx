@@ -11,6 +11,7 @@ import CreatePage from 'readingMessage/components/CreatePage';
 import SignInPage from 'settings/components/SignInPage';
 import SignUpPage from 'settings/components/SignUpPage';
 import RecoveryPasswordPage from 'settings/components/RecoveryPasswordPage';
+import ReadingListPage from 'readingList/components/ReadingListPage';
 
 export const Routes = () => (
   <BrowserRouter>
@@ -23,6 +24,7 @@ export const Routes = () => (
       <PrivateRoute path='/reading/' component={ReadingSearch} />
       <PrivateRoute path='/reading_add' component={CreatePage} />
       <PrivateRoute path='/reading_edit/:id' component={EditPage} />
+      <PrivateRoute path='/reading_list' component={ReadingListPage} />
       <Route component={GenericNotFound} />
     </Switch>
   </BrowserRouter>

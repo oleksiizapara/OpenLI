@@ -12,11 +12,14 @@ import { key as settingsKey } from 'settings/index';
 
 import { key as controlKey } from 'control/index';
 
+import { key as readingListKey } from 'readingList/index';
+
 import * as readingMessageMocks from 'mocks/readingMessageMocks';
 import * as readingMocks from 'mocks/readingMocks';
 import * as reviewMocks from 'mocks/reviewMocks';
 import * as settingsMocks from 'mocks/settingsMocks';
 import * as controlMocks from 'mocks/controlMocks';
+import * as readingListMocks from 'mocks/readingListMocks';
 
 const initialSpeechRecognitionState = {};
 const initialReadingState = readingMocks.reviewSample;
@@ -24,6 +27,7 @@ const initialReadingMessageState = readingMessageMocks.loadedSampleMessage;
 const initialReviewState = reviewMocks.loadedMock;
 const initialSettingsState = settingsMocks.authenticatedState;
 const initialControlState = controlMocks.defaultMock;
+const initialReadingListState = readingListMocks.defaultMock;
 
 const mockedReducer = initialState => (state = initialState) => {
   return state;
@@ -35,5 +39,6 @@ export default combineReducers({
   [readingMessageKey]: mockedReducer(initialReadingMessageState),
   [reviewKey]: mockedReducer(initialReviewState),
   [settingsKey]: mockedReducer(initialSettingsState),
-  [controlKey]: mockedReducer(initialControlState)
+  [controlKey]: mockedReducer(initialControlState),
+  [readingListKey]: mockedReducer(initialReadingListState)
 });
