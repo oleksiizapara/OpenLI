@@ -2,13 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { Header, Segment, Container } from 'semantic-ui-react';
+import { Header, Segment, Container, Icon } from 'semantic-ui-react';
+import readingMessageAccess from 'common/readingMessageAccess';
 
 const ReadingListItem = ({ message }) => {
   return (
     <>
       <Header attached='top' as='h3'>
-        <Link to={`/reading/${message.id}`}> {message.title}</Link>
+        {message.access == readingMessageAccess.PRIVATE && (
+          <Icon name='protect' />
+        )}
+        {message.access == readingMessageAccess.PUBLIC && <Icon name='globe' />}
+
+        <Header.Content>
+          <Link to={`/reading/${message.id}`}> {message.title}</Link>
+        </Header.Content>
       </Header>
 
       <Segment attached>
