@@ -15,6 +15,7 @@ const readingMessageInvalidTitle = ' Title is invalid';
 const readingMessageInvalidContent = 'Content is invalid';
 const invalidReadingMessageAccess = 'Access is invalid';
 const readingMessagesWasNotFound = 'Reading messages was not found';
+const readingMessagesSearchIsNotWorking = 'Search is not working';
 
 export const errorMessages = {
   readingMessageWasNotCreated,
@@ -32,5 +33,6 @@ export const errorMessages = {
   readingMessageInvalidTitle,
   readingMessageInvalidContent,
   invalidReadingMessageAccess,
-  readingMessagesWasNotFound
+  readingMessagesWasNotFound,
+  readingMessagesSearchIsNotWorking
 };

@@ -5,3 +5,7 @@ export const readingMessagePrepareToSave = readingMessage => {
     delete draft.author;
   });
 };
+
+export const calculateTotalPages = page => {
+  return page.nextToken ? page.pageId + 1 : page.pageId;
+};

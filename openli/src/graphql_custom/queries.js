@@ -44,3 +44,35 @@ query GetReadingMessageByAuthor(
   }
 }
 `;
+
+export const getSearchMessages = `
+query getSearchMessages(
+  $searchText: String!
+  $pageSize: Int!
+  $nextToken: String
+) {
+  listReadingMessages(
+    nextToken:$nextToken
+    limit: $pageSize
+    filter: {  
+      title :{contains :$searchText  }
+      access : {eq: PUBLIC}
+    }
+  ) {
+    nextToken
+    items {
+      id
+      authorId
+      author {
+        name
+        familyName
+      }
+      title
+      content
+      createdAt
+      access
+      updatedAt
+    }
+  }
+}
+`;

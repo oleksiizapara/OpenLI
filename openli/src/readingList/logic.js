@@ -9,6 +9,7 @@ import { selectors } from './reducer';
 import * as queryHelper from 'common/queryHelper';
 import { errorMessages } from 'common/errorMessages';
 import { selectors as settingsSelectors } from 'settings/reducer';
+import { calculateTotalPages } from 'common/common';
 
 export const loadReadingList = createLogic({
   type: actionTypes.LOAD,
@@ -45,9 +46,7 @@ export const loadReadingList = createLogic({
             pages: updatedPages,
             messages: page.messages,
             activePage: page.pageId,
-            totalPages: lastPage.nextToken
-              ? lastPage.pageId + 1
-              : lastPage.pageId
+            totalPages: calculateTotalPages(lastPage)
           })
         );
         done();

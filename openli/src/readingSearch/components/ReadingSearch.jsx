@@ -13,23 +13,16 @@ import { readingSearchSchema } from 'common/validationSchema';
 const ReadingSearch = () => {
   const dispatch = useDispatch();
   const formState = useSelector(state => selectors.formState(state));
-  const searchText = useSelector(state => selectors.searchText(state));
 
   const loading = formState === formStates.LOADING_STATE;
 
   return (
     <>
       <Formik
-        enableReinitialize
-        initialValues={{ searchText: searchText }}
+        initialValues={{ searchText: '' }}
         validationSchema={readingSearchSchema}
         onSubmit={(values, onSubmitActions) => {
-          dispatch(
-            actions.search({
-              searchText: values.searchText,
-              pageId: 1
-            })
-          );
+          dispatch(actions.search(values.searchText));
           onSubmitActions.setSubmitting(false);
         }}
       >

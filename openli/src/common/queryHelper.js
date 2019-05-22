@@ -77,3 +77,35 @@ export const getReadingMessagesByAuthor = async ({
     logger.debug('getReadingMessageByAuthorError', e);
   }
 };
+
+export const getSearchMessages = async ({
+  searchText,
+  nextToken,
+  pageSize
+}) => {
+  try {
+    const response = await API.graphql(
+      graphqlOperation(customQueries.getSearchMessages, {
+        searchText,
+        nextToken,
+        pageSize
+      })
+    );
+    assertErrors(response);
+    const {
+      data: { listReadingMessages: data }
+    } = response;
+    return {
+      nextToken: data.nextToken,
+      messages: data.items
+    };
+  } catch (e) {
+    Analytics.record({
+      name: 'getSearchMessagesError',
+      attributes: {
+        error: e.message
+      }
+    });
+    logger.debug('getSearchMessagesError', e);
+  }
+};

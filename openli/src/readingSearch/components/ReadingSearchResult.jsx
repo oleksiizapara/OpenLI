@@ -40,9 +40,9 @@ const ReadingSearchResult = () => {
               <Pagination
                 activePage={activePage}
                 totalPages={totalPages}
-                onPageChange={(_, { activePage }) =>
-                  dispatch(actions.load(activePage))
-                }
+                onPageChange={(_, { activePage }) => {
+                  dispatch(actions.changePage(activePage));
+                }}
               />
             </Segment>
           )}

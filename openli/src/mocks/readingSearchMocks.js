@@ -20,7 +20,6 @@ const sampleMessage = id => {
 
 export const defaultMock = {
   formState: formStates.DEFAULT_STATE,
-  searchText: '',
   messages: [],
   error: undefined,
   activePage: undefined,
@@ -29,7 +28,6 @@ export const defaultMock = {
 
 export const loadingMock = {
   formState: formStates.LOADING_STATE,
-  searchText: 'SearchText',
   messages: [],
   error: undefined,
   activePage: undefined,
@@ -38,7 +36,6 @@ export const loadingMock = {
 
 export const searchedMock = {
   formState: formStates.LOADED_STATE,
-  searchText: '',
   messages: [
     sampleMessage(1),
     sampleMessage(2),

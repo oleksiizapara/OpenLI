@@ -5,7 +5,6 @@ import { defaultReadingListPageSize } from 'common/constants';
 
 export const selectors = {
   formState: state => state[key].formState,
-  searchText: state => state[key].searchText,
   error: state => state[key].error,
   messages: state => state[key].messages,
   activePage: state => state[key].activePage,
@@ -17,7 +16,6 @@ export const selectors = {
 const initialState = {
   formState: formStates.DEFAULT_STATE,
   error: '',
-  searchText: '',
   messages: [],
   pages: [],
   activePage: undefined,
@@ -37,11 +35,13 @@ export default function(state = initialState, action) {
         break;
       case actionTypes.SEARCH:
         draft.formState = formStates.LOADING_STATE;
-        draft.searchText = action.payload.searchText;
         draft.pages = [];
         draft.messages = [];
         draft.activePage = undefined;
         draft.totalPages = undefined;
+        break;
+      case actionTypes.CHANGE_PAGE:
+        draft.formState = formStates.LOADING_STATE;
         break;
       case actionTypes.PAGE_UPDATED:
         draft.formState = formStates.LOADED_STATE;
@@ -52,7 +52,6 @@ export default function(state = initialState, action) {
         break;
       case actionTypes.TO_DEFAULT:
         draft.formState = formStates.DEFAULT_STATE;
-        draft.searchText = '';
         draft.pages = [];
         draft.messages = [];
         draft.activePage = undefined;

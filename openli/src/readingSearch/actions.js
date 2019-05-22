@@ -1,12 +1,14 @@
 export const key = 'readingSearch';
 
 const SEARCH = `[${key}] SEARCH`;
+const CHANGE_PAGE = `[${key}] CHANGE_PAGE`;
 const ERROR = `[${key}] ERROR`;
 const TO_DEFAULT = `[${key}] TO_DEFAULT`;
 const PAGE_UPDATED = `[${key}] PAGE_UPDATED`;
 
 export const actionTypes = {
   SEARCH,
+  CHANGE_PAGE,
   ERROR,
   TO_DEFAULT,
   PAGE_UPDATED
@@ -24,11 +26,17 @@ export const formStates = {
   ERROR_STATE
 };
 
-const search = ({ searchText, pageId }) => ({
+const search = searchText => ({
   type: actionTypes.SEARCH,
   payload: {
-    pageId,
     searchText
+  }
+});
+
+const changePage = pageId => ({
+  type: actionTypes.CHANGE_PAGE,
+  payload: {
+    pageId
   }
 });
 
@@ -56,6 +64,7 @@ const toDefault = () => ({
 
 export const actions = {
   search,
+  changePage,
   error,
   pagesUpdated,
   toDefault
