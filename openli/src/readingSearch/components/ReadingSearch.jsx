@@ -37,21 +37,10 @@ const ReadingSearch = () => {
           isValid,
           submitForm
         }) => (
-          <Form
-            error={!isValid}
-            onSubmit={handleSubmit}
-            loading={isSubmitting || loading}
-          >
+          <Form error={!isValid} onSubmit={handleSubmit}>
             <Form.Input
-              icon={
-                <Icon
-                  name='search'
-                  inverted
-                  circular
-                  link
-                  onClick={() => submitForm()}
-                />
-              }
+              loading={isSubmitting || loading}
+              icon={<Icon name='search' link onClick={() => submitForm()} />}
               name='searchText'
               placeholder='Search...'
               error={!!errors.searchText && touched.searchText}
