@@ -38,21 +38,14 @@ const error = error => ({
   }
 });
 
-const changePassword = ({ oldPassword, newPassword }) => ({
+const changePassword = values => ({
   type: actionTypes.CHANGE_PASSWORD,
-  payload: {
-    oldPassword,
-    newPassword
-  }
+  payload: { ...values }
 });
 
-const updateProfile = ({ email, name, familyName }) => ({
+const updateProfile = values => ({
   type: actionTypes.UPDATE_PROFILE,
-  payload: {
-    email,
-    name,
-    familyName
-  }
+  payload: { ...values }
 });
 
 const updateProfileCode = ({ code }) => ({
