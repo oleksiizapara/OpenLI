@@ -30,6 +30,8 @@ import {
   reducer as readingSearchReducer
 } from './readingSearch/index';
 
+import { key as profileKey, reducer as profileReducer } from './profile/index';
+
 export default combineReducers({
   [speechRecognitionKey]: speechRecognitionReducer,
   [readingKey]: readingReducer,
@@ -38,5 +40,6 @@ export default combineReducers({
   [settingsKey]: settingsReducer,
   [controlKey]: controlReducer,
   [readingListKey]: readingListReducer,
-  [readingSearchKey]: readingSearchReducer
+  [readingSearchKey]: readingSearchReducer,
+  [profileKey]: profileReducer
 });

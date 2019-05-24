@@ -5,8 +5,8 @@ import { createLogic } from 'redux-logic';
 import { Auth } from 'aws-amplify';
 import logger from 'common/logger';
 
-export const userFetch = createLogic({
-  type: actionTypes.USER_FETCH,
+const userFetch = createLogic({
+  type: [actionTypes.USER_FETCH, actionTypes.USER_REFRESH],
   latest: true,
 
   processOptions: {

@@ -56,6 +56,30 @@ describe.each([
         expect(user).toEqual(expectedState.user);
       });
     });
+
+    test(`[redux-logic]  userRefresh ${mockedValue}`, async () => {
+      const initialState = {
+        [key]: initialKeyState
+      };
+
+      const store = createMockStore({
+        initialState,
+        reducer,
+        logic
+      });
+
+      Auth.currentUserInfo = jest.fn().mockResolvedValue(mockedValue);
+
+      store.dispatch(actions.userRefresh());
+
+      await store.whenComplete(() => {
+        const isLoaded = selectors.isLoaded(store.getState());
+        expect(isLoaded).toEqual(expectedState.isLoading);
+
+        const user = selectors.user(store.getState());
+        expect(user).toEqual(expectedState.user);
+      });
+    });
   }
 );
 

@@ -33,6 +33,12 @@ export const UserProfile = () => {
           to='/reading_list'
         />
         <Dropdown.Item
+          as={Link}
+          content='Your Profile'
+          key='profile'
+          to='/profile'
+        />
+        <Dropdown.Item
           onClick={async () => {
             try {
               await Auth.signOut();

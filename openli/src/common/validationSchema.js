@@ -15,6 +15,18 @@ const passwordValidation = yup
   .max(255)
   .required();
 
+const nameValidation = yup
+  .string()
+  .min(3)
+  .max(255)
+  .required();
+
+const familyNameValidation = yup
+  .string()
+  .min(3)
+  .max(255)
+  .required();
+
 const passwordConfirmValidation = name =>
   yup
     .string()
@@ -30,14 +42,8 @@ export const signUpSchema = yup.object().shape({
   email: emailValidation,
   password: passwordValidation,
   passwordConfirm: passwordConfirmValidation('password'),
-  name: yup
-    .string()
-    .max(255)
-    .required(),
-  familyName: yup
-    .string()
-    .max(255)
-    .required()
+  name: nameValidation,
+  familyName: familyNameValidation
 });
 
 export const signUpConfirmSchema = yup.object().shape({
@@ -74,7 +80,19 @@ export const createOrEditReadingMessageSchema = yup.object().shape({
 });
 
 export const changePasswordSchema = yup.object().shape({
-  newPassword: passwordValidation
+  oldPassword: passwordValidation,
+  newPassword: passwordValidation,
+  newPasswordConfirm: passwordConfirmValidation('newPassword')
+});
+
+export const updateProfileSchema = yup.object().shape({
+  email: emailValidation,
+  name: nameValidation,
+  familyName: familyNameValidation
+});
+
+export const updateProfileCodeSchema = yup.object().shape({
+  code: codeValidation
 });
 
 export const readingSearchSchema = yup.object().shape({
