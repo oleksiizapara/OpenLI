@@ -19,6 +19,16 @@ export const onCreateUser = `subscription OnCreateUser {
       }
       nextToken
     }
+    preogresses {
+      items {
+        id
+        authorId
+        isCalculated
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }
@@ -39,6 +49,16 @@ export const onUpdateUser = `subscription OnUpdateUser {
         createdAt
         updatedAt
         access
+      }
+      nextToken
+    }
+    preogresses {
+      items {
+        id
+        authorId
+        isCalculated
+        createdAt
+        updatedAt
       }
       nextToken
     }
@@ -65,6 +85,16 @@ export const onDeleteUser = `subscription OnDeleteUser {
       }
       nextToken
     }
+    preogresses {
+      items {
+        id
+        authorId
+        isCalculated
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
     createdAt
     updatedAt
   }
@@ -79,6 +109,9 @@ export const onCreateReadingMessage = `subscription OnCreateReadingMessage {
       name
       familyName
       readingMessages {
+        nextToken
+      }
+      preogresses {
         nextToken
       }
       createdAt
@@ -104,6 +137,9 @@ export const onUpdateReadingMessage = `subscription OnUpdateReadingMessage {
       readingMessages {
         nextToken
       }
+      preogresses {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -127,6 +163,9 @@ export const onDeleteReadingMessage = `subscription OnDeleteReadingMessage {
       readingMessages {
         nextToken
       }
+      preogresses {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -136,6 +175,192 @@ export const onDeleteReadingMessage = `subscription OnDeleteReadingMessage {
     createdAt
     updatedAt
     access
+  }
+}
+`;
+export const onCreateProgress = `subscription OnCreateProgress {
+  onCreateProgress {
+    id
+    author {
+      id
+      username
+      name
+      familyName
+      readingMessages {
+        nextToken
+      }
+      preogresses {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    authorId
+    readingMessageHistories {
+      id
+      ReadingMessage {
+        id
+        authorId
+        title
+        content
+        createdAt
+        updatedAt
+        access
+      }
+      words {
+        index
+        word
+        time
+        isRegognised
+      }
+      readingSpeed
+      totalWords
+      uniqueWords
+      recognisedWords
+      unRecognisedWords
+      recognisedWordsPercent
+      time
+    }
+    readingMessageProgresses {
+      id
+      orderId
+      readingMessageId
+      readingMessageTitle
+      readingMessageProgressUnits {
+        id
+        readingMessageId
+        time
+        recognisedWordsPercent
+      }
+      time
+    }
+    isCalculated
+    createdAt
+    updatedAt
+  }
+}
+`;
+export const onUpdateProgress = `subscription OnUpdateProgress {
+  onUpdateProgress {
+    id
+    author {
+      id
+      username
+      name
+      familyName
+      readingMessages {
+        nextToken
+      }
+      preogresses {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    authorId
+    readingMessageHistories {
+      id
+      ReadingMessage {
+        id
+        authorId
+        title
+        content
+        createdAt
+        updatedAt
+        access
+      }
+      words {
+        index
+        word
+        time
+        isRegognised
+      }
+      readingSpeed
+      totalWords
+      uniqueWords
+      recognisedWords
+      unRecognisedWords
+      recognisedWordsPercent
+      time
+    }
+    readingMessageProgresses {
+      id
+      orderId
+      readingMessageId
+      readingMessageTitle
+      readingMessageProgressUnits {
+        id
+        readingMessageId
+        time
+        recognisedWordsPercent
+      }
+      time
+    }
+    isCalculated
+    createdAt
+    updatedAt
+  }
+}
+`;
+export const onDeleteProgress = `subscription OnDeleteProgress {
+  onDeleteProgress {
+    id
+    author {
+      id
+      username
+      name
+      familyName
+      readingMessages {
+        nextToken
+      }
+      preogresses {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    authorId
+    readingMessageHistories {
+      id
+      ReadingMessage {
+        id
+        authorId
+        title
+        content
+        createdAt
+        updatedAt
+        access
+      }
+      words {
+        index
+        word
+        time
+        isRegognised
+      }
+      readingSpeed
+      totalWords
+      uniqueWords
+      recognisedWords
+      unRecognisedWords
+      recognisedWordsPercent
+      time
+    }
+    readingMessageProgresses {
+      id
+      orderId
+      readingMessageId
+      readingMessageTitle
+      readingMessageProgressUnits {
+        id
+        readingMessageId
+        time
+        recognisedWordsPercent
+      }
+      time
+    }
+    isCalculated
+    createdAt
+    updatedAt
   }
 }
 `;
