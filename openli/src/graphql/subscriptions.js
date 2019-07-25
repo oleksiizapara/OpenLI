@@ -19,7 +19,26 @@ export const onCreateUser = `subscription OnCreateUser {
       }
       nextToken
     }
-    preogresses {
+    readingMessageHistories {
+      items {
+        id
+        authorId
+        readingMessageId
+        title
+        readingSpeed
+        totalWords
+        uniqueWords
+        recognisedWords
+        notRecognisedWords
+        recognisedWordsPercent
+        time
+        isCalculated
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    progresses {
       items {
         id
         authorId
@@ -52,7 +71,26 @@ export const onUpdateUser = `subscription OnUpdateUser {
       }
       nextToken
     }
-    preogresses {
+    readingMessageHistories {
+      items {
+        id
+        authorId
+        readingMessageId
+        title
+        readingSpeed
+        totalWords
+        uniqueWords
+        recognisedWords
+        notRecognisedWords
+        recognisedWordsPercent
+        time
+        isCalculated
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    progresses {
       items {
         id
         authorId
@@ -85,7 +123,26 @@ export const onDeleteUser = `subscription OnDeleteUser {
       }
       nextToken
     }
-    preogresses {
+    readingMessageHistories {
+      items {
+        id
+        authorId
+        readingMessageId
+        title
+        readingSpeed
+        totalWords
+        uniqueWords
+        recognisedWords
+        notRecognisedWords
+        recognisedWordsPercent
+        time
+        isCalculated
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    progresses {
       items {
         id
         authorId
@@ -111,7 +168,10 @@ export const onCreateReadingMessage = `subscription OnCreateReadingMessage {
       readingMessages {
         nextToken
       }
-      preogresses {
+      readingMessageHistories {
+        nextToken
+      }
+      progresses {
         nextToken
       }
       createdAt
@@ -137,7 +197,10 @@ export const onUpdateReadingMessage = `subscription OnUpdateReadingMessage {
       readingMessages {
         nextToken
       }
-      preogresses {
+      readingMessageHistories {
+        nextToken
+      }
+      progresses {
         nextToken
       }
       createdAt
@@ -163,7 +226,10 @@ export const onDeleteReadingMessage = `subscription OnDeleteReadingMessage {
       readingMessages {
         nextToken
       }
-      preogresses {
+      readingMessageHistories {
+        nextToken
+      }
+      progresses {
         nextToken
       }
       createdAt
@@ -189,38 +255,16 @@ export const onCreateProgress = `subscription OnCreateProgress {
       readingMessages {
         nextToken
       }
-      preogresses {
+      readingMessageHistories {
+        nextToken
+      }
+      progresses {
         nextToken
       }
       createdAt
       updatedAt
     }
     authorId
-    readingMessageHistories {
-      id
-      ReadingMessage {
-        id
-        authorId
-        title
-        content
-        createdAt
-        updatedAt
-        access
-      }
-      words {
-        index
-        word
-        time
-        isRegognised
-      }
-      readingSpeed
-      totalWords
-      uniqueWords
-      recognisedWords
-      unRecognisedWords
-      recognisedWordsPercent
-      time
-    }
     readingMessageProgresses {
       id
       orderId
@@ -230,6 +274,11 @@ export const onCreateProgress = `subscription OnCreateProgress {
         id
         readingMessageId
         time
+        readingSpeed
+        totalWords
+        uniqueWords
+        recognisedWords
+        notRecognisedWords
         recognisedWordsPercent
       }
       time
@@ -251,38 +300,16 @@ export const onUpdateProgress = `subscription OnUpdateProgress {
       readingMessages {
         nextToken
       }
-      preogresses {
+      readingMessageHistories {
+        nextToken
+      }
+      progresses {
         nextToken
       }
       createdAt
       updatedAt
     }
     authorId
-    readingMessageHistories {
-      id
-      ReadingMessage {
-        id
-        authorId
-        title
-        content
-        createdAt
-        updatedAt
-        access
-      }
-      words {
-        index
-        word
-        time
-        isRegognised
-      }
-      readingSpeed
-      totalWords
-      uniqueWords
-      recognisedWords
-      unRecognisedWords
-      recognisedWordsPercent
-      time
-    }
     readingMessageProgresses {
       id
       orderId
@@ -292,6 +319,11 @@ export const onUpdateProgress = `subscription OnUpdateProgress {
         id
         readingMessageId
         time
+        readingSpeed
+        totalWords
+        uniqueWords
+        recognisedWords
+        notRecognisedWords
         recognisedWordsPercent
       }
       time
@@ -313,38 +345,16 @@ export const onDeleteProgress = `subscription OnDeleteProgress {
       readingMessages {
         nextToken
       }
-      preogresses {
+      readingMessageHistories {
+        nextToken
+      }
+      progresses {
         nextToken
       }
       createdAt
       updatedAt
     }
     authorId
-    readingMessageHistories {
-      id
-      ReadingMessage {
-        id
-        authorId
-        title
-        content
-        createdAt
-        updatedAt
-        access
-      }
-      words {
-        index
-        word
-        time
-        isRegognised
-      }
-      readingSpeed
-      totalWords
-      uniqueWords
-      recognisedWords
-      unRecognisedWords
-      recognisedWordsPercent
-      time
-    }
     readingMessageProgresses {
       id
       orderId
@@ -354,10 +364,141 @@ export const onDeleteProgress = `subscription OnDeleteProgress {
         id
         readingMessageId
         time
+        readingSpeed
+        totalWords
+        uniqueWords
+        recognisedWords
+        notRecognisedWords
         recognisedWordsPercent
       }
       time
     }
+    isCalculated
+    createdAt
+    updatedAt
+  }
+}
+`;
+export const onCreateReadingMessageHistory = `subscription OnCreateReadingMessageHistory {
+  onCreateReadingMessageHistory {
+    id
+    author {
+      id
+      username
+      name
+      familyName
+      readingMessages {
+        nextToken
+      }
+      readingMessageHistories {
+        nextToken
+      }
+      progresses {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    authorId
+    readingMessageId
+    title
+    words {
+      index
+      word
+      time
+      isNotRecognisedCount
+    }
+    readingSpeed
+    totalWords
+    uniqueWords
+    recognisedWords
+    notRecognisedWords
+    recognisedWordsPercent
+    time
+    isCalculated
+    createdAt
+    updatedAt
+  }
+}
+`;
+export const onUpdateReadingMessageHistory = `subscription OnUpdateReadingMessageHistory {
+  onUpdateReadingMessageHistory {
+    id
+    author {
+      id
+      username
+      name
+      familyName
+      readingMessages {
+        nextToken
+      }
+      readingMessageHistories {
+        nextToken
+      }
+      progresses {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    authorId
+    readingMessageId
+    title
+    words {
+      index
+      word
+      time
+      isNotRecognisedCount
+    }
+    readingSpeed
+    totalWords
+    uniqueWords
+    recognisedWords
+    notRecognisedWords
+    recognisedWordsPercent
+    time
+    isCalculated
+    createdAt
+    updatedAt
+  }
+}
+`;
+export const onDeleteReadingMessageHistory = `subscription OnDeleteReadingMessageHistory {
+  onDeleteReadingMessageHistory {
+    id
+    author {
+      id
+      username
+      name
+      familyName
+      readingMessages {
+        nextToken
+      }
+      readingMessageHistories {
+        nextToken
+      }
+      progresses {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    authorId
+    readingMessageId
+    title
+    words {
+      index
+      word
+      time
+      isNotRecognisedCount
+    }
+    readingSpeed
+    totalWords
+    uniqueWords
+    recognisedWords
+    notRecognisedWords
+    recognisedWordsPercent
+    time
     isCalculated
     createdAt
     updatedAt

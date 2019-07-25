@@ -12,7 +12,10 @@ export const selectors = {
   totalWords: state => state[key].totalWords,
   readingSpeed: state => state[key].readingSpeed,
   recognisedWords: state => state[key].recognisedWords,
-  notRecognisedWords: state => state[key].notRecognisedWords
+  notRecognisedWords: state => state[key].notRecognisedWords,
+  uniqueWords: state => state[key].uniqueWords,
+  recognisedWordsPercent: state => state[key].recognisedWordsPercent,
+  time: state => state[key].time
 };
 
 const initialState = {
@@ -24,7 +27,10 @@ const initialState = {
   totalWords: undefined,
   readingSpeed: undefined,
   recognisedWords: [],
-  notRecognisedWords: []
+  notRecognisedWords: [],
+  uniqueWords: [],
+  recognisedWordsPercent: undefined,
+  time: undefined
 };
 
 export default function(state = initialState, action) {
@@ -43,6 +49,9 @@ export default function(state = initialState, action) {
         draft.readingSpeed = action.payload.readingSpeed;
         draft.recognisedWords = action.payload.recognisedWords;
         draft.notRecognisedWords = action.payload.notRecognisedWords;
+        draft.uniqueWords = action.payload.uniqueWords;
+        draft.recognisedWordsPercent = action.payload.recognisedWordsPercent;
+        draft.time = action.payload.time;
         break;
       case actionTypes.ERROR:
         draft.error = action.payload.error;
@@ -54,8 +63,11 @@ export default function(state = initialState, action) {
         draft.readingMessage = undefined;
         draft.totalWords = undefined;
         draft.readingSpeed = undefined;
-        draft.recognisedWords = undefined;
-        draft.notRecognisedWords = undefined;
+        draft.recognisedWords = [];
+        draft.notRecognisedWords = [];
+        draft.uniqueWords = [];
+        draft.recognisedWordsPercent = undefined;
+        draft.time = undefined;
         break;
       default:
         break;

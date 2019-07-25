@@ -5,13 +5,17 @@ const LOADED = `[${key}] LOADED`;
 const CALCULATED = `[${key}] CALCULATED`;
 const ERROR = `[${key}] ERROR`;
 const TO_DEFAULT = `[${key}] TO_DEFAULT`;
+const UPLOAD = `[${key}] UPLOAD`;
+const UPLOADED = `[${key}] UPLOADED`;
 
 export const actionTypes = {
   LOAD,
   LOADED,
   CALCULATED,
   ERROR,
-  TO_DEFAULT
+  TO_DEFAULT,
+  UPLOAD,
+  UPLOADED
 };
 
 export const DEFAULT_STATE = 'DEFAULT_STATE';
@@ -58,10 +62,24 @@ const toDefault = () => ({
   payload: {}
 });
 
+const upload = () => ({
+  type: actionTypes.UPLOAD,
+  payload: {}
+});
+
+const uploaded = isUploaded => ({
+  type: actionTypes.UPLOADED,
+  payload: {
+    isUploaded
+  }
+});
+
 export const actions = {
   load,
   loaded,
   calculated,
   error,
-  toDefault
+  toDefault,
+  upload,
+  uploaded
 };

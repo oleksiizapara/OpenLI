@@ -1,7 +1,7 @@
 import {
   splitTextOnWords,
   recogniseWords,
-  validateRecognizedWords,
+  validateRecognisedWords,
   getTooltipWordIndex,
   calculateNotRecognisedWords,
   isEditable,
@@ -99,10 +99,10 @@ describe.each([
   [[1, 1, 2], [-1, -1, -1]],
   [[-1, 1, 2, 3], [-1, 1, 2, 3]]
 ])('bla bla', (recognisedWords, expectedValidatedWords) => {
-  test(`[reading common.js].validateRecognizedWords ${JSON.stringify(
+  test(`[reading common.js].validateRecognisedWords ${JSON.stringify(
     recognisedWords
   )} ${JSON.stringify(expectedValidatedWords)}`, () => {
-    const validatedWords = validateRecognizedWords(recognisedWords);
+    const validatedWords = validateRecognisedWords(recognisedWords);
     expect(validatedWords).toEqual(expectedValidatedWords);
   });
 });

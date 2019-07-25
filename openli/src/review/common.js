@@ -42,6 +42,14 @@ const dirtyCalculateNotRecognisedWords = words => {
     .toArray();
 };
 
+export const calculateUniqueWords = words => {
+  return Enumerable.from(words)
+    .select(x => x.word)
+    .distinct()
+    .orderBy(x => x)
+    .toArray();
+};
+
 const removeDuplicateWithCapitalLetters = words => {
   const lowCaseWords = Enumerable.from(words)
     .where(x => x.toLowerCase() === x)
@@ -57,5 +65,20 @@ const removeDuplicateWithCapitalLetters = words => {
 export const calculateNotRecognisedWords = words => {
   return removeDuplicateWithCapitalLetters(
     Enumerable.from(dirtyCalculateNotRecognisedWords(words)).toArray()
+  );
+};
+
+export const calculateTime = words => {
+  return Enumerable.from(words)
+    .where(x => x.time !== null)
+    .orderBy(x => x.index)
+    .last().time;
+};
+
+export const calculateRecognisedWordsPercent = words => {
+  return (
+    (calculateRecognisedWords(words).length /
+      calculateUniqueWords(words).length) *
+    100
   );
 };

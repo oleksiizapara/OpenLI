@@ -91,7 +91,7 @@ export const filterRecognisedWordIndexes = (
   return rawRecogniseWordIndexes;
 };
 
-export const validateRecognizedWords = recognisedWords => {
+export const validateRecognisedWords = recognisedWords => {
   const startedRecognisedWords = Enumerable.from(recognisedWords).takeWhile(
     x => x !== -1
   );
@@ -99,35 +99,35 @@ export const validateRecognizedWords = recognisedWords => {
     startedRecognisedWords.count() > 0 &&
     startedRecognisedWords.all(x => x !== -1);
 
-  const unrecognizedWordsCount = Enumerable.from(recognisedWords)
+  const unrecognisedWordsCount = Enumerable.from(recognisedWords)
     .where(x => x === -1)
     .count();
 
-  const allUnrecognizedWords = Enumerable.from(recognisedWords)
+  const allUnrecognisedWords = Enumerable.from(recognisedWords)
     // eslint-disable-next-line no-unused-vars
     .select(x => -1)
     .toArray();
 
-  const allRecognizedWords = Enumerable.from(recognisedWords)
+  const allRecognisedWords = Enumerable.from(recognisedWords)
     .where(x => x !== -1)
     .toArray();
 
   if (
     recognisedWords.length > 0 &&
-    (unrecognizedWordsCount === 0 ||
-      recognisedWords.length / unrecognizedWordsCount >= 3 ||
+    (unrecognisedWordsCount === 0 ||
+      recognisedWords.length / unrecognisedWordsCount >= 3 ||
       isStartedWithRecognisedWords)
   ) {
-    for (var i = 0; i < allRecognizedWords.length - 1; i++) {
-      if (allRecognizedWords[i + 1] <= allRecognizedWords[i]) {
-        return allUnrecognizedWords;
+    for (var i = 0; i < allRecognisedWords.length - 1; i++) {
+      if (allRecognisedWords[i + 1] <= allRecognisedWords[i]) {
+        return allUnrecognisedWords;
       }
     }
 
     return recognisedWords;
   }
 
-  return allUnrecognizedWords;
+  return allUnrecognisedWords;
 };
 
 export const getTooltipWordIndex = words => {

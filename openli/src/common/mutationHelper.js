@@ -1,7 +1,10 @@
 import * as mutations from 'graphql_custom/mutations';
 import { graphqlOperation, Analytics, API } from 'aws-amplify';
 import logger from './logger';
-import { readingMessagePrepareToSave } from './common';
+import {
+  readingMessagePrepareToSave,
+  readingMessageHistoryPrepareToSave
+} from './common';
 
 const assertErrors = response => {
   if (response && response.errors && response.errors.length > 0) {
@@ -82,5 +85,48 @@ export const deleteReadingMessage = async id => {
       }
     });
     logger.debug('deleteReadingMessageError', e);
+  }
+};
+
+export const createReadingMessageHistory = async history => {
+  const savingHistory = readingMessageHistoryPrepareToSave(history);
+
+  try {
+    const response = await API.graphql(
+      graphqlOperation(mutations.createReadingMessageHistory, {
+        input: savingHistory
+      })
+    );
+    assertErrors(response);
+    return response.data.createReadingMessageHistory;
+  } catch (e) {
+    Analytics.record({
+      name: 'createReadingMessageHistoryError',
+      data: savingHistory,
+      attributes: {
+        error: e.message
+      }
+    });
+    logger.debug('createReadingMessageHistoryError', e, savingHistory);
+  }
+};
+
+export const updateProgress = async progress => {
+  try {
+    const response = await API.graphql(
+      graphqlOperation(mutations.updateProgress, {
+        input: progress
+      })
+    );
+    assertErrors(response);
+    return response.data.updateProgress;
+  } catch (e) {
+    Analytics.record({
+      name: 'updateProgressError',
+      attributes: {
+        error: e.message
+      }
+    });
+    logger.debug('updateProgressError', e);
   }
 };

@@ -1,4 +1,3 @@
-import * as queries from 'graphql/queries';
 import * as customQueries from 'graphql_custom/queries';
 
 import { graphqlOperation, Analytics, API } from 'aws-amplify';
@@ -13,7 +12,7 @@ const assertErrors = response => {
 export const getUser = async username => {
   try {
     const response = await API.graphql(
-      graphqlOperation(queries.getUser, { id: username })
+      graphqlOperation(customQueries.getUser, { id: username })
     );
     assertErrors(response);
     return response.data.getUser;

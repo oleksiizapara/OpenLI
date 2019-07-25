@@ -38,3 +38,19 @@ export const deleteReadingMessage = `mutation DeleteReadingMessage($input: Delet
   }
 }
 `;
+
+export const createReadingMessageHistory = `mutation CreateReadingMessageHistory(
+  $input: CreateReadingMessageHistoryInput!
+) {
+  createReadingMessageHistory(input: $input) {
+    id
+  }
+}
+`;
+
+export const updateProgress = `mutation UpdateProgress($input: UpdateProgressInput!) {
+  updateProgress(input: $input) {
+    id
+  }
+}
+`;

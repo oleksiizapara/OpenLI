@@ -28,8 +28,8 @@ test(`[redux-logic] calculate`, async () => {
   store.dispatch(
     actions.load({
       words: [
-        { word: 'a', time: 1000 },
-        { word: 'b', time: 3000, isNotRecognisedCount: 1 }
+        { index: 0, word: 'a', time: 1000 },
+        { index: 1, word: 'b', time: 3000, isNotRecognisedCount: 1 }
       ],
       readingMessage: { content: 'a' }
     })
@@ -47,6 +47,17 @@ test(`[redux-logic] calculate`, async () => {
 
     const notRecognisedWords = selectors.notRecognisedWords(store.getState());
     expect(notRecognisedWords).toEqual(['b']);
+
+    const uniqueWords = selectors.uniqueWords(store.getState());
+    expect(uniqueWords).toEqual(['a', 'b']);
+
+    const time = selectors.time(store.getState());
+    expect(time).toEqual(3000);
+
+    const recognisedWordsPercent = selectors.recognisedWordsPercent(
+      store.getState()
+    );
+    expect(recognisedWordsPercent).toEqual(50);
 
     const formState = selectors.formState(store.getState());
     expect(formState).toEqual(formStates.LOADED_STATE);

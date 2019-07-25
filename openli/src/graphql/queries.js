@@ -19,7 +19,26 @@ export const getUser = `query GetUser($id: ID!) {
       }
       nextToken
     }
-    preogresses {
+    readingMessageHistories {
+      items {
+        id
+        authorId
+        readingMessageId
+        title
+        readingSpeed
+        totalWords
+        uniqueWords
+        recognisedWords
+        notRecognisedWords
+        recognisedWordsPercent
+        time
+        isCalculated
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    progresses {
       items {
         id
         authorId
@@ -48,7 +67,10 @@ export const listUsers = `query ListUsers(
       readingMessages {
         nextToken
       }
-      preogresses {
+      readingMessageHistories {
+        nextToken
+      }
+      progresses {
         nextToken
       }
       createdAt
@@ -69,7 +91,10 @@ export const getReadingMessage = `query GetReadingMessage($id: ID!) {
       readingMessages {
         nextToken
       }
-      preogresses {
+      readingMessageHistories {
+        nextToken
+      }
+      progresses {
         nextToken
       }
       createdAt
@@ -122,38 +147,16 @@ export const getProgress = `query GetProgress($id: ID!) {
       readingMessages {
         nextToken
       }
-      preogresses {
+      readingMessageHistories {
+        nextToken
+      }
+      progresses {
         nextToken
       }
       createdAt
       updatedAt
     }
     authorId
-    readingMessageHistories {
-      id
-      ReadingMessage {
-        id
-        authorId
-        title
-        content
-        createdAt
-        updatedAt
-        access
-      }
-      words {
-        index
-        word
-        time
-        isRegognised
-      }
-      readingSpeed
-      totalWords
-      uniqueWords
-      recognisedWords
-      unRecognisedWords
-      recognisedWordsPercent
-      time
-    }
     readingMessageProgresses {
       id
       orderId
@@ -163,6 +166,11 @@ export const getProgress = `query GetProgress($id: ID!) {
         id
         readingMessageId
         time
+        readingSpeed
+        totalWords
+        uniqueWords
+        recognisedWords
+        notRecognisedWords
         recognisedWordsPercent
       }
       time
@@ -190,16 +198,6 @@ export const listProgresss = `query ListProgresss(
         updatedAt
       }
       authorId
-      readingMessageHistories {
-        id
-        readingSpeed
-        totalWords
-        uniqueWords
-        recognisedWords
-        unRecognisedWords
-        recognisedWordsPercent
-        time
-      }
       readingMessageProgresses {
         id
         orderId
@@ -207,6 +205,92 @@ export const listProgresss = `query ListProgresss(
         readingMessageTitle
         time
       }
+      isCalculated
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+`;
+export const getReadingMessageHistory = `query GetReadingMessageHistory($id: ID!) {
+  getReadingMessageHistory(id: $id) {
+    id
+    author {
+      id
+      username
+      name
+      familyName
+      readingMessages {
+        nextToken
+      }
+      readingMessageHistories {
+        nextToken
+      }
+      progresses {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    authorId
+    readingMessageId
+    title
+    words {
+      index
+      word
+      time
+      isNotRecognisedCount
+    }
+    readingSpeed
+    totalWords
+    uniqueWords
+    recognisedWords
+    notRecognisedWords
+    recognisedWordsPercent
+    time
+    isCalculated
+    createdAt
+    updatedAt
+  }
+}
+`;
+export const listReadingMessageHistorys = `query ListReadingMessageHistorys(
+  $filter: ModelReadingMessageHistoryFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listReadingMessageHistorys(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      author {
+        id
+        username
+        name
+        familyName
+        createdAt
+        updatedAt
+      }
+      authorId
+      readingMessageId
+      title
+      words {
+        index
+        word
+        time
+        isNotRecognisedCount
+      }
+      readingSpeed
+      totalWords
+      uniqueWords
+      recognisedWords
+      notRecognisedWords
+      recognisedWordsPercent
+      time
       isCalculated
       createdAt
       updatedAt

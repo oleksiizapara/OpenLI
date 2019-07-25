@@ -15,7 +15,7 @@ import { date } from 'common/date';
 import {
   splitTextOnWords,
   recogniseWords,
-  validateRecognizedWords,
+  validateRecognisedWords,
   calculateNotRecognisedWords,
   updateTranscript,
   finalizeWords,
@@ -88,7 +88,7 @@ export const recognitionFinalWords = createLogic({
       finalTranscriptWords
     );
 
-    const recognisedWordIndexes = validateRecognizedWords(
+    const recognisedWordIndexes = validateRecognisedWords(
       filteredRawRecognisedWordIndexes
     );
 
@@ -204,7 +204,7 @@ export const recognitionInterimWords = createLogic({
       interimTranscriptWords
     );
 
-    const recognisedWordIndexes = validateRecognizedWords(
+    const recognisedWordIndexes = validateRecognisedWords(
       filteredRawRecognisedWordIndexes
     );
 

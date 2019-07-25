@@ -1,4 +1,23 @@
 // eslint-disable
+export const getUser = `query GetUser($id: ID!) {
+  getUser(id: $id) {
+    id
+    username
+    name
+    familyName
+    
+    progresses {
+      items {
+        id
+        isCalculated
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+`;
 
 export const getReadingMessage = `query GetReadingMessage($id: ID!) {
   getReadingMessage(id: $id) {
