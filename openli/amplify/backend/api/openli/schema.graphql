@@ -7,8 +7,7 @@ type User @model @auth(rules: [{ allow: owner, ownerField: "id" }]) {
     @connection(name: "ReadingMessages", keyField: "authorId")
   readingMessageHistories: [ReadingMessageHistory]
     @connection(name: "ReadingMessageHistories", keyField: "authorId")
-  progresses: [Progress]
-    @connection(name: "Progresses", keyField: "authorId")
+  progresses: [Progress] @connection(name: "Progresses", keyField: "authorId")
   createdAt: String
   updatedAt: String
 }
@@ -31,8 +30,7 @@ enum ReadingMessageAccess {
   PRIVATE
 }
 
-type Progress @model
-  @auth(rules: [{ allow: owner, ownerField: "authorId" }]) {
+type Progress @model @auth(rules: [{ allow: owner, ownerField: "authorId" }]) {
   id: ID!
   author: User @connection(name: "Progresses", keyField: "authorId")
   authorId: String
@@ -42,10 +40,12 @@ type Progress @model
   updatedAt: String
 }
 
-type ReadingMessageHistory @model
-  @auth(rules: [{ allow: owner, ownerField: "authorId" }]){
+type ReadingMessageHistory
+  @model
+  @auth(rules: [{ allow: owner, ownerField: "authorId" }]) {
   id: ID!
-  author: User @connection(name: "ReadingMessageHistories", keyField: "authorId")
+  author: User
+    @connection(name: "ReadingMessageHistories", keyField: "authorId")
   authorId: String
 
   readingMessageId: ID!
@@ -58,7 +58,7 @@ type ReadingMessageHistory @model
   recognisedWords: [String]
   notRecognisedWords: [String]
   recognisedWordsPercent: Float!
-  time: String,
+  time: String
   isCalculated: Boolean!
   createdAt: String
   updatedAt: String
@@ -72,12 +72,12 @@ type Word {
 }
 
 type ReadingMessageProgress {
-    id: ID!
-    orderId: Int
-    readingMessageId: ID!
-    readingMessageTitle: String!
-    readingMessageProgressUnits: [ReadingMessageProgressUnit]
-    time: String!
+  id: ID!
+  orderId: Int
+  readingMessageId: ID!
+  readingMessageTitle: String!
+  readingMessageProgressUnits: [ReadingMessageProgressUnit]
+  time: String!
 }
 
 type ReadingMessageProgressUnit {
