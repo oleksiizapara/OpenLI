@@ -9,6 +9,7 @@ import { key as controlKey } from 'control/index';
 import { key as readingListKey } from 'readingList/index';
 import { key as readingSearchKey } from 'readingSearch/index';
 import { key as profileKey } from 'profile/index';
+import { key as progressKey } from '../progress/index';
 
 import * as readingMessageMocks from 'mocks/readingMessageMocks';
 import * as readingMocks from 'mocks/readingMocks';
@@ -18,6 +19,7 @@ import * as controlMocks from 'mocks/controlMocks';
 import * as readingListMocks from 'mocks/readingListMocks';
 import * as readingSearchMocks from 'mocks/readingSearchMocks';
 import * as profileMocks from 'mocks/profileMocks';
+import * as progressMocks from 'mocks/progressMocks';
 
 const initialSpeechRecognitionState = {};
 const initialReadingState = readingMocks.reviewSample;
@@ -28,6 +30,7 @@ const initialControlState = controlMocks.defaultMock;
 const initialReadingListState = readingListMocks.defaultMock;
 const initialReadingSearchState = readingSearchMocks.searchedMock;
 const initialProfileState = profileMocks.defaultMock;
+const initialProgressState = progressMocks.defaultMock;
 
 const mockedReducer = initialState => (state = initialState) => {
   return state;
@@ -42,5 +45,6 @@ export default combineReducers({
   [controlKey]: mockedReducer(initialControlState),
   [readingListKey]: mockedReducer(initialReadingListState),
   [readingSearchKey]: mockedReducer(initialReadingSearchState),
-  [profileKey]: mockedReducer(initialProfileState)
+  [profileKey]: mockedReducer(initialProfileState),
+  [progressKey]: mockedReducer(initialProgressState)
 });

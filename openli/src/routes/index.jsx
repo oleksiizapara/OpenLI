@@ -13,6 +13,7 @@ import RecoveryPasswordPage from 'settings/components/RecoveryPasswordPage';
 import ReadingListPage from 'readingList/components/ReadingListPage';
 import ReadingSearchPage from 'readingSearch/components/ReadingSearchPage';
 import ProfilePage from 'profile/components/ProfilePage';
+import ProgressPage from 'progress/components/ProgressPage';
 
 export const Routes = () => (
   <BrowserRouter>
@@ -27,6 +28,7 @@ export const Routes = () => (
       <PrivateRoute path='/reading_edit/:id' component={EditPage} />
       <PrivateRoute path='/reading_list' component={ReadingListPage} />
       <PrivateRoute path='/profile' component={ProfilePage} />
+      <PrivateRoute path='/progress' component={ProgressPage} />
       <Route component={GenericNotFound} />
     </Switch>
   </BrowserRouter>

@@ -5,6 +5,7 @@ import { logic as reviewLogic } from './review/index';
 import { logic as settingsLogic } from './settings/index';
 import { logic as readingListLogic } from './readingList/index';
 import { logic as readingSearchLogic } from './readingSearch/index';
+import { logic as progressLogic } from './progress/index';
 import { logic as profileLogic } from './profile/index';
 
 export default [
@@ -15,5 +16,6 @@ export default [
   ...settingsLogic,
   ...readingListLogic,
   ...readingSearchLogic,
-  ...profileLogic
+  ...profileLogic,
+  ...progressLogic
 ];

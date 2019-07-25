@@ -30,6 +30,11 @@ import {
   reducer as readingSearchReducer
 } from './readingSearch/index';
 
+import {
+  key as progressKey,
+  reducer as progressReducer
+} from './progress/index';
+
 import { key as profileKey, reducer as profileReducer } from './profile/index';
 
 export default combineReducers({
@@ -41,5 +46,6 @@ export default combineReducers({
   [controlKey]: controlReducer,
   [readingListKey]: readingListReducer,
   [readingSearchKey]: readingSearchReducer,
-  [profileKey]: profileReducer
+  [profileKey]: profileReducer,
+  [progressKey]: progressReducer
 });
