@@ -34,8 +34,8 @@ type Progress @model
   id: ID!
   author: User @connection(name: "Progresses", keyField: "authorId")
   authorId: String
-  readingMessageHistories: [ReadingMessageHistory!]
-  readingMessageProgresses: [ReadingMessageProgress!]
+  readingMessageHistories: [ReadingMessageHistory]
+  readingMessageProgresses: [ReadingMessageProgress]
   isCalculated: Boolean!
   createdAt: String
   updatedAt: String
@@ -47,9 +47,9 @@ type ReadingMessageHistory {
   words: [Word]
   readingSpeed: Int!
   totalWords: Int!
-  uniqueWords: [String!]
-  recognisedWords: [String!]
-  unRecognisedWords: [String!]
+  uniqueWords: [String]
+  recognisedWords: [String]
+  unRecognisedWords: [String]
   recognisedWordsPercent: Float!
   time: String
 }
@@ -64,15 +64,15 @@ type Word {
 type ReadingMessageProgress {
     id: ID!
     orderId: Int
-    readingMessageId: [ID!]
+    readingMessageId: ID!
     readingMessageTitle: String!
-    readingMessageProgressUnits: [ReadingMessageProgressUnit!]
+    readingMessageProgressUnits: [ReadingMessageProgressUnit]
     time: String!
 }
 
 type ReadingMessageProgressUnit {
   id: ID!
-  readingMessageId: [ID!]
+  readingMessageId: ID!
   time: String!
-  recognisedWordsPercent: [Float!]
+  recognisedWordsPercent: Float!
 }

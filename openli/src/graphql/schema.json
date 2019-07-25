@@ -1023,13 +1023,9 @@
             "kind" : "LIST",
             "name" : null,
             "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "OBJECT",
-                "name" : "ReadingMessageHistory",
-                "ofType" : null
-              }
+              "kind" : "OBJECT",
+              "name" : "ReadingMessageHistory",
+              "ofType" : null
             }
           },
           "isDeprecated" : false,
@@ -1042,13 +1038,9 @@
             "kind" : "LIST",
             "name" : null,
             "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "OBJECT",
-                "name" : "ReadingMessageProgress",
-                "ofType" : null
-              }
+              "kind" : "OBJECT",
+              "name" : "ReadingMessageProgress",
+              "ofType" : null
             }
           },
           "isDeprecated" : false,
@@ -1178,13 +1170,9 @@
             "kind" : "LIST",
             "name" : null,
             "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "SCALAR",
-                "name" : "String",
-                "ofType" : null
-              }
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
             }
           },
           "isDeprecated" : false,
@@ -1197,13 +1185,9 @@
             "kind" : "LIST",
             "name" : null,
             "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "SCALAR",
-                "name" : "String",
-                "ofType" : null
-              }
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
             }
           },
           "isDeprecated" : false,
@@ -1216,13 +1200,9 @@
             "kind" : "LIST",
             "name" : null,
             "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "SCALAR",
-                "name" : "String",
-                "ofType" : null
-              }
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
             }
           },
           "isDeprecated" : false,
@@ -1380,16 +1360,12 @@
           "description" : null,
           "args" : [ ],
           "type" : {
-            "kind" : "LIST",
+            "kind" : "NON_NULL",
             "name" : null,
             "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "SCALAR",
-                "name" : "ID",
-                "ofType" : null
-              }
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
             }
           },
           "isDeprecated" : false,
@@ -1417,13 +1393,9 @@
             "kind" : "LIST",
             "name" : null,
             "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "OBJECT",
-                "name" : "ReadingMessageProgressUnit",
-                "ofType" : null
-              }
+              "kind" : "OBJECT",
+              "name" : "ReadingMessageProgressUnit",
+              "ofType" : null
             }
           },
           "isDeprecated" : false,
@@ -1472,16 +1444,12 @@
           "description" : null,
           "args" : [ ],
           "type" : {
-            "kind" : "LIST",
+            "kind" : "NON_NULL",
             "name" : null,
             "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "SCALAR",
-                "name" : "ID",
-                "ofType" : null
-              }
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
             }
           },
           "isDeprecated" : false,
@@ -1506,16 +1474,12 @@
           "description" : null,
           "args" : [ ],
           "type" : {
-            "kind" : "LIST",
+            "kind" : "NON_NULL",
             "name" : null,
             "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "SCALAR",
-                "name" : "Float",
-                "ofType" : null
-              }
+              "kind" : "SCALAR",
+              "name" : "Float",
+              "ofType" : null
             }
           },
           "isDeprecated" : false,
@@ -2363,13 +2327,9 @@
             "kind" : "LIST",
             "name" : null,
             "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "INPUT_OBJECT",
-                "name" : "ReadingMessageHistoryInput",
-                "ofType" : null
-              }
+              "kind" : "INPUT_OBJECT",
+              "name" : "ReadingMessageHistoryInput",
+              "ofType" : null
             }
           },
           "defaultValue" : null
@@ -2380,13 +2340,9 @@
             "kind" : "LIST",
             "name" : null,
             "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "INPUT_OBJECT",
-                "name" : "ReadingMessageProgressInput",
-                "ofType" : null
-              }
+              "kind" : "INPUT_OBJECT",
+              "name" : "ReadingMessageProgressInput",
+              "ofType" : null
             }
           },
           "defaultValue" : null
@@ -2476,13 +2432,9 @@
             "kind" : "LIST",
             "name" : null,
             "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "SCALAR",
-                "name" : "String",
-                "ofType" : null
-              }
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
             }
           },
           "defaultValue" : null
@@ -2493,13 +2445,9 @@
             "kind" : "LIST",
             "name" : null,
             "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "SCALAR",
-                "name" : "String",
-                "ofType" : null
-              }
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
             }
           },
           "defaultValue" : null
@@ -2510,13 +2458,9 @@
             "kind" : "LIST",
             "name" : null,
             "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "SCALAR",
-                "name" : "String",
-                "ofType" : null
-              }
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
             }
           },
           "defaultValue" : null
@@ -2625,16 +2569,12 @@
           "name" : "readingMessageId",
           "description" : null,
           "type" : {
-            "kind" : "LIST",
+            "kind" : "NON_NULL",
             "name" : null,
             "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "SCALAR",
-                "name" : "ID",
-                "ofType" : null
-              }
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
             }
           },
           "defaultValue" : null
@@ -2658,13 +2598,9 @@
             "kind" : "LIST",
             "name" : null,
             "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "INPUT_OBJECT",
-                "name" : "ReadingMessageProgressUnitInput",
-                "ofType" : null
-              }
+              "kind" : "INPUT_OBJECT",
+              "name" : "ReadingMessageProgressUnitInput",
+              "ofType" : null
             }
           },
           "defaultValue" : null
@@ -2694,16 +2630,12 @@
           "name" : "readingMessageId",
           "description" : null,
           "type" : {
-            "kind" : "LIST",
+            "kind" : "NON_NULL",
             "name" : null,
             "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "SCALAR",
-                "name" : "ID",
-                "ofType" : null
-              }
+              "kind" : "SCALAR",
+              "name" : "ID",
+              "ofType" : null
             }
           },
           "defaultValue" : null
@@ -2724,16 +2656,12 @@
           "name" : "recognisedWordsPercent",
           "description" : null,
           "type" : {
-            "kind" : "LIST",
+            "kind" : "NON_NULL",
             "name" : null,
             "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "SCALAR",
-                "name" : "Float",
-                "ofType" : null
-              }
+              "kind" : "SCALAR",
+              "name" : "Float",
+              "ofType" : null
             }
           },
           "defaultValue" : null
@@ -2775,13 +2703,9 @@
             "kind" : "LIST",
             "name" : null,
             "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "INPUT_OBJECT",
-                "name" : "ReadingMessageHistoryInput",
-                "ofType" : null
-              }
+              "kind" : "INPUT_OBJECT",
+              "name" : "ReadingMessageHistoryInput",
+              "ofType" : null
             }
           },
           "defaultValue" : null
@@ -2792,13 +2716,9 @@
             "kind" : "LIST",
             "name" : null,
             "ofType" : {
-              "kind" : "NON_NULL",
-              "name" : null,
-              "ofType" : {
-                "kind" : "INPUT_OBJECT",
-                "name" : "ReadingMessageProgressInput",
-                "ofType" : null
-              }
+              "kind" : "INPUT_OBJECT",
+              "name" : "ReadingMessageProgressInput",
+              "ofType" : null
             }
           },
           "defaultValue" : null
@@ -2961,100 +2881,6 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
-        "name" : "ModelFloatFilterInput",
-        "description" : null,
-        "fields" : null,
-        "inputFields" : [ {
-          "name" : "ne",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Float",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "eq",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Float",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "le",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Float",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "lt",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Float",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "ge",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Float",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "gt",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Float",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "contains",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Float",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "notContains",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Float",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "between",
-          "description" : null,
-          "type" : {
-            "kind" : "LIST",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "Float",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        } ],
-        "interfaces" : null,
-        "enumValues" : null,
-        "possibleTypes" : null
-      }, {
-        "kind" : "INPUT_OBJECT",
         "name" : "ModelIntFilterInput",
         "description" : null,
         "fields" : null,
@@ -3139,6 +2965,100 @@
             "ofType" : {
               "kind" : "SCALAR",
               "name" : "Int",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "ModelFloatFilterInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
+          "name" : "ne",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "eq",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "le",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "lt",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "ge",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "gt",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "contains",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "notContains",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "between",
+          "description" : null,
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "Float",
               "ofType" : null
             }
           },
@@ -3969,17 +3889,30 @@
         "onFragment" : false,
         "onField" : false
       }, {
-        "name" : "aws_api_key",
-        "description" : "Tells the service this field/object has access authorized by an API key.",
-        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
-        "args" : [ ],
+        "name" : "aws_auth",
+        "description" : "Directs the schema to enforce authorization on a field",
+        "locations" : [ "FIELD_DEFINITION" ],
+        "args" : [ {
+          "name" : "cognito_groups",
+          "description" : "List of cognito user pool groups which have access on this field",
+          "type" : {
+            "kind" : "LIST",
+            "name" : null,
+            "ofType" : {
+              "kind" : "SCALAR",
+              "name" : "String",
+              "ofType" : null
+            }
+          },
+          "defaultValue" : null
+        } ],
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false
       }, {
-        "name" : "aws_auth",
-        "description" : "Directs the schema to enforce authorization on a field",
-        "locations" : [ "FIELD_DEFINITION" ],
+        "name" : "aws_cognito_user_pools",
+        "description" : "Tells the service this field/object has access authorized by a Cognito User Pools token.",
+        "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
         "args" : [ {
           "name" : "cognito_groups",
           "description" : "List of cognito user pool groups which have access on this field",
@@ -4027,23 +3960,10 @@
         "onFragment" : false,
         "onField" : false
       }, {
-        "name" : "aws_cognito_user_pools",
-        "description" : "Tells the service this field/object has access authorized by a Cognito User Pools token.",
+        "name" : "aws_api_key",
+        "description" : "Tells the service this field/object has access authorized by an API key.",
         "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
-        "args" : [ {
-          "name" : "cognito_groups",
-          "description" : "List of cognito user pool groups which have access on this field",
-          "type" : {
-            "kind" : "LIST",
-            "name" : null,
-            "ofType" : {
-              "kind" : "SCALAR",
-              "name" : "String",
-              "ofType" : null
-            }
-          },
-          "defaultValue" : null
-        } ],
+        "args" : [ ],
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false
