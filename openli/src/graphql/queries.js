@@ -43,6 +43,7 @@ export const getUser = `query GetUser($id: ID!) {
         id
         authorId
         isCalculated
+        time
         createdAt
         updatedAt
       }
@@ -176,6 +177,7 @@ export const getProgress = `query GetProgress($id: ID!) {
       time
     }
     isCalculated
+    time
     createdAt
     updatedAt
   }
@@ -206,6 +208,7 @@ export const listProgresss = `query ListProgresss(
         time
       }
       isCalculated
+      time
       createdAt
       updatedAt
     }

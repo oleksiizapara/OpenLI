@@ -43,6 +43,7 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
         id
         authorId
         isCalculated
+        time
         createdAt
         updatedAt
       }
@@ -95,6 +96,7 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
         id
         authorId
         isCalculated
+        time
         createdAt
         updatedAt
       }
@@ -147,6 +149,7 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
         id
         authorId
         isCalculated
+        time
         createdAt
         updatedAt
       }
@@ -284,6 +287,7 @@ export const createProgress = `mutation CreateProgress($input: CreateProgressInp
       time
     }
     isCalculated
+    time
     createdAt
     updatedAt
   }
@@ -329,6 +333,7 @@ export const updateProgress = `mutation UpdateProgress($input: UpdateProgressInp
       time
     }
     isCalculated
+    time
     createdAt
     updatedAt
   }
@@ -374,6 +379,7 @@ export const deleteProgress = `mutation DeleteProgress($input: DeleteProgressInp
       time
     }
     isCalculated
+    time
     createdAt
     updatedAt
   }

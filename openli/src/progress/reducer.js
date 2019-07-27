@@ -1,4 +1,4 @@
-import { key, actionTypes, formStates } from './actions';
+import { key, actionTypes, formStates, CALCULATING_STATE } from './actions';
 
 import produce from 'immer';
 
@@ -14,7 +14,10 @@ export const selectors = {
 const initialState = {
   formState: formStates.DEFAULT_STATE,
   error: '',
-  messageProgresses: []
+  readingMessageProgresses: [],
+  isCalculated: false,
+  createdAt: undefined,
+  updatedAt: undefined
 };
 
 export default function(state = initialState, action) {
@@ -22,6 +25,16 @@ export default function(state = initialState, action) {
     switch (action.type) {
       case actionTypes.LOAD:
         draft.formState = formStates.LOADING_STATE;
+        break;
+      case actionTypes.CALCULATE:
+        draft.formState = formStates.CALCULATING_STATE;
+        break;
+      case actionTypes.CALCULATED:
+        draft.formState = formStates.LOADED_STATE;
+        draft.readingMessageProgresses =
+          action.payload.readingMessageProgresses;
+        draft.createdAt = action.payload.createdAt;
+        draft.updatedAt = action.payload.updatedAt;
         break;
       case actionTypes.ERROR:
         draft.error = action.payload.error;

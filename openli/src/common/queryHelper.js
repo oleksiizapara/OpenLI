@@ -108,3 +108,49 @@ export const getSearchMessages = async ({
     logger.debug('getSearchMessagesError', e);
   }
 };
+
+export const getProgress = async id => {
+  try {
+    const response = await API.graphql(
+      graphqlOperation(customQueries.getProgress, { id: id })
+    );
+    assertErrors(response);
+    const {
+      data: { getProgress: data }
+    } = response;
+
+    return response.data.getProgress;
+  } catch (e) {
+    Analytics.record({
+      name: 'getProgressError',
+      attributes: {
+        error: e.message
+      }
+    });
+    logger.debug('getProgressError', e);
+  }
+};
+
+export const listReadingMessageHistorys = async authorId => {
+  try {
+    const response = await API.graphql(
+      graphqlOperation(customQueries.listReadingMessageHistorys, {
+        filter: { authorId: { eq: authorId } }
+      })
+    );
+    assertErrors(response);
+    const {
+      data: { listReadingMessageHistorys: data }
+    } = response;
+
+    return response.data.listReadingMessageHistorys.items;
+  } catch (e) {
+    Analytics.record({
+      name: 'listReadingMessageHistorysError',
+      attributes: {
+        error: e.message
+      }
+    });
+    logger.debug('listReadingMessageHistorysError', e);
+  }
+};

@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  LineChart,
-  Line,
+  BarChart,
+  Bar,
+  CartesianGrid,
   XAxis,
   YAxis,
-  CartesianGrid,
   ResponsiveContainer,
-  Tooltip
+  Tooltip,
+  Legend
 } from 'recharts';
 
 import Enumerable from 'linq';
@@ -24,9 +25,20 @@ const tooltipFormatter = (value, name, props) => {
     case 'readingSpeed':
       return [`${value} words/minute`, 'Reading Speed'];
     case 'recognisedWordsPercent':
-      return [`${value}%`, 'Recognised Words'];
+      return [`${Math.round(value)}%`, 'Recognised Words'];
     default:
       return [];
+  }
+};
+
+const legendFormatter = (value, entry, index) => {
+  switch (value) {
+    case 'readingSpeed':
+      return 'Reading Speed';
+    case 'recognisedWordsPercent':
+      return 'Recognised Words';
+    default:
+      return '';
   }
 };
 
@@ -43,32 +55,49 @@ const ProgressReadingMessage = ({ readingMessageProgress }) => {
       <Header>{readingMessageTitle}</Header>
 
       <ResponsiveContainer width='100%' height={400}>
-        <LineChart data={readingMessageProgressUnits}>
+        <BarChart data={readingMessageProgressUnits}>
+          <CartesianGrid strokeDasharray='3 3' />
           <XAxis
             dataKey='time'
-            domain={['auto', 'auto']}
             name='Time'
-            tickFormatter={unixTime => moment(unixTime).format('HH:mm Do')}
-            type='number'
+            tickFormatter={unixTime =>
+              moment(unixTime - '0').format('HH:mm:ss Do')
+            }
           />
-          <YAxis type='number' dataKey='readingSpeed' orientation='left' />
           <YAxis
+            yAxisId='readingSpeedId'
             type='number'
-            dataKey='recognisedWordsPercent'
+            dataKey='readingSpeed'
             orientation='right'
           />
-          <Line type='monotone' dataKey='readingSpeed' stroke='#8884d8' />
-          <Line
-            type='monotone'
+          <YAxis
+            yAxisId='recognisedWordsPercentId'
+            type='number'
             dataKey='recognisedWordsPercent'
-            stroke='#82ca9d'
+            orientation='left'
           />
+          <Bar
+            yAxisId='readingSpeedId'
+            dataKey='readingSpeed'
+            fill='#8884d8'
+            label='Reading Speed'
+          />
+          <Bar
+            yAxisId='recognisedWordsPercentId'
+            dataKey='recognisedWordsPercent'
+            fill='#82ca9d'
+            label='Recognised Words %'
+          />
+          <Legend formatter={legendFormatter} />
           <Tooltip
+            cursor={{ fill: 'transparent' }}
             filterNull={true}
             formatter={tooltipFormatter}
-            labelFormatter={unixTime => moment(unixTime).format('HH:mm Do')}
+            labelFormatter={unixTime =>
+              moment(unixTime - '0').format('HH:mm:ss Do')
+            }
           />
-        </LineChart>
+        </BarChart>
       </ResponsiveContainer>
 
       <Table basic='very' celled collapsing>
@@ -91,7 +120,7 @@ const ProgressReadingMessage = ({ readingMessageProgress }) => {
                 <React.Fragment key={time}>
                   <Table.Row>
                     <Table.Cell singleLine>
-                      {moment(time).format('HH:mm Do')}
+                      {moment(time - '0').format('HH:mm:ss Do')}
                     </Table.Cell>
                     <Table.Cell>
                       Not Recognised Words: {notRecognisedWords.join(', ')}

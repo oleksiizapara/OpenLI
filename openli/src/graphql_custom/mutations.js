@@ -48,9 +48,65 @@ export const createReadingMessageHistory = `mutation CreateReadingMessageHistory
 }
 `;
 
+export const createProgress = `mutation CreateProgress($input: CreateProgressInput!) {
+  createProgress(input: $input) {
+    id
+    author {
+      name
+      familyName
+    }
+    authorId
+    readingMessageProgresses {
+      orderId
+      readingMessageId
+      readingMessageTitle
+      readingMessageProgressUnits {
+        readingMessageId
+        time
+        readingSpeed
+        totalWords
+        uniqueWords
+        recognisedWords
+        notRecognisedWords
+        recognisedWordsPercent
+      }
+      time
+    }
+    time
+    isCalculated
+    createdAt
+    updatedAt
+  }
+}
+`;
 export const updateProgress = `mutation UpdateProgress($input: UpdateProgressInput!) {
   updateProgress(input: $input) {
     id
+    author {
+      name
+      familyName
+    }
+    authorId
+    readingMessageProgresses {
+      orderId
+      readingMessageId
+      readingMessageTitle
+      readingMessageProgressUnits {
+        readingMessageId
+        time
+        readingSpeed
+        totalWords
+        uniqueWords
+        recognisedWords
+        notRecognisedWords
+        recognisedWordsPercent
+      }
+      time
+    }
+    time
+    isCalculated
+    createdAt
+    updatedAt
   }
 }
 `;

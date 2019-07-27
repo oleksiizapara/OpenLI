@@ -111,14 +111,6 @@ export const onUpload = createLogic({
       isCalculated: false
     });
 
-    const user = settingsSelectors.user(getState());
-
-    if (user.progress !== null) {
-      user.progress.forEach(progress => {
-        updateProgress({ id: progress.id, isCalculated: false });
-      });
-    }
-
     dispatch(actions.uploaded(true));
 
     done();

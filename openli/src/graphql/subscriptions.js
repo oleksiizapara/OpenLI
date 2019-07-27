@@ -43,6 +43,7 @@ export const onCreateUser = `subscription OnCreateUser {
         id
         authorId
         isCalculated
+        time
         createdAt
         updatedAt
       }
@@ -95,6 +96,7 @@ export const onUpdateUser = `subscription OnUpdateUser {
         id
         authorId
         isCalculated
+        time
         createdAt
         updatedAt
       }
@@ -147,6 +149,7 @@ export const onDeleteUser = `subscription OnDeleteUser {
         id
         authorId
         isCalculated
+        time
         createdAt
         updatedAt
       }
@@ -284,6 +287,7 @@ export const onCreateProgress = `subscription OnCreateProgress {
       time
     }
     isCalculated
+    time
     createdAt
     updatedAt
   }
@@ -329,6 +333,7 @@ export const onUpdateProgress = `subscription OnUpdateProgress {
       time
     }
     isCalculated
+    time
     createdAt
     updatedAt
   }
@@ -374,6 +379,7 @@ export const onDeleteProgress = `subscription OnDeleteProgress {
       time
     }
     isCalculated
+    time
     createdAt
     updatedAt
   }

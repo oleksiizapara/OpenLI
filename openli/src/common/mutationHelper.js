@@ -111,6 +111,26 @@ export const createReadingMessageHistory = async history => {
   }
 };
 
+export const createProgress = async progress => {
+  try {
+    const response = await API.graphql(
+      graphqlOperation(mutations.createProgress, {
+        input: progress
+      })
+    );
+    assertErrors(response);
+    return response.data.createProgress;
+  } catch (e) {
+    Analytics.record({
+      name: 'createProgressError',
+      attributes: {
+        error: e.message
+      }
+    });
+    logger.debug('createProgressError', e);
+  }
+};
+
 export const updateProgress = async progress => {
   try {
     const response = await API.graphql(

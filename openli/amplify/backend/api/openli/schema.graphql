@@ -36,6 +36,7 @@ type Progress @model @auth(rules: [{ allow: owner, ownerField: "authorId" }]) {
   authorId: String
   readingMessageProgresses: [ReadingMessageProgress]
   isCalculated: Boolean!
+  time: String
   createdAt: String
   updatedAt: String
 }

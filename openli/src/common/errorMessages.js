@@ -17,6 +17,11 @@ const invalidReadingMessageAccess = 'Access is invalid';
 const readingMessagesWasNotFound = 'Reading messages was not found';
 const readingMessagesSearchIsNotWorking = 'Search is not working';
 
+const progressIsNotWorking = 'Progress in not working!';
+const progressDidNotReadAnyText = 'User did not read any text';
+
+const userIsNotInitialized = 'user is not initialized';
+
 export const errorMessages = {
   readingMessageWasNotCreated,
   readingMessageWasNotUpdated,
@@ -34,5 +39,8 @@ export const errorMessages = {
   readingMessageInvalidContent,
   invalidReadingMessageAccess,
   readingMessagesWasNotFound,
-  readingMessagesSearchIsNotWorking
+  readingMessagesSearchIsNotWorking,
+  progressIsNotWorking,
+  progressDidNotReadAnyText,
+  userIsNotInitialized
 };
