@@ -7,8 +7,6 @@ import { actionTypes, actions } from './actions';
 import { selectors } from './reducer';
 import { selectors as settingsSelectors } from 'settings/reducer';
 
-import * as queryHelper from 'common/queryHelper';
-import * as mutationHelper from 'common/mutationHelper';
 import { errorMessages } from 'common/errorMessages';
 import { createReadingMessageProgresses, assertErrors } from 'common/common';
 import { API, Analytics } from 'aws-amplify';
