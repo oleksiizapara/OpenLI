@@ -2,6 +2,7 @@
   "extends": [
     ":dependencyDashboard"
   ],
+  "prConcurrentLimit" : 4,
   "packageRules": [
     {
         "matchUpdateTypes": ["minor", "patch"],
