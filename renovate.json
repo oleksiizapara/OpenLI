@@ -1,11 +1,12 @@
 {
-  "rangeStrategy": "pin",
-  "baseBranches": ["dependency-updates"],
-  "prConcurrentLimit" : 4,
+  "extends": [
+    ":dependencyDashboard"
+  ],
   "packageRules": [
     {
-      "updateTypes": ["minor", "patch", "pin", "digest"],
-      "automerge": true
-    }
+        "matchUpdateTypes": ["minor", "patch"],
+        "matchCurrentVersion": "!/^0/",
+        "automerge": true
+      }
   ]
 }
