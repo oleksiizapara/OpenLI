@@ -46,7 +46,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "dom-testing-library": "^4.0.1",
+    "dom-testing-library": "5.0.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "eslint": "^5.16.0",
