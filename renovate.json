@@ -1,6 +1,7 @@
 {
   "extends": [
-    "config:base", "dependencyDashboard"
+    "config:base", 
+    ":dependencyDashboard"
   ],
   "prConcurrentLimit" : 4,
   "packageRules": [
