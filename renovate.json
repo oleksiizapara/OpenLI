@@ -1,13 +1,18 @@
 {
   "extends": [
+    "config:base", 
     ":dependencyDashboard"
   ],
   "prConcurrentLimit" : 4,
   "packageRules": [
     {
-        "matchUpdateTypes": ["minor", "patch"],
-        "matchCurrentVersion": "!/^0/",
-        "automerge": true
-      }
-  ]
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "automerge": true
+    }
+  ],
+  "platformAutomerge": true
 }
