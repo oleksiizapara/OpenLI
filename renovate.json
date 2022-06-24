@@ -1,0 +1,11 @@
+{
+    "packageRules": [
+        {
+          "matchUpdateTypes": ["minor", "patch"],
+          "matchCurrentVersion": "!/^0/",
+          "matchDepTypes": ["devDependencies"],
+          "matchPackagePatterns": ["lint", "prettier"],
+          "automerge": true
+        }
+      ]
+}
