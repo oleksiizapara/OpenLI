@@ -6,7 +6,7 @@
   "dependencies": {
     "aws-amplify": "4.3.46",
     "aws-amplify-react": "^5.0.0",
-    "axios": "^0.27.0",
+    "axios": "^0.28.0",
     "formik": "2.2.9",
     "immer": "9.0.21",
     "linq": "^3.2.0",
