@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "./",
   "dependencies": {
-    "aws-amplify": "4.3.46",
+    "aws-amplify": "6.10.2",
     "aws-amplify-react": "^5.0.0",
     "axios": "^0.29.0",
     "formik": "2.4.6",
